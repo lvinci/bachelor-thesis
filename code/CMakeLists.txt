@@ -3,4 +3,7 @@ project(code)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(code main.cpp)
+add_executable(code main.cpp
+        npp/npp.h
+        npp/npp_sequential.cpp
+        npp/npp_parallel.cpp)

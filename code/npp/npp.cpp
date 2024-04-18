@@ -9,16 +9,6 @@
 
 /******************************************************************************/
 
-// ReSharper disable CppParameterNeverUsed
-// ReSharper disable CppDeprecatedRegisterStorageClassSpecifier
-// ReSharper disable CppParameterMayBeConstPtrOrRef
-// ReSharper disable CppParameterMayBeConst
-// ReSharper disable CppMemberFunctionMayBeConst
-// ReSharper disable CppUseAuto
-// ReSharper disable CppMemberFunctionMayBeStatic
-// ReSharper disable CppPassValueParameterByConstReference
-// ReSharper disable CppDeprecatedEntity
-// ReSharper disable CppDFANullDereference
 #include "npp.h"
 //#include "functions.c"  /* activation, update, propagate,... */
 /******************************************************************************/

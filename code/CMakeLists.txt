@@ -15,6 +15,8 @@ configure_file(resources/startnet_seed_8.net startnet_seed_8.net COPYONLY)
 configure_file(resources/startnet_seed_9.net startnet_seed_9.net COPYONLY)
 configure_file(resources/startnet_seed_10.net startnet_seed_10.net COPYONLY)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(CMAKE_CXX_FLAGS_RELEASE "-O2")
 
 add_executable(code main.cpp

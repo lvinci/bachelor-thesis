@@ -116,13 +116,13 @@ void rprop_init(float *params, unit_typ unit[], topo_typ *topo) {
 }
 
 void rprop_update(unit_typ unit[], topo_typ *topo, float *params) {
-    const register float delta_max = params[1];
-    const register float wd = params[2];
+    const float delta_max = params[1];
+    const float wd = params[2];
     weight_typ *wptr;
     FORALL_WEIGHTS(wptr) {
-        register float update_value = wptr->variable[0];
-        const register float dEdw = wptr->dEdw + wd * wptr->value;
-        const register float direction = wptr->delta * dEdw;
+        float update_value = wptr->variable[0];
+        const float dEdw = wptr->dEdw + wd * wptr->value;
+        const float direction = wptr->delta * dEdw;
         if (direction < 0.0) {
             update_value = MIN(update_value * ETAPLUS, delta_max);
             if (dEdw > 0.0)

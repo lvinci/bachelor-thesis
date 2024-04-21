@@ -22,7 +22,8 @@ using namespace std;
 #define MAX_SEEDS 10
 #define MAX_EPOCHS 10000
 
-bool readDataset(const string &filename, vector<string> *trainingData, vector<string> *testingData) {
+bool readDataset(const string &filename, vector<string> *trainingData,
+                 vector<string> *testingData) {
     ifstream file(filename);
     if (!file || !file.is_open()) {
         return false;
@@ -45,23 +46,21 @@ bool readDataset(const string &filename, vector<string> *trainingData, vector<st
     return true;
 }
 
-void initializeVectors(const string &data, float *inVec, float *outVec, float *tarVec) {
+void initializeVectors(const string &data, float *inVec, float *outVec,
+                       float *tarVec) {
     istringstream ss(data);
     string token;
     int i = 0;
     while (getline(ss, token, ';') && i < INPUTS) {
-        inVec[i] = stod(token);
+        inVec[i] = stof(token);
         i++;
     }
-    i = 0;
-    while (i < OUTPUTS) {
-        tarVec[i] = 0;
-        i++;
-    }
+    fill_n(outVec, OUTPUTS, 0);
     tarVec[stoi(token)] = 1;
 }
 
-void runSeed(const int seed, vector<string> trainingData, vector<string> testingData) {
+void runSeed(const int seed, vector<string> trainingData,
+             vector<string> testingData) {
     const string filename = "startnet_seed_" + to_string(seed) + ".net";
     const auto net = new Net();
     net->load_net(filename.c_str());
@@ -70,13 +69,15 @@ void runSeed(const int seed, vector<string> trainingData, vector<string> testing
     const auto tarVec = new float[net->topo_data.out_count];
     float uparams[10];
 
-    net->save_net(
-        "start_uparam1_" + to_string(uparams[0]) + "_uparam2_" + to_string(uparams[1]) + "_uparam3_" +
-        to_string(uparams[2]) + "_seed_" + to_string(seed) + ".net");
+    net->save_net("start_uparam1_" + to_string(uparams[0]) + "_uparam2_" +
+                  to_string(uparams[1]) + "_uparam3_" + to_string(uparams[2]) +
+                  "_seed_" + to_string(seed) + ".net");
 
     ofstream experimentalData(
-        "experimentalData_maxEpoch_" + to_string(MAX_EPOCHS) + "_uparam1_" + to_string(uparams[0]) + "_uparam2_" +
-        to_string(uparams[1]) + "_uparam3_" + to_string(uparams[2]) + "_seed_" + to_string(seed) + ".txt");
+        "experimentalData_maxEpoch_" + to_string(MAX_EPOCHS) + "_uparam1_" +
+        to_string(uparams[0]) + "_uparam2_" + to_string(uparams[1]) +
+        "_uparam3_" + to_string(uparams[2]) + "_seed_" + to_string(seed) +
+        ".txt");
 
     for (int epoch = 0; epoch < MAX_EPOCHS; epoch++) {
         float tss = 0.0;
@@ -102,9 +103,11 @@ void runSeed(const int seed, vector<string> trainingData, vector<string> testing
                 tssCorrect += error * error; // E_total
                 tssTesting += tssCorrect;
             }
-            if (tssCorrect < 0.15) correct++;
+            if (tssCorrect < 0.15)
+                correct++;
         }
-        //cout << "seed " << seed << " epoch " << epoch << " correct = " << correct << endl;
+        // cout << "seed " << seed << " epoch " << epoch << " correct = " << correct
+        // << endl;
         net->update_weights();
     }
 

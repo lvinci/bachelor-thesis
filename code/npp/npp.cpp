@@ -551,7 +551,7 @@ int Net::save_net(std::string filename) {
     for (int l = 0; l < topo_data.layer_count; l++)
         fprintf(outfile, "%d ", layer[l].unit_count);
     fprintf(outfile, "\nset_update_f %d ", update_id);
-    for (float update_param : update_params)
+    for (float update_param: update_params)
         fprintf(outfile, "%f ", update_param);
     fprintf(outfile, "\n");
     for (scale_list = scale_list_in; scale_list != nullptr; scale_list = scale_list->next)
@@ -600,7 +600,7 @@ int Net::load_net(const char filename[]) {
     FILE *infile = fopen(filename, "r");
     if (infile == nullptr) {
         char secondchance[100];
-        sprintf(secondchance, "%s.net", filename);
+        snprintf(secondchance, 100, "%s.net", filename);
         if ((infile = fopen(secondchance, "r")) == nullptr) {
             fprintf(stderr, "Neither %s nor %s can be opened\n", filename, secondchance);
             return (FILE_ERROR);

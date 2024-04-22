@@ -39,8 +39,8 @@
 void bp_init(float *params, unit_typ unit[], topo_typ *topo) {
     weight_typ *wptr;
     FORALL_WEIGHTS(wptr) {
-        wptr->delta = wptr->dEdw = static_cast<FTYPE>(0);
-    }
+            wptr->delta = wptr->dEdw = static_cast<FTYPE>(0);
+        }
 }
 
 void bp_update(unit_typ unit[], topo_typ *topo, float *params)
@@ -52,10 +52,10 @@ void bp_update(unit_typ unit[], topo_typ *topo, float *params)
     const float wd = params[2]; /* weight_decay */
 
     FORALL_WEIGHTS(wptr) {
-        wptr->delta = -learnrate * wptr->dEdw + momentum * wptr->delta - wd * wptr->value;
-        wptr->value += wptr->delta;
-        wptr->dEdw = static_cast<FTYPE>(0); /* important: clear dEdw !*/
-    }
+            wptr->delta = -learnrate * wptr->dEdw + momentum * wptr->delta - wd * wptr->value;
+            wptr->value += wptr->delta;
+            wptr->dEdw = static_cast<FTYPE>(0); /* important: clear dEdw !*/
+        }
 }
 
 #define UPDATE_VALUE 0.1
@@ -67,8 +67,8 @@ void bp_update(unit_typ unit[], topo_typ *topo, float *params)
 #define BETA 0.9
 #define PHI 1E-6
 #define BATCH_SIZE 16
-#define MAX(a,b) ((a)>(b)?(a):(b))
-#define MIN(a,b) ((a)<(b)?(a):(b))
+#define MAX(a, b) ((a)>(b)?(a):(b))
+#define MIN(a, b) ((a)<(b)?(a):(b))
 
 void rmsprop_init(float *params, unit_typ unit[], const topo_typ *topo) {
     weight_typ *wptr;
@@ -82,8 +82,8 @@ void rmsprop_init(float *params, unit_typ unit[], const topo_typ *topo) {
     if (!params[3])
         params[3] = BATCH_SIZE;
     FORALL_WEIGHTS(wptr) {
-        wptr->delta = wptr->dEdw = static_cast<FTYPE>(0);
-    }
+            wptr->delta = wptr->dEdw = static_cast<FTYPE>(0);
+        }
 }
 
 void rmsprop_update(unit_typ unit[], topo_typ *topo, float *params) {
@@ -93,11 +93,11 @@ void rmsprop_update(unit_typ unit[], topo_typ *topo, float *params) {
     const float fuzz_factor = params[2];
 
     FORALL_WEIGHTS(wptr) {
-        wptr->variable[0] = forget_factor * wptr->variable[0] + (1 - forget_factor) * wptr->dEdw * wptr->dEdw;
-        wptr->delta = (learnrate / sqrt(wptr->variable[0] + fuzz_factor)) * wptr->dEdw;
-        wptr->value -= wptr->delta;
-        wptr->dEdw = static_cast<FTYPE>(0); /* important: clear dEdw !*/
-    }
+            wptr->variable[0] = forget_factor * wptr->variable[0] + (1 - forget_factor) * wptr->dEdw * wptr->dEdw;
+            wptr->delta = (learnrate / sqrt(wptr->variable[0] + fuzz_factor)) * wptr->dEdw;
+            wptr->value -= wptr->delta;
+            wptr->dEdw = static_cast<FTYPE>(0); /* important: clear dEdw !*/
+        }
 }
 
 void rprop_init(float *params, unit_typ unit[], topo_typ *topo) {
@@ -110,9 +110,9 @@ void rprop_init(float *params, unit_typ unit[], topo_typ *topo) {
     if (params[0] > params[1])
         params[0] = params[1];
     FORALL_WEIGHTS(wptr) {
-        wptr->delta = wptr->dEdw = static_cast<FTYPE>(0);
-        wptr->variable[0] = params[0];
-    }
+            wptr->delta = wptr->dEdw = static_cast<FTYPE>(0);
+            wptr->variable[0] = params[0];
+        }
 }
 
 void rprop_update(unit_typ unit[], topo_typ *topo, float *params) {
@@ -120,31 +120,31 @@ void rprop_update(unit_typ unit[], topo_typ *topo, float *params) {
     const float wd = params[2];
     weight_typ *wptr;
     FORALL_WEIGHTS(wptr) {
-        float update_value = wptr->variable[0];
-        const float dEdw = wptr->dEdw + wd * wptr->value;
-        const float direction = wptr->delta * dEdw;
-        if (direction < 0.0) {
-            update_value = MIN(update_value * ETAPLUS, delta_max);
-            if (dEdw > 0.0)
-                wptr->delta = -update_value;
-            else /* dEdw<0.0 */
-                wptr->delta = update_value;
-        } else if (direction > 0.0) {
-            update_value = MAX(update_value * ETAMINUS, DELTA_MIN);
-            wptr->delta = 0.0; /* restart adaptation in next step */
-        } else {
-            /* direction == 0.0 */
-            if (dEdw > 0.0)
-                wptr->delta = -update_value;
-            else if (dEdw < 0.0)
-                wptr->delta = update_value;
-            else
-                wptr->delta = static_cast<FTYPE>(0);
+            float update_value = wptr->variable[0];
+            const float dEdw = wptr->dEdw + wd * wptr->value;
+            const float direction = wptr->delta * dEdw;
+            if (direction < 0.0) {
+                update_value = MIN(update_value * ETAPLUS, delta_max);
+                if (dEdw > 0.0)
+                    wptr->delta = -update_value;
+                else /* dEdw<0.0 */
+                    wptr->delta = update_value;
+            } else if (direction > 0.0) {
+                update_value = MAX(update_value * ETAMINUS, DELTA_MIN);
+                wptr->delta = 0.0; /* restart adaptation in next step */
+            } else {
+                /* direction == 0.0 */
+                if (dEdw > 0.0)
+                    wptr->delta = -update_value;
+                else if (dEdw < 0.0)
+                    wptr->delta = update_value;
+                else
+                    wptr->delta = static_cast<FTYPE>(0);
+            }
+            wptr->value += wptr->delta;
+            wptr->variable[0] = update_value;
+            wptr->dEdw = static_cast<FTYPE>(0); /* important: clear dEdw !*/
         }
-        wptr->value += wptr->delta;
-        wptr->variable[0] = update_value;
-        wptr->dEdw = static_cast<FTYPE>(0); /* important: clear dEdw !*/
-    }
 }
 
 /***************************************************************/
@@ -258,7 +258,7 @@ Net::Net() {
     float default_params[MAX_PARAMS];
 
     topo_data.unit_count = topo_data.in_count =
-                           topo_data.out_count = topo_data.hidden_count = 0;
+    topo_data.out_count = topo_data.hidden_count = 0;
     topo_data.layer_count = 0;
     forward_pass_f = prop_forward;
     backward_pass_f = prop_backward;
@@ -310,7 +310,7 @@ void Net::delete_structure() {
 
     /* ridi 11/96: reset */
     topo_data.unit_count = topo_data.in_count =
-                           topo_data.out_count = topo_data.hidden_count = 0;
+    topo_data.out_count = topo_data.hidden_count = 0;
     topo_data.layer_count = 0;
     scale_list_in = scale_list_out = nullptr;
     unit = nullptr;
@@ -339,9 +339,9 @@ int Net::create_layers(int layers, int layer_nodes[]) {
         layer[i].unit_count = layer_nodes[i];
         start += layer_nodes[i];
     }
-    in_vec = new FTYPE [topo_data.in_count];
-    scaled_in_vec = new FTYPE [topo_data.in_count];
-    out_vec = new FTYPE [topo_data.out_count];
+    in_vec = new FTYPE[topo_data.in_count];
+    scaled_in_vec = new FTYPE[topo_data.in_count];
+    out_vec = new FTYPE[topo_data.out_count];
     return OK;
 }
 
@@ -410,7 +410,7 @@ void Net::connect_units(int to_unit, int from_unit, FTYPE value) {
 void Net::connect_layers() {
     for (int l = 1; l < topo_data.layer_count; l++) /* start with first hidden layer */
         for (int i = 0; i < layer[l].unit_count; i++) {
-            connect_units(layer[l].unit[i].unit_no,BIAS, 0);
+            connect_units(layer[l].unit[i].unit_no, BIAS, 0);
             for (int j = 0; j < layer[l - 1].unit_count; j++)
                 connect_units(layer[l].unit[i].unit_no, layer[l - 1].unit[j].unit_no, 0);
         }
@@ -419,7 +419,7 @@ void Net::connect_layers() {
 void Net::connect_shortcut() {
     for (int l = 1; l < topo_data.layer_count; l++) /* start with first hidden layer */
         for (int i = 0; i < layer[l].unit_count; i++) {
-            connect_units(layer[l].unit[i].unit_no,BIAS, 0);
+            connect_units(layer[l].unit[i].unit_no, BIAS, 0);
             for (int k = 0; k < l; k++)
                 for (int j = 0; j < layer[k].unit_count; j++)
                     connect_units(layer[l].unit[i].unit_no, layer[k].unit[j].unit_no, 0);
@@ -452,8 +452,8 @@ void Net::apply_scaling(float *data_vector, scale_typ *scale_list) {
         switch (scale_elem->scale_function) {
             case 0: /* symmetric scaling : if x>0: y=a*x if x<0:y=b*x */
                 new_value = (data_vector[scale_elem->position - 1] > 0
-                                 ? scale_elem->parameter1 * data_vector[scale_elem->position - 1]
-                                 : scale_elem->parameter2 * data_vector[scale_elem->position - 1]);
+                             ? scale_elem->parameter1 * data_vector[scale_elem->position - 1]
+                             : scale_elem->parameter2 * data_vector[scale_elem->position - 1]);
                 break;
             case 1: /* linear scaling: y = a*x + b */
                 new_value = scale_elem->parameter1 * data_vector[scale_elem->position - 1] +
@@ -485,7 +485,8 @@ void Net::apply_scaling(float *data_vector, scale_typ *scale_list) {
                 else /* within focus */
                     new_value = scale_elem->parameter2 * data_vector[scale_elem->position - 1];
                 break;
-            default: break;
+            default:
+                break;
         } /* switch */
         data_vector[scale_elem->position - 1] = new_value;
     } /* for */
@@ -499,8 +500,8 @@ void Net::apply_backward_scaling(float *data_vector, scale_typ *scale_list) {
         switch (scale_elem->scale_function) {
             case 0: /* symmetric scaling : if x>=0: y=a*x if x<0:y=b*x */
                 new_value = (data_vector[scale_elem->position - 1] >= 0
-                                 ? scale_elem->parameter1 * data_vector[scale_elem->position - 1]
-                                 : scale_elem->parameter2 * data_vector[scale_elem->position - 1]);
+                             ? scale_elem->parameter1 * data_vector[scale_elem->position - 1]
+                             : scale_elem->parameter2 * data_vector[scale_elem->position - 1]);
                 break;
             case 1: /* linear scaling: y = a*x + b */
                 new_value = scale_elem->parameter1 * data_vector[scale_elem->position - 1];
@@ -513,7 +514,8 @@ void Net::apply_backward_scaling(float *data_vector, scale_typ *scale_list) {
                 /* no gradient computation possible */
                 new_value = data_vector[scale_elem->position - 1];
                 break;
-            default: break;
+            default:
+                break;
         } /* switch */
         data_vector[scale_elem->position - 1] = new_value;
     } /* for */
@@ -591,6 +593,7 @@ int Net::load_net(const char filename[]) {
     float p[MAX_PARAMS];
     int position, scale_function;
     float para1, para2, para3;
+    char *saveptr;
 
     if (topo_data.unit_count) {
         /* ridi 11/96: overwrite old net */
@@ -608,22 +611,22 @@ int Net::load_net(const char filename[]) {
     }
 
     int define_new = 0; /* type of description not yet identified */
-    while (fgets(line,MAX_LINE_LEN, infile) != nullptr) {
+    while (fgets(line, MAX_LINE_LEN, infile) != nullptr) {
         if (*line == '\n' || *line == '#') {
         } /* skip comments */
         else if (strncmp(line, "topology", 7) == 0) {
-            strtok(line, " \t\n"); /* skip first token (== topology)*/
-            for (i = 0, value = strtok(nullptr, " \t"); (value != nullptr) && (i < MAX_LAYERS);
-                 value = strtok(nullptr, " \t\n"), i++) {
+            strtok_r(line, " \t\n", &saveptr); /* skip first token (== topology)*/
+            for (i = 0, value = strtok_r(nullptr, " \t", &saveptr); (value != nullptr) && (i < MAX_LAYERS);
+                 value = strtok_r(nullptr, " \t\n", &saveptr), i++) {
                 read_in_topo[i] = atoi(value);
             } /* finished reading topology  */
             if (create_layers(i, read_in_topo)) return (ERROR);
         } else if (strncmp(line, "set_update_f", 12) == 0) {
-            strtok(line, " \t\n"); /* skip first token (== set_update_f)*/
-            value = strtok(nullptr, " \t\n"); /* second token = type of update fun */
+            strtok_r(line, " \t\n", &saveptr); /* skip first token (== set_update_f)*/
+            value = strtok_r(nullptr, " \t\n", &saveptr); /* second token = type of update fun */
             mode = atoi(value);
-            for (i = 0, value = strtok(nullptr, " \t"); value != nullptr && (i < MAX_PARAMS);
-                 value = strtok(nullptr, " \t\n"), i++) {
+            for (i = 0, value = strtok_r(nullptr, " \t", &saveptr); value != nullptr && (i < MAX_PARAMS);
+                 value = strtok_r(nullptr, " \t\n", &saveptr), i++) {
                 p[i] = static_cast<float>(atof(value));
             } /* finished reading update params  */
             set_update_f(mode, p);
@@ -667,12 +670,12 @@ int Net::load_net(const char filename[]) {
                 sscanf(line, "%d %d", &current_unit, &act_id);
                 set_unit_act_f(current_unit, act_id);
                 /* read weights (in next line) */
-                if (fgets(line,MAX_LINE_LEN, infile)) {
+                if (fgets(line, MAX_LINE_LEN, infile)) {
                 } // the if-statement is just to prevent a warning for an unused return value from fgets()
-                for (value = strtok(line, " \t"); value != nullptr && *value != '\n';
-                     value = strtok(nullptr, " \t")) {
+                for (value = strtok_r(line, " \t", &saveptr); value != nullptr && *value != '\n';
+                     value = strtok_r(nullptr, " \t", &saveptr)) {
                     const int from_unit = atoi(value);
-                    value = strtok(nullptr, " \t");
+                    value = strtok_r(nullptr, " \t", &saveptr);
                     FTYPE weight_value = static_cast<FTYPE>(atof(value));
                     connect_units(current_unit, from_unit, weight_value);
                 } /* for all weights */

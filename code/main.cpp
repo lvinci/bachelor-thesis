@@ -114,6 +114,13 @@ static inline void initializeVectors(const DatasetRow &row, float *inVec, float 
     tarVec[1] = row.classification == 'h';
 }
 
+/**
+ *
+ * @param seed
+ * @param trainingset
+ * @param testingset
+ * @param results
+ */
 static void runSeed(const int seed, const vector<DatasetRow> &trainingset, const vector<DatasetRow> &testingset) {
     const string filename = "startnet_seed_" + to_string(seed) + ".net";
     const auto net = new Net();
@@ -121,7 +128,6 @@ static void runSeed(const int seed, const vector<DatasetRow> &trainingset, const
     const auto inVec = new float[net->topo_data.in_count];
     const auto outVec = new float[net->topo_data.out_count];
     const auto tarVec = new float[net->topo_data.out_count];
-    float uparams[10];
 
     for (int epoch = 0; epoch < EPOCHS; epoch++) {
         float tss = 0.0;
@@ -151,7 +157,8 @@ static void runSeed(const int seed, const vector<DatasetRow> &trainingset, const
                 correct++;
         }
         net->update_weights();
-        printf("%d/%d correct=%d\n", seed, epoch, correct);
+        float correctRate = ((float) (correct) / (float) (testingset.size())) * 100.0F;
+        printf("%d/%d correct=%d/%zu %.3f%%\n", seed, epoch, correct, testingset.size(), correctRate);
     }
     delete[] inVec;
     delete[] outVec;
@@ -167,7 +174,7 @@ int main() {
     }
     printf("Read dataset from file %s with %zu rows.\n", DATASET_FILENAME, dataset.size());
     //
-    vector<thread> threads;
+    //vector<thread> threads;
     for (int seed = 1; seed <= SEEDS; seed++) {
         // Partition the dataset into a training set and a testing set for this seed
         vector<DatasetRow> trainingset, testingset;
@@ -175,11 +182,11 @@ int main() {
         printf("starting thread for seed %d with %zu training and %zu testing rows\n", seed, trainingset.size(),
                testingset.size());
         //
-        runSeed(seed, trainingset, testingset);
         //threads.push_back(thread(runSeed, seed, trainingset, testingset));
+        runSeed(seed, trainingset, testingset);
     }
-    /* for (auto &thread: threads) {
-         thread.join();
-     }*/
+    /*for (auto &thread: threads) {
+        thread.join();
+    }*/
     return 0;
 }

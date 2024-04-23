@@ -1,47 +1,72 @@
-#include <fstream>
-#include <iostream>
-#include <random>
-#include <sstream>
 #include <string>
-#include <thread>
+#include <sstream>
 #include <vector>
+#include <fstream>
+#include <algorithm>
+#include <random>
+#include <thread>
 
 #include "npp/npp.h"
 
 using namespace std;
 
-#define DATASET_FILENAME "winequality_white_normalized.txt"
+#define DATASET_FILENAME "magic_normalized.txt"
+#define SEEDS 10
+#define EPOCHS 10000
 
 #define PERCENT_TRAINING 0.8
-#define PERCENT_TESTING 0.2
-#define INPUTS 11
-#define OUTPUTS 11
-#define HIDDEN 18
-#define LAYERS 4
+#define INPUTS 10
+#define OUTPUTS 2
 
-#define MAX_SEEDS 10
-#define MAX_EPOCHS 10000
+/**
+ * Represents a row in a dataset.
+ * Every row has a number of floats which matches the INPUTS of the neural network.
+ * Furthermore the classification is stored as a char.
+ */
+typedef struct {
+    float input[INPUTS];
+    char classification;
+} DatasetRow;
 
-void createNet() {
-    // TODO: add this function to create the networks
+/**
+ * Attempts to parse a DatasetRow from the given string.
+ * @param line string to be parsed
+ * @param row row that will be used to store the parsed dataset row
+ * @return true if the string could be parsed, false otherwise
+ */
+bool parseDatasetRow(const string &line, DatasetRow *row) {
+    // Create a string stream to parse the line
+    stringstream ss(line);
+    string substr;
+    // Parse the first floats separated by ';'
+    for (int i = 0; i < INPUTS; ++i) {
+        if (!getline(ss, substr, ';') || !(istringstream(substr) >> row->input[i])) {
+            return false; // If conversion fails or delimiter is missing, return false
+        }
+    }
+    // Parse the last character (classification)
+    if (!getline(ss, substr, ';') || substr.size() != 1) {
+        return false;
+    }
+    row->classification = substr[0];
+    return true;
 }
 
 /**
- *
- * @param filename
- * @param dataset
- * @return
+ * Reads the dataset from the file with the given filename
+ * @param filename name (relative path) of the file to be read
+ * @param dataset vector to save the parsed dataset rows
+ * @return true if the dataset could be read, false otherwise
  */
-bool readDataset(const string &filename, vector<string> *dataset) {
+bool readDataset(string filename, vector<DatasetRow> *dataset) {
     ifstream file(filename);
     if (!file || !file.is_open()) {
         return false;
     }
-    std::string line;
+    string line;
     while (getline(file, line)) {
-        if (line.length() > 5) {
-            dataset->push_back(line);
-        }
+        DatasetRow row;
+        if (parseDatasetRow(line, &row)) dataset->push_back(row);
     }
     shuffle(dataset->begin(), dataset->end(), default_random_engine(time(nullptr)));
     return true;
@@ -50,72 +75,63 @@ bool readDataset(const string &filename, vector<string> *dataset) {
 /**
  *
  * @param dataset
- * @param seed
- * @param numSeeds
- * @param trainingData
- * @param testingData
+ * @param numPartitions
+ * @param partition
+ * @param trainingset
+ * @param testingset
  */
-void splitDataset(const vector<string> dataset, const int seed, const int numSeeds, vector<string> *trainingData,
-                  vector<string> *testingData) {
-    const int datasetCount = dataset.size() / numSeeds;
-    const int trainingOffset = (seed - 1) * datasetCount;
-    const int trainingDataCount = datasetCount * PERCENT_TRAINING;
-    const int testingOffset = trainingOffset + trainingDataCount;
-    vector<string> trainingVector(&dataset[trainingOffset], &dataset[testingOffset - 1]);
-    for (auto data: trainingVector) {
-        trainingData->emplace_back(data);
-    }
-    vector<string> testingVector(&dataset[testingOffset], &dataset[trainingOffset + datasetCount - 1]);
-    for (auto data: testingVector) {
-        testingData->emplace_back(data);
-    }
-
+void
+partitionDataset(const vector<DatasetRow> &dataset, const int numPartitions, const int partition,
+                 vector<DatasetRow> *trainingset,
+                 vector<DatasetRow> *testingset) {
+    // Calculate the sizes of the training and testing sets
+    const size_t partitionSize = dataset.size() / numPartitions;
+    const size_t trainingsetSize = partitionSize * PERCENT_TRAINING;
+    const size_t trainingsetStart = partitionSize * (partition - 1);
+    const size_t testingsetStart = trainingsetStart + trainingsetSize + 1;
+    // Copy the training set rows into the trainingset
+    auto trainingBegin = dataset.begin() + trainingsetStart;
+    auto trainingEnd = dataset.begin() + testingsetStart - 1;
+    trainingset->insert(trainingset->end(), trainingBegin, trainingEnd);
+    // Copy the testing set rows into the testingset
+    auto testingBegin = dataset.begin() + testingsetStart;
+    auto testingEnd = dataset.begin() + trainingsetStart + partitionSize - 1;
+    testingset->insert(testingset->end(), testingBegin, testingEnd);
 }
 
 /**
  *
- * @param data
+ * @param row
  * @param inVec
  * @param outVec
  * @param tarVec
  */
-static inline void initializeVectors(const string &data, float *inVec, float *outVec,
+static inline void initializeVectors(const DatasetRow &row, float *inVec, float *outVec,
                                      float *tarVec) {
-    istringstream ss(data);
-    string token;
-    int i = 0;
-    while (getline(ss, token, ';') && i < INPUTS) {
-        inVec[i] = stof(token);
-        i++;
-    }
+    copy(row.input, row.input + INPUTS, inVec);
     fill_n(outVec, OUTPUTS, 0);
-    tarVec[stoi(token)] = 1;
+    tarVec[0] = row.classification == 'g';
+    tarVec[1] = row.classification == 'h';
 }
 
 /**
  *
  * @param seed
- * @param trainingData
- * @param testingData
+ * @param trainingset
+ * @param testingset
+ * @param results
  */
-void runSeed(const int seed, vector<string> trainingData,
-             vector<string> testingData) {
+static void runSeed(const int seed, const vector<DatasetRow> &trainingset, const vector<DatasetRow> &testingset) {
     const string filename = "startnet_seed_" + to_string(seed) + ".net";
-    cout << filename << endl;
     const auto net = new Net();
     net->load_net(filename.c_str());
     const auto inVec = new float[net->topo_data.in_count];
     const auto outVec = new float[net->topo_data.out_count];
     const auto tarVec = new float[net->topo_data.out_count];
-    float uparams[10];
 
-    net->save_net("start_uparam1_" + to_string(uparams[0]) + "_uparam2_" +
-                  to_string(uparams[1]) + "_uparam3_" + to_string(uparams[2]) +
-                  "_seed_" + to_string(seed) + ".net");
-
-    for (int epoch = 0; epoch < MAX_EPOCHS; epoch++) {
+    for (int epoch = 0; epoch < EPOCHS; epoch++) {
         float tss = 0.0;
-        for (const auto data: trainingData) {
+        for (const auto data: trainingset) {
             initializeVectors(data, inVec, outVec, tarVec);
             net->forward_pass(inVec, outVec);
             for (int i = 0; i < net->topo_data.out_count; i++) {
@@ -128,7 +144,7 @@ void runSeed(const int seed, vector<string> trainingData,
         float tssTesting = 0, tssCorrect;
         int correct = 0;
         //
-        for (const auto data: testingData) {
+        for (const auto data: testingset) {
             tssCorrect = 0;
             initializeVectors(data, inVec, outVec, tarVec);
             net->forward_pass(inVec, outVec);
@@ -137,34 +153,40 @@ void runSeed(const int seed, vector<string> trainingData,
                 tssCorrect += error * error; // E_total
                 tssTesting += tssCorrect;
             }
-            if (tssCorrect < 0.15)
+            if (tssCorrect < 0.05)
                 correct++;
         }
-        cout << seed << "/" << epoch << " correct=" << correct << endl;
         net->update_weights();
+        float correctRate = ((float) (correct) / (float) (testingset.size())) * 100.0F;
+        printf("%d/%d correct=%d/%zu %.3f%%\n", seed, epoch, correct, testingset.size(), correctRate);
     }
-
     delete[] inVec;
     delete[] outVec;
     delete[] tarVec;
 }
 
 int main() {
-    vector<string> dataset;
+    // Read in dataset from the dataset textfile
+    vector<DatasetRow> dataset;
     if (!readDataset(DATASET_FILENAME, &dataset)) {
-        cerr << "Could not read dataset " << DATASET_FILENAME << endl;
+        printf("Could not read dataset from file %s. Does the file exist?\n", DATASET_FILENAME);
         return 1;
     }
-    vector<thread> threads;
-    for (int seed = 1; seed <= MAX_SEEDS; seed++) {
-        // Read the dataset in from the file
-        vector<string> trainingData, testingData;
-        splitDataset(dataset, seed, MAX_SEEDS, &trainingData, &testingData);
-        //runSeed(seed, trainingData, testingData);
-        threads.push_back(thread(runSeed, seed, trainingData, testingData));
+    printf("Read dataset from file %s with %zu rows.\n", DATASET_FILENAME, dataset.size());
+    //
+    //vector<thread> threads;
+    for (int seed = 1; seed <= SEEDS; seed++) {
+        // Partition the dataset into a training set and a testing set for this seed
+        vector<DatasetRow> trainingset, testingset;
+        partitionDataset(dataset, SEEDS, seed, &trainingset, &testingset);
+        printf("starting thread for seed %d with %zu training and %zu testing rows\n", seed, trainingset.size(),
+               testingset.size());
+        //
+        //threads.push_back(thread(runSeed, seed, trainingset, testingset));
+        runSeed(seed, trainingset, testingset);
     }
-    for (auto &thread: threads) {
+    /*for (auto &thread: threads) {
         thread.join();
-    }
+    }*/
     return 0;
 }

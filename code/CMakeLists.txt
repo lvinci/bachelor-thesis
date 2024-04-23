@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.28)
-project(code)
+project(luca-vinciguerra-bathesis)
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
-configure_file(resources/winequality_white_normalized.txt winequality_white_normalized.txt COPYONLY)
+configure_file(resources/magic_normalized.txt magic_normalized.txt COPYONLY)
 configure_file(resources/startnet_seed_1.net startnet_seed_1.net COPYONLY)
 configure_file(resources/startnet_seed_2.net startnet_seed_2.net COPYONLY)
 configure_file(resources/startnet_seed_3.net startnet_seed_3.net COPYONLY)

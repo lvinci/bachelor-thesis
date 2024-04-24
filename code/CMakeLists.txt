@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.28)
+cmake_minimum_required(VERSION 3.25)
 project(luca-vinciguerra-bathesis)
 
 set(CMAKE_CXX_STANDARD 17)

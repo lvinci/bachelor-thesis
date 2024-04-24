@@ -73,12 +73,13 @@ bool readDataset(string filename, vector<DatasetRow> *dataset) {
 }
 
 /**
- *
- * @param dataset
- * @param numPartitions
- * @param partition
- * @param trainingset
- * @param testingset
+ * Partitions the given dataset into training and testing set.
+ * Additionally, only a part of the given dataset can be used.
+ * @param dataset complete dataset to be partitioned
+ * @param numPartitions number of partitions (1 if you want the full dataset)
+ * @param partition number of the current partition
+ * @param trainingset training set vector to be initialized
+ * @param testingset testing set vector to be initialized
  */
 void
 partitionDataset(const vector<DatasetRow> &dataset, const int numPartitions, const int partition,
@@ -100,11 +101,11 @@ partitionDataset(const vector<DatasetRow> &dataset, const int numPartitions, con
 }
 
 /**
- *
- * @param row
- * @param inVec
- * @param outVec
- * @param tarVec
+ * Initializes the vectors for a neural network pass using the given dataset
+ * @param row dataset row to be used
+ * @param inVec vector for the inputs
+ * @param outVec vector for the outputs
+ * @param tarVec target vector
  */
 static inline void initializeVectors(const DatasetRow &row, float *inVec, float *outVec,
                                      float *tarVec) {
@@ -115,11 +116,11 @@ static inline void initializeVectors(const DatasetRow &row, float *inVec, float 
 }
 
 /**
- *
- * @param seed
- * @param trainingset
- * @param testingset
- * @param results
+ * Runs the seed with the given datasets.
+ * This function is supposed to be run in a thread.
+ * @param seed the number of the seed to be run
+ * @param trainingset set of training data
+ * @param testingset set of testing data
  */
 static void runSeed(const int seed, const vector<DatasetRow> &trainingset, const vector<DatasetRow> &testingset) {
     const string filename = "startnet_seed_" + to_string(seed) + ".net";
@@ -173,20 +174,19 @@ int main() {
         return 1;
     }
     printf("Read dataset from file %s with %zu rows.\n", DATASET_FILENAME, dataset.size());
-    //
-    //vector<thread> threads;
+    // vector that contains all threads that should run in parallel
+    vector<thread> threads;
     for (int seed = 1; seed <= SEEDS; seed++) {
         // Partition the dataset into a training set and a testing set for this seed
         vector<DatasetRow> trainingset, testingset;
-        partitionDataset(dataset, SEEDS, seed, &trainingset, &testingset);
+        partitionDataset(dataset, 1, 1, &trainingset, &testingset);
         printf("starting thread for seed %d with %zu training and %zu testing rows\n", seed, trainingset.size(),
                testingset.size());
-        //
-        //threads.push_back(thread(runSeed, seed, trainingset, testingset));
-        runSeed(seed, trainingset, testingset);
+        // add the thread to the list of threads
+        threads.push_back(thread(runSeed, seed, trainingset, testingset));
     }
-    /*for (auto &thread: threads) {
+    for (auto &thread: threads) {
         thread.join();
-    }*/
+    }
     return 0;
 }

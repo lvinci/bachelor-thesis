@@ -19,6 +19,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_CXX_FLAGS_RELEASE "-O2")
 
-add_executable(code main.cpp
+add_executable(lucavinciguerra-bathesis main.cpp
         npp/npp.h
         npp/npp.cpp)

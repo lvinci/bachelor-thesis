@@ -21,4 +21,5 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O2")
 
 add_executable(lucavinciguerra-bathesis main.cpp
         npp/npp.h
-        npp/npp.cpp)
+        npp/npp.cpp
+        threadpool/threadpool.h)

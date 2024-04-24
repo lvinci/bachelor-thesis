@@ -7,6 +7,7 @@
 #include <thread>
 
 #include "npp/npp.h"
+#include "threadpool/threadpool.h"
 
 using namespace std;
 
@@ -176,6 +177,7 @@ int main() {
     printf("Read dataset from file %s with %zu rows.\n", DATASET_FILENAME, dataset.size());
     // vector that contains all threads that should run in parallel
     vector<thread> threads;
+    ThreadPool threadpool;
     for (int seed = 1; seed <= SEEDS; seed++) {
         // Partition the dataset into a training set and a testing set for this seed
         vector<DatasetRow> trainingset, testingset;
@@ -183,10 +185,10 @@ int main() {
         printf("starting thread for seed %d with %zu training and %zu testing rows\n", seed, trainingset.size(),
                testingset.size());
         // add the thread to the list of threads
-        threads.push_back(thread(runSeed, seed, trainingset, testingset));
-    }
-    for (auto &thread: threads) {
-        thread.join();
+        threadpool.enqueue([seed, trainingset, testingset] {
+            runSeed(seed, trainingset, testingset);
+        });
+        //threads.push_back(thread(runSeed, seed, trainingset, testingset));
     }
     return 0;
 }

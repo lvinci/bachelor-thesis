@@ -174,12 +174,11 @@ inline double square(double number) {
 /**
  * Analyzes the results and saves the data to a textfile
  */
-void analyzeResults(const int threadcount, const int partitionCount) {
+void analyzeResults(const int threadcount, const int partitionCount, const int attempt) {
     srand(time(nullptr));
-    int id = rand() % ((999999 + 1) - 100000) + 1000000;
     ofstream experimentalData(
             "results" + to_string(partitionCount) + "partitions_" + to_string(threadcount) + "threads_" +
-            to_string(id) + ".txt");
+            to_string(attempt) + "attempt.txt");
     for (int i = 0; i <= EPOCHS; i++) {
         double tssVariance = 0, tssDeviation = 0, testTssVariance = 0, testTssDeviation = 0, correctsVariance = 0, correctsDeviation = 0;
         double mse = 0, mseTesting = 0, corrects = 0;
@@ -298,17 +297,23 @@ static void runSeed(const int seed, const vector<DatasetRow> &trainingset, const
 
 int main(int argc, char **argv) {
     // Parse given command line arguments
-    if (argc < 2 || argc > 3) {
+    if (argc < 2 || argc > 4) {
         printf("<threadcount> = amount of threads to be used\n");
         printf("<partitionCount> = amount of threads to be used\n");
+        printf("<attempt> = number of the attempt\n");
         printf("./lucavinciguerra-bathesis <threadcount>\n");
         printf("./lucavinciguerra-bathesis <threadcount> <partitionCount>\n");
+        printf("./lucavinciguerra-bathesis <threadcount> <partitionCount> <attempt>\n");
         return 1;
     }
     int threadcount = stoi(argv[1]);
     int partitionCount = 1;
-    if (argc == 3) {
+    int attempt = 1;
+    if (argc >= 3) {
         partitionCount = stoi(argv[2]);
+    }
+    if (argc >= 4) {
+        attempt = stoi(argv[3]);
     }
     // Read in dataset from the dataset textfile
     vector<DatasetRow> dataset;
@@ -331,6 +336,6 @@ int main(int argc, char **argv) {
         });
     }
     delete threadpool;
-    analyzeResults(threadcount, partitionCount);
+    analyzeResults(threadcount, partitionCount, attempt);
     return 0;
 }

@@ -35,7 +35,7 @@ function run_attempt {
   local attempt=$3
   echo -e -n "${NC}Benchmarking ${RED}$partitioncount${NC} partitions with ${RED}$threadcount${NC} threads #${RED}$attempt${NC} "
   local filename="benchmark_attempt${attempt}_${partitioncount}partitions_${threadcount}threads.txt"
-  start=$(date +%s.%N)
+  start=$(date +%s.%3N)
   { time $EXECUTABLE "$threadcount" "$partitioncount" "$attempt" > /dev/null; } 2>> "$filename"
   end=$(date +%s.%3N)
   echo "TOTAL TIME: $(echo "$end - $start" | bc) seconds" >> "$filename"

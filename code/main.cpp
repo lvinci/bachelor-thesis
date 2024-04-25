@@ -174,8 +174,9 @@ inline double square(double number) {
 /**
  * Analyzes the results and saves the data to a textfile
  */
-void analyzeResults() {
-    ofstream experimentalData("experimentalData_maxEpoch_" + to_string(EPOCHS) + "_combinedSeeds.txt");
+void analyzeResults(const int threadcount, const int partitionCount) {
+    ofstream experimentalData(
+            "experimentalData_" + to_string(threadcount) + "threads_" + to_string(partitionCount) + "partitions.txt");
     for (int i = 0; i <= EPOCHS; i++) {
         double tssVariance = 0, tssDeviation = 0, testTssVariance = 0, testTssDeviation = 0, correctsVariance = 0, correctsDeviation = 0;
         double mse = 0, mseTesting = 0, corrects = 0;
@@ -327,6 +328,6 @@ int main(int argc, char **argv) {
         });
     }
     delete threadpool;
-    analyzeResults();
+    analyzeResults(threadcount, partitionCount);
     return 0;
 }

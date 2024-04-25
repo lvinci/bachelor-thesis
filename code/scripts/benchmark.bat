@@ -5,6 +5,7 @@ ATTEMPTS=5
 PARTITIONS=(8 4 2 1) # Partitions to be tested
 THREADS=(10 8 6 4 2 1) # Thread counts to be tested (this script will ignore higher counts than AVAILABLE_THREADS)
 AVAILABLE_THREADS=10 # Amount of threads to be used
+CSV_FILE="benchmark_results.csv"
 
 # CLI COLORS
 RED='\033[0;33m'
@@ -40,6 +41,7 @@ function run_attempt {
   end=$(date +%s.%3N)
   echo "TOTAL TIME: $(echo "$end - $start" | bc) seconds" >> "$filename"
   echo -e "${GREEN}[$(echo "$end - $start" | bc)s]"
+  echo "$threadcount,$partitioncount,$attempt,$(echo "$end - $start" | bc)" >> "$CSV_FILE"
 }
 
 # Run the benchmarks for all possible combinations

@@ -177,8 +177,8 @@ inline double square(double number) {
 void analyzeResults(const int threadcount, const int partitionCount, const int attempt) {
     srand(time(nullptr));
     ofstream experimentalData(
-            "results" + to_string(partitionCount) + "partitions_" + to_string(threadcount) + "threads_" +
-            to_string(attempt) + "attempt.txt");
+            "results_attempt" + to_string(attempt) + "_" + to_string(partitionCount) + "partitions_" +
+            to_string(threadcount) + "threads.txt");
     for (int i = 0; i <= EPOCHS; i++) {
         double tssVariance = 0, tssDeviation = 0, testTssVariance = 0, testTssDeviation = 0, correctsVariance = 0, correctsDeviation = 0;
         double mse = 0, mseTesting = 0, corrects = 0;

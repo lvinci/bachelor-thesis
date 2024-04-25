@@ -4,6 +4,7 @@ project(luca-vinciguerra-bathesis)
 set(CMAKE_CXX_STANDARD 17)
 
 configure_file(resources/magic_normalized.txt magic_normalized.txt COPYONLY)
+configure_file(scripts/benchmark.bat benchmark.bat COPYONLY)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 

@@ -11,12 +11,15 @@
 using namespace std;
 
 #define DATASET_FILENAME "magic_normalized.txt"
+#define DATASET_INITIAL_SHUFFLE_SEED 13267
 #define SEEDS 10
 #define EPOCHS 10000
 
 #define PERCENT_TRAINING 0.8
 #define INPUTS 10
 #define OUTPUTS 2
+#define HIDDEN 9
+#define LAYERS 4
 
 /**
  * Represents a row in a dataset.
@@ -27,6 +30,34 @@ typedef struct {
     float input[INPUTS];
     char classification;
 } DatasetRow;
+
+/**
+ * Initializes the given neural net with the predefined topology.
+ * @param net Net instance to be initialized
+ * @param randomSeed seed used by the random number generator
+ */
+void createNeuralNet(Net *net, int seed) {
+    // Create neural network topology
+    int topology[LAYERS];
+    topology[0] = INPUTS;
+    topology[1] = HIDDEN;
+    topology[2] = HIDDEN;
+    topology[3] = OUTPUTS;
+    // Create the layers and connect the weights
+    net->create_layers(LAYERS, topology);
+    net->connect_layers();
+    net->set_seed(seed);
+    net->init_weights(0, 0.5);
+    // Initialize activation functions
+    float uparams[10];
+    uparams[0] = 0.001;
+    uparams[1] = 0.95;
+    uparams[2] = 0;
+    net->set_layer_act_f(1, LOGISTIC);
+    net->set_layer_act_f(2, LOGISTIC);
+    net->set_layer_act_f(3, LOGISTIC);
+    net->set_update_f(BP, uparams);
+}
 
 /**
  * Attempts to parse a DatasetRow from the given string.
@@ -53,12 +84,22 @@ bool parseDatasetRow(const string &line, DatasetRow *row) {
 }
 
 /**
+ * Checks whether the file with the given filename exists.
+ * @param name relative file path and name
+ * @return true if the file exists, false otherwise
+ */
+inline bool fileExists(const std::string &name) {
+    ifstream f(name.c_str());
+    return f.good();
+}
+
+/**
  * Reads the dataset from the file with the given filename
  * @param filename name (relative path) of the file to be read
  * @param dataset vector to save the parsed dataset rows
  * @return true if the dataset could be read, false otherwise
  */
-bool readDataset(string filename, vector<DatasetRow> *dataset, const int randomSeed) {
+bool readDataset(string filename, vector<DatasetRow> *dataset) {
     ifstream file(filename);
     if (!file || !file.is_open()) {
         return false;
@@ -68,7 +109,7 @@ bool readDataset(string filename, vector<DatasetRow> *dataset, const int randomS
         DatasetRow row;
         if (parseDatasetRow(line, &row)) dataset->push_back(row);
     }
-    shuffle(dataset->begin(), dataset->end(), default_random_engine(randomSeed));
+    shuffle(dataset->begin(), dataset->end(), default_random_engine(DATASET_INITIAL_SHUFFLE_SEED));
     return true;
 }
 
@@ -80,11 +121,12 @@ bool readDataset(string filename, vector<DatasetRow> *dataset, const int randomS
  * @param partition number of the current partition
  * @param trainingset training set vector to be initialized
  * @param testingset testing set vector to be initialized
+ * @param seed seed to be used for random generation
  */
 void
 partitionDataset(const vector<DatasetRow> &dataset, const int numPartitions, const int partition,
                  vector<DatasetRow> *trainingset,
-                 vector<DatasetRow> *testingset) {
+                 vector<DatasetRow> *testingset, const int seed) {
     // Calculate the sizes of the training and testing sets
     const size_t partitionSize = dataset.size() / numPartitions;
     const size_t trainingsetSize = partitionSize * PERCENT_TRAINING;
@@ -98,6 +140,9 @@ partitionDataset(const vector<DatasetRow> &dataset, const int numPartitions, con
     auto testingBegin = dataset.begin() + testingsetStart;
     auto testingEnd = dataset.begin() + trainingsetStart + partitionSize - 1;
     testingset->insert(testingset->end(), testingBegin, testingEnd);
+    // Shuffle the dataset for the seed
+   shuffle(trainingset->begin(), trainingset->end(), default_random_engine(seed));
+   shuffle(testingset->begin(), testingset->end(), default_random_engine(seed));
 }
 
 /**
@@ -123,14 +168,23 @@ static inline void initializeVectors(const DatasetRow &row, float *inVec, float 
  * @param testingset set of testing data
  */
 static void runSeed(const int seed, const vector<DatasetRow> &trainingset, const vector<DatasetRow> &testingset) {
+    // Initialize the net object for the given seed.
     const string filename = "startnet_seed_" + to_string(seed) + ".net";
     const auto net = new Net();
-    net->load_net(filename.c_str());
+    // If the startnet file exists, use the generated startnet, otherwise generate the net and save
+    if (fileExists(filename)) {
+        net->load_net(filename.c_str());
+    } else {
+        createNeuralNet(net, seed);
+        net->save_net(filename.c_str());
+    }
+    // Create the vectors used as inputs, outputs and targets for use by propagation
     const auto inVec = new float[net->topo_data.in_count];
     const auto outVec = new float[net->topo_data.out_count];
     const auto tarVec = new float[net->topo_data.out_count];
-
+    // Run the training and testing process EPOCHS amount of times
     for (int epoch = 0; epoch < EPOCHS; epoch++) {
+        // Run the training for the whole training set
         float tss = 0.0;
         for (const auto data: trainingset) {
             initializeVectors(data, inVec, outVec, tarVec);
@@ -141,10 +195,9 @@ static void runSeed(const int seed, const vector<DatasetRow> &trainingset, const
             }
             net->backward_pass(outVec, inVec);
         }
-        //
+        // Test the neural network for the whole testing set and keep track of correct passes
         float tssTesting = 0, tssCorrect;
         int correct = 0;
-        //
         for (const auto data: testingset) {
             tssCorrect = 0;
             initializeVectors(data, inVec, outVec, tarVec);
@@ -157,6 +210,7 @@ static void runSeed(const int seed, const vector<DatasetRow> &trainingset, const
             if (tssCorrect < 0.05)
                 correct++;
         }
+        // Update the weights of the neural network and print the result of the epoch
         net->update_weights();
         float correctRate = ((float) (correct) / (float) (testingset.size())) * 100.0F;
         printf("%d/%d correct=%d/%zu %.3f%%\n", seed, epoch, correct, testingset.size(), correctRate);
@@ -168,25 +222,21 @@ static void runSeed(const int seed, const vector<DatasetRow> &trainingset, const
 
 int main(int argc, char **argv) {
     // Parse given command line arguments
-    int partitionCount = 1;
-    // Check argument count and correct command usage
-    if (argc < 3 || argc > 4) {
-        printf("<seed> = integer used as seed for the random generator\n");
+    if (argc < 2 || argc > 3) {
         printf("<threadcount> = amount of threads to be used\n");
         printf("<partitionCount> = amount of threads to be used\n");
-        printf("./lucavinciguerra-bathesis <seed> <threadcount>\n");
-        printf("./lucavinciguerra-bathesis <seed> <threadcount> <partitionCount>\n");
+        printf("./lucavinciguerra-bathesis <threadcount>\n");
+        printf("./lucavinciguerra-bathesis <threadcount> <partitionCount>\n");
         return 1;
     }
-    // Parse given threadcount
-    int randomSeed = stoi(argv[1]);
-    int threadcount = stoi(argv[2]);
-    if (argc == 4) {
-        partitionCount = stoi(argv[3]);
+    int threadcount = stoi(argv[1]);
+    int partitionCount = 1;
+    if (argc == 3) {
+        partitionCount = stoi(argv[2]);
     }
     // Read in dataset from the dataset textfile
     vector<DatasetRow> dataset;
-    if (!readDataset(DATASET_FILENAME, &dataset, randomSeed)) {
+    if (!readDataset(DATASET_FILENAME, &dataset)) {
         printf("Could not read dataset from file %s. Does the file exist?\n", DATASET_FILENAME);
         return 1;
     }
@@ -196,7 +246,7 @@ int main(int argc, char **argv) {
     for (int seed = 1; seed <= SEEDS; seed++) {
         // Partition the dataset into a training set and a testing set for this seed
         vector<DatasetRow> trainingset, testingset;
-        partitionDataset(dataset, partitionCount, 1, &trainingset, &testingset);
+        partitionDataset(dataset, partitionCount, 1, &trainingset, &testingset, seed);
         printf("starting thread for seed %d with %zu training and %zu testing rows\n", seed, trainingset.size(),
                testingset.size());
         // add the thread to the list of threads

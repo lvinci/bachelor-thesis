@@ -16,10 +16,17 @@ using namespace std;
 #define EPOCHS 10000
 
 #define PERCENT_TRAINING 0.8
+#define PERCENT_TESTING (1.0 - PERCENT_TRAINING)
 #define INPUTS 10
 #define OUTPUTS 2
 #define HIDDEN 9
 #define LAYERS 4
+
+// Results are stored here
+double results[SEEDS + 2][EPOCHS + 1][3];
+double combinedMSE[SEEDS + 2][EPOCHS + 1];
+double combinedMSETesting[SEEDS + 2][EPOCHS + 1];
+double combinedCorrects[SEEDS + 2][EPOCHS + 1];
 
 /**
  * Represents a row in a dataset.
@@ -141,8 +148,8 @@ partitionDataset(const vector<DatasetRow> &dataset, const int numPartitions, con
     auto testingEnd = dataset.begin() + trainingsetStart + partitionSize - 1;
     testingset->insert(testingset->end(), testingBegin, testingEnd);
     // Shuffle the dataset for the seed
-   shuffle(trainingset->begin(), trainingset->end(), default_random_engine(seed));
-   shuffle(testingset->begin(), testingset->end(), default_random_engine(seed));
+    shuffle(trainingset->begin(), trainingset->end(), default_random_engine(seed));
+    shuffle(testingset->begin(), testingset->end(), default_random_engine(seed));
 }
 
 /**
@@ -158,6 +165,62 @@ static inline void initializeVectors(const DatasetRow &row, float *inVec, float 
     fill_n(outVec, OUTPUTS, 0);
     tarVec[0] = row.classification == 'g';
     tarVec[1] = row.classification == 'h';
+}
+
+inline double square(double number) {
+    return number * number;
+}
+
+/**
+ * Analyzes the results and saves the data to a textfile
+ */
+void analyzeResults() {
+    ofstream experimentalData("experimentalData_maxEpoch_" + to_string(EPOCHS) + "_combinedSeeds.txt");
+    for (int i = 0; i <= EPOCHS; i++) {
+        double tssVariance = 0, tssDeviation = 0, testTssVariance = 0, testTssDeviation = 0, correctsVariance = 0, correctsDeviation = 0;
+        double mse = 0, mseTesting = 0, corrects = 0;
+        for (int seed = 1; seed <= SEEDS; seed++) {
+            mse += combinedMSE[seed][i];
+            mseTesting += combinedMSETesting[seed][i];
+            corrects += combinedCorrects[seed][i];
+        }
+        tssVariance = (square((results[1][i][0] - mse / SEEDS)) +
+                       square((results[2][i][0] - mse / SEEDS)) +
+                       square((results[3][i][0] - mse / SEEDS)) +
+                       square((results[4][i][0] - mse / SEEDS)) +
+                       square((results[5][i][0] - mse / SEEDS)) +
+                       square((results[6][i][0] - mse / SEEDS)) +
+                       square((results[7][i][0] - mse / SEEDS)) +
+                       square((results[8][i][0] - mse / SEEDS)) +
+                       square((results[9][i][0] - mse / SEEDS)) +
+                       square((results[10][i][0] - mse / SEEDS))) / SEEDS;
+        tssDeviation = sqrt(tssVariance);
+        testTssVariance = (square((results[1][i][1] - mseTesting / SEEDS)) +
+                           square((results[2][i][1] - mseTesting / SEEDS)) +
+                           square((results[3][i][1] - mseTesting / SEEDS)) +
+                           square((results[4][i][1] - mseTesting / SEEDS)) +
+                           square((results[5][i][1] - mseTesting / SEEDS)) +
+                           square((results[6][i][1] - mseTesting / SEEDS)) +
+                           square((results[7][i][1] - mseTesting / SEEDS)) +
+                           square((results[8][i][1] - mseTesting / SEEDS)) +
+                           square((results[9][i][1] - mseTesting / SEEDS)) +
+                           square((results[10][i][1] - mseTesting / SEEDS))) / SEEDS;
+        testTssDeviation = sqrt(testTssVariance);
+        correctsVariance = (square((results[1][i][2] - corrects / SEEDS)) +
+                            square((results[2][i][2] - corrects / SEEDS)) +
+                            square((results[3][i][2] - corrects / SEEDS)) +
+                            square((results[4][i][2] - corrects / SEEDS)) +
+                            square((results[5][i][2] - corrects / SEEDS)) +
+                            square((results[6][i][2] - corrects / SEEDS)) +
+                            square((results[7][i][2] - corrects / SEEDS)) +
+                            square((results[8][i][2] - corrects / SEEDS)) +
+                            square((results[9][i][2] - corrects / SEEDS)) +
+                            square((results[10][i][2] - corrects / SEEDS))) / SEEDS;
+        correctsDeviation = sqrt(correctsVariance);
+        experimentalData << i << "," << mse / SEEDS << "," << tssDeviation << ","
+                         << mseTesting / SEEDS << "," << testTssDeviation << ","
+                         << corrects / SEEDS << "," << correctsDeviation << endl;
+    }
 }
 
 /**
@@ -210,10 +273,19 @@ static void runSeed(const int seed, const vector<DatasetRow> &trainingset, const
             if (tssCorrect < 0.05)
                 correct++;
         }
+        //
+        const int datasetCount = testingset.size() + trainingset.size();
+        results[seed][epoch][0] = (tss / (datasetCount * PERCENT_TRAINING));
+        results[seed][epoch][1] = (tssTesting / (datasetCount * PERCENT_TESTING));
+        results[seed][epoch][2] = (correct / (datasetCount * PERCENT_TESTING)) * 100;
+        combinedMSE[seed][epoch] = (tss / (datasetCount * PERCENT_TRAINING));
+        combinedMSETesting[seed][epoch] = (tssTesting / (datasetCount * PERCENT_TESTING));
+        combinedCorrects[seed][epoch] = (correct / (datasetCount * PERCENT_TESTING)) * 100;
         // Update the weights of the neural network and print the result of the epoch
         net->update_weights();
         float correctRate = ((float) (correct) / (float) (testingset.size())) * 100.0F;
-        printf("%d/%d correct=%d/%zu %.3f%%\n", seed, epoch, correct, testingset.size(), correctRate);
+        printf("%s%d/%d correct=%d/%zu %.3f%%\n", (seed < 10) ? "0" : "", seed, epoch, correct, testingset.size(),
+               correctRate);
     }
     delete[] inVec;
     delete[] outVec;
@@ -255,5 +327,6 @@ int main(int argc, char **argv) {
         });
     }
     delete threadpool;
+    analyzeResults();
     return 0;
 }

@@ -4,7 +4,6 @@
 #include <fstream>
 #include <algorithm>
 #include <random>
-#include <thread>
 
 #include "npp/npp.h"
 #include "threadpool/threadpool.h"
@@ -59,7 +58,7 @@ bool parseDatasetRow(const string &line, DatasetRow *row) {
  * @param dataset vector to save the parsed dataset rows
  * @return true if the dataset could be read, false otherwise
  */
-bool readDataset(string filename, vector<DatasetRow> *dataset) {
+bool readDataset(string filename, vector<DatasetRow> *dataset, const int randomSeed) {
     ifstream file(filename);
     if (!file || !file.is_open()) {
         return false;
@@ -69,7 +68,7 @@ bool readDataset(string filename, vector<DatasetRow> *dataset) {
         DatasetRow row;
         if (parseDatasetRow(line, &row)) dataset->push_back(row);
     }
-    shuffle(dataset->begin(), dataset->end(), default_random_engine(time(nullptr)));
+    shuffle(dataset->begin(), dataset->end(), default_random_engine(randomSeed));
     return true;
 }
 
@@ -167,28 +166,44 @@ static void runSeed(const int seed, const vector<DatasetRow> &trainingset, const
     delete[] tarVec;
 }
 
-int main() {
+int main(int argc, char **argv) {
+    // Parse given command line arguments
+    int partitionCount = 1;
+    // Check argument count and correct command usage
+    if (argc < 3 || argc > 4) {
+        printf("<seed> = integer used as seed for the random generator\n");
+        printf("<threadcount> = amount of threads to be used\n");
+        printf("<partitionCount> = amount of threads to be used\n");
+        printf("./lucavinciguerra-bathesis <seed> <threadcount>\n");
+        printf("./lucavinciguerra-bathesis <seed> <threadcount> <partitionCount>\n");
+        return 1;
+    }
+    // Parse given threadcount
+    int randomSeed = stoi(argv[1]);
+    int threadcount = stoi(argv[2]);
+    if (argc == 4) {
+        partitionCount = stoi(argv[3]);
+    }
     // Read in dataset from the dataset textfile
     vector<DatasetRow> dataset;
-    if (!readDataset(DATASET_FILENAME, &dataset)) {
+    if (!readDataset(DATASET_FILENAME, &dataset, randomSeed)) {
         printf("Could not read dataset from file %s. Does the file exist?\n", DATASET_FILENAME);
         return 1;
     }
     printf("Read dataset from file %s with %zu rows.\n", DATASET_FILENAME, dataset.size());
     // vector that contains all threads that should run in parallel
-    vector<thread> threads;
-    ThreadPool threadpool;
+    ThreadPool *threadpool = new ThreadPool(threadcount);
     for (int seed = 1; seed <= SEEDS; seed++) {
         // Partition the dataset into a training set and a testing set for this seed
         vector<DatasetRow> trainingset, testingset;
-        partitionDataset(dataset, 1, 1, &trainingset, &testingset);
+        partitionDataset(dataset, partitionCount, 1, &trainingset, &testingset);
         printf("starting thread for seed %d with %zu training and %zu testing rows\n", seed, trainingset.size(),
                testingset.size());
         // add the thread to the list of threads
-        threadpool.enqueue([seed, trainingset, testingset] {
+        threadpool->enqueue([seed, trainingset, testingset] {
             runSeed(seed, trainingset, testingset);
         });
-        //threads.push_back(thread(runSeed, seed, trainingset, testingset));
     }
+    delete threadpool;
     return 0;
 }

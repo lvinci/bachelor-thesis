@@ -80,10 +80,11 @@ def generate_comp_all_partitions_plot(benchmark_id: string, dataset: list[Datase
 
 
 def main() -> int:
-    benchmark_id = sys.argv[1]
-    dataset = read_csv_dataset(f'../results/benchmarks/{benchmark_id}_averaged.csv')
-    generate_comp_all_threads_plot(benchmark_id, dataset)
-    generate_comp_all_partitions_plot(benchmark_id, dataset)
+    for benchmark_id in os.listdir("../results/benchmarks"):
+        if os.path.isdir(f'../results/benchmarks/{benchmark_id}'):
+            dataset = read_csv_dataset(f'../results/benchmarks/{benchmark_id}_averaged.csv')
+            generate_comp_all_threads_plot(benchmark_id, dataset)
+            generate_comp_all_partitions_plot(benchmark_id, dataset)
     return 0
 
 

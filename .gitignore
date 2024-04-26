@@ -1,5 +1,22 @@
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,intellij,macos,linux,windows
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,intellij,macos,linux,windows
+# Created by https://www.toptal.com/developers/gitignore/api/cmake,linux,macos,windows,intellij,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=cmake,linux,macos,windows,intellij,visualstudiocode
+
+### CMake ###
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+### CMake Patch ###
+# External projects
+*-prefix/
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -207,4 +224,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,intellij,macos,linux,windows
+# End of https://www.toptal.com/developers/gitignore/api/cmake,linux,macos,windows,intellij,visualstudiocode

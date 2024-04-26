@@ -242,7 +242,7 @@ static void runSeed(const int seed, const vector<DatasetRow> &trainingset, const
         net->load_net(filename.c_str());
     } else {
         createNeuralNet(net, seed);
-        net->save_net(filename.c_str());
+        net->save_net(filename);
     }
     // Create the vectors used as inputs, outputs and targets for use by propagation
     const auto inVec = new float[net->topo_data.in_count];
@@ -323,7 +323,7 @@ int main(int argc, char **argv) {
     }
     printf("Read dataset from file %s with %zu rows.\n", DATASET_FILENAME, dataset.size());
     // vector that contains all threads that should run in parallel
-    ThreadPool *threadpool = new ThreadPool(threadcount);
+    auto *threadpool = new ThreadPool(threadcount);
     for (int seed = 1; seed <= SEEDS; seed++) {
         // Partition the dataset into a training set and a testing set for this seed
         vector<DatasetRow> trainingset, testingset;

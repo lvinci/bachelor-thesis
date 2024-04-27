@@ -1,0 +1,49 @@
+\chapter{Grundlagen}
+\label{ch:Grundlagen}
+
+Das folgende Kapitel legt die Grundlagen für künstliche neuronale Netzwerke dar, indem es detailliert auf ihre Struktur und Funktionsweise eingeht, insbesondere für vorwärtsgerichtete Netzwerke. Dabei wird ein umfassender Überblick über die potenziellen Anwendungsbereiche von künstlichen neuronalen Netzwerken gegeben, wobei deren Rolle in verschiedenen Bereichen wie Bilderkennung, Sprachverarbeitung und Mustererkennung hervorgehoben wird.
+
+Des Weiteren wird die Thematik der Parallelisierung sowohl im allgemeinen Kontext als auch speziell im Zusammenhang mit neuronalen Netzwerken erläutert. Es werden die Vor- und Nachteile dieser Technik beleuchtet und die gängigsten Methoden zur Parallelisierung von Berechnungen in neuronalen Netzwerken werden ausführlich diskutiert. Dabei wird besonders auf die Parallelisierung von Berechnungen innerhalb vorwärtsgerichteter Netzwerke eingegangen.
+
+Die Nutzung von Grafikprozessoren (GPUs) für parallele Berechnungen wird dabei angesprochen, jedoch liegt der Fokus auf den grundlegenden Prinzipien der Parallelisierung von neuronalen Netzwerken und deren Implementierung mittels Thread- und Prozessparallelsierung. Durch das fundierte Verständnis der zugrunde liegenden Konzepte können wir die Potenziale und Herausforderungen der Parallelisierung in diesem spezifischen Kontext besser einschätzen und geeignete Ansätze zur Leistungssteigerung identifizieren.
+
+\section{Grundprinzipien von neuronalen Netzwerken}
+\label{sec:Grundlagen_neuronale_Netzwerke}
+
+Neuronale Netzwerke sind ein wesentlicher Bestandteil des maschinellen Lernens und der künstlichen Intelligenz. Sie sind inspiriert von der Funktionsweise des menschlichen Gehirns und bestehen aus einer Ansammlung miteinander verbundener Knoten, die als Neuronen bezeichnet werden. Diese Netzwerke können eine Vielzahl von Aufgaben ausführen, von der Bilderkennung bis hin zur Sprachverarbeitung.
+
+Die Funktionsweise eines neuronalen Netzwerks lässt sich grob in zwei Hauptphasen unterteilen: Vorwärtspropagierung und Rückwärtspropagierung. Während der Vorwärtspropagierung fließen die Daten durch das Netzwerk, beginnend mit den Eingangsneuronen, die die Rohdaten empfangen, und endend mit den Ausgangsneuronen, die die Vorhersagen oder Klassifikationen des Netzwerks liefern. Jedes Neuron in einem neuronalen Netzwerk ist mit anderen Neuronen verbunden, und diese Verbindungen sind mit Gewichten versehen, die die Stärke der Verbindung zwischen den Neuronen darstellen.
+
+Während der Vorwärtspropagierung durchläuft jede Eingabe eine Reihe von Schichten im Netzwerk, wobei jede Schicht aus einer bestimmten Anzahl von Neuronen besteht. Jedes Neuron in einer Schicht erhält Inputs von den Neuronen der vorherigen Schicht, multipliziert diese Inputs mit den entsprechenden Gewichten und summiert sie. Anschließend wird eine Aktivierungsfunktion auf die gewichtete Summe angewendet, um die Ausgabe des Neurons zu berechnen, die dann an die Neuronen der nächsten Schicht weitergeleitet wird.
+
+Die Rückwärtspropagierung ist der Prozess, bei dem das Netzwerk lernt, indem es seine Gewichte entsprechend der Fehler zwischen den tatsächlichen und den vorhergesagten Ausgaben anpasst. Dies geschieht durch die Berechnung von Gradienten mit Hilfe des Backpropagation-Algorithmus und die Anpassung der Gewichte mithilfe eines Optimierungsalgorithmus wie dem Gradientenabstiegsverfahren.
+
+Insgesamt ermöglicht die Funktionsweise von neuronalen Netzwerken die Modellierung komplexer Zusammenhänge in Daten und die Durchführung verschiedenster Aufgaben des maschinellen Lernens und der künstlichen Intelligenz.
+
+\section{Aufbau eines neuronalen Netzwerks}
+\label{sec:Grundlagen_neuronale_Netzwerke}
+\subsection{Neuronen und deren Verbindungen}
+\label{sec:Grundlagen_neuronale_Netzwerke_Grundlagen}
+\subsection{Schichten und ihre Funktionen}
+\label{sec:Grundlagen_neuronale_Netzwerke_Aufbau}
+\subsection{Vorwärtsgerichtete und rückwärtsgerichtete Netzwerke}
+\label{sec:Grundlagen_neuronale_Netzwerke_Aufbau}
+
+\section{Anwendungsfälle von neuronalen Netzwerken}
+\label{sec:Grundlagen_neuronale_Netzwerke}
+
+\section{Einführung in die Parallelisierung}
+\label{sec:Grundlagen_neuronale_Netzwerke}
+\subsection{Definition und Herangehensweise}
+\label{sec:Grundlagen_neuronale_Netzwerke_Aufbau}
+\subsection{Vor- und Nachteile von Parallelisierung}
+\label{sec:Grundlagen_neuronale_Netzwerke_Aufbau}
+
+\section{Parallelisierung in vorwärtsgerichteten Netzwerken}
+\label{sec:Grundlagen_neuronale_Netzwerke}
+\subsection{Thread- und Prozessparallelsierung}
+\label{sec:Grundlagen_neuronale_Netzwerke_Aufbau}
+\subsection{Implementierung von Parallelisierungstechniken}
+\label{sec:Grundlagen_neuronale_Netzwerke_Aufbau}
+\subsection{Auswirkungen auf die Leistungsfähigkeit}
+\label{sec:Grundlagen_neuronale_Netzwerke_Aufbau}

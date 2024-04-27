@@ -90,6 +90,8 @@
 %%%%%% Mathematik-Paket AMSMath:
 \usepackage[fleqn,reqno]{amsmath}
 
+\usepackage{setspace}
+
 
 %%%%%% Seitengeometrie einstellen:
 % https://tex.stackexchange.com/questions/344241/logo-as-header-using-fancyhdr-package
@@ -262,7 +264,6 @@
 
 \begin{document}
 
-
 %%%%% Settings einbinden:
 \input{TeXFiles/000_Settings}
 \sloppy %Formatierungsueberstaende am Zeilenende vermeiden
@@ -331,6 +332,7 @@
 \fancyfoot[R]{\thepage}  % Seitennummer
 
 %\myName
+\setstretch{1.5}
 \input{TeXFiles/010_Kurzfassung}
 \input{TeXFiles/020_Einleitung}
 \input{TeXFiles/030_Grundlagen}

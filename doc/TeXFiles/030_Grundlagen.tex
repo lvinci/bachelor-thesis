@@ -8,7 +8,7 @@ Des Weiteren wird die Thematik der Parallelisierung sowohl im allgemeinen Kontex
 Die Nutzung von Grafikprozessoren (GPUs) für parallele Berechnungen wird dabei angesprochen, jedoch liegt der Fokus auf den grundlegenden Prinzipien der Parallelisierung von neuronalen Netzwerken und deren Implementierung mittels Thread- und Prozessparallelsierung. Durch das fundierte Verständnis der zugrunde liegenden Konzepte können wir die Potenziale und Herausforderungen der Parallelisierung in diesem spezifischen Kontext besser einschätzen und geeignete Ansätze zur Leistungssteigerung identifizieren.
 
 \section{Grundprinzipien von neuronalen Netzwerken}
-\label{sec:Grundlagen_neuronale_Netzwerke}
+\label{sec:Grundlagen_Grundprinzipien_neuronale_Netze}
 
 Neuronale Netzwerke sind ein wesentlicher Bestandteil des maschinellen Lernens und der künstlichen Intelligenz. Sie sind inspiriert von der Funktionsweise des menschlichen Gehirns und bestehen aus einer Ansammlung miteinander verbundener Knoten, die als Neuronen bezeichnet werden. Diese Netzwerke können eine Vielzahl von Aufgaben ausführen, von der Bilderkennung bis hin zur Sprachverarbeitung.
 
@@ -21,29 +21,109 @@ Die Rückwärtspropagierung ist der Prozess, bei dem das Netzwerk lernt, indem e
 Insgesamt ermöglicht die Funktionsweise von neuronalen Netzwerken die Modellierung komplexer Zusammenhänge in Daten und die Durchführung verschiedenster Aufgaben des maschinellen Lernens und der künstlichen Intelligenz.
 
 \section{Aufbau eines neuronalen Netzwerks}
-\label{sec:Grundlagen_neuronale_Netzwerke}
+\label{sec:Grundlagen_Aufbau_neuronale_Netzwerke}
 \subsection{Neuronen und deren Verbindungen}
-\label{sec:Grundlagen_neuronale_Netzwerke_Grundlagen}
+\label{sec:Grundlagen_neuronen_und_Verbindungen}
+Ein neuronales Netzwerk besteht aus einer Vielzahl von Neuronen, die in einem komplexen Netzwerk miteinander verbunden sind. Jedes Neuron empfängt Eingaben von anderen Neuronen oder von externen Quellen und verarbeitet diese Informationen, bevor es Signale an andere Neuronen weitergibt. Die Verbindungen zwischen den Neuronen werden durch Gewichte repräsentiert, die anzeigen, wie stark die Verbindung zwischen zwei Neuronen ist. Diese Gewichte werden während des Trainingsprozesses des neuronalen Netzwerks angepasst, um eine optimale Leistung zu erreichen.
+
+Die Funktionsweise eines Neurons kann vereinfacht als eine Summation der Eingaben multipliziert mit den entsprechenden Gewichten beschrieben werden, gefolgt von der Anwendung einer Aktivierungsfunktion. Diese Aktivierungsfunktion bestimmt, ob das Neuron aktiviert wird und Signale an die nächsten Neuronen weitergibt. Durch diese Schichtung und Verbindung der Neuronen kann das neuronale Netzwerk komplexe Muster erkennen und Informationen verarbeiten.
+
 \subsection{Schichten und ihre Funktionen}
-\label{sec:Grundlagen_neuronale_Netzwerke_Aufbau}
+\label{sec:Grundlagen_Schichten}
+Ein neuronales Netzwerk ist in der Regel in verschiedene Schichten organisiert, die jeweils spezifische Funktionen erfüllen. Die erste Schicht wird oft als Eingangsschicht bezeichnet und empfängt die Rohdaten oder Merkmale, die dem Netzwerk präsentiert werden. Diese Daten werden dann durch das Netzwerk weitergeleitet, wobei jede Schicht eine spezifische Transformation durchführt.
+
+Zwischen der Eingangsschicht und der Ausgangsschicht können mehrere versteckte Schichten vorhanden sein. Diese versteckten Schichten sind entscheidend für die Fähigkeit des Netzwerks, komplexe Muster zu lernen und abstrakte Merkmale zu extrahieren. Jede Schicht lernt auf unterschiedlichen Abstraktionsebenen und trägt zur schrittweisen Verbesserung der Leistung des Netzwerks bei.
+
+Die Ausgangsschicht liefert schließlich die Ergebnisse der Netzwerkberechnungen, sei es in Form einer Klassifikation, Regression oder einer anderen Art der Informationsverarbeitung, je nach den Anforderungen der spezifischen Anwendung. Durch die Strukturierung des Netzwerks in Schichten und die Festlegung spezifischer Funktionen für jede Schicht kann das neuronale Netzwerk effizient Informationen verarbeiten und komplexe Probleme lösen.
+
 \subsection{Vorwärtsgerichtete und rückwärtsgerichtete Netzwerke}
-\label{sec:Grundlagen_neuronale_Netzwerke_Aufbau}
+\label{sec:Grundlagen_vorwarts_Netzwerke}
+Neuronale Netzwerke können in zwei Hauptkategorien unterteilt werden: vorwärtsgerichtete (feedforward) und rückwärtsgerichtete (feedback) Netzwerke.
+
+Vorwärtsgerichtete Netzwerke sind die am häufigsten verwendete Architektur in der neuronalen Netzwerkwissenschaft. In diesen Netzwerken fließen die Informationen nur in eine Richtung, von der Eingangsschicht zur Ausgangsschicht, ohne Rückkopplungsschleifen. Das bedeutet, dass die Ausgabe jedes Neurons in einer Schicht nur von den Eingaben der vorhergehenden Schicht abhängt und nicht von den Ausgaben der Neuronen derselben Schicht oder einer späteren Schicht.
+
+Dieses einfache Flussmuster ermöglicht eine effiziente Berechnung und einfache Interpretation der Ergebnisse. Vorwärtsgerichtete Netzwerke eignen sich besonders gut für Anwendungen wie Klassifikation und Regression, bei denen eine direkte Zuordnung von Eingaben zu Ausgaben erfolgt.
+
+Im Gegensatz dazu haben rückwärtsgerichtete Netzwerke Rückkopplungsschleifen, die es ermöglichen, Informationen sowohl vorwärts als auch rückwärts durch das Netzwerk zu propagieren. Diese Art von Netzwerken, auch als rekurrente neuronale Netzwerke (RNNs) bekannt, sind besonders gut geeignet für die Verarbeitung sequenzieller Daten, bei denen der Kontext und die zeitliche Abfolge der Eingaben wichtig sind.
+
+RNNs sind in der Lage, vergangene Informationen zu berücksichtigen und sie in die aktuelle Berechnung einzubeziehen, was sie besonders nützlich für Aufgaben wie Sprachverarbeitung, Zeitreihenanalyse und maschinelles Übersetzen macht.
+
+Die Wahl zwischen vorwärtsgerichteten und rückwärtsgerichteten Netzwerken hängt von den spezifischen Anforderungen der Anwendung ab. Während vorwärtsgerichtete Netzwerke gut für statische Daten und klare Ein-Aus-Beziehungen geeignet sind, bieten rückwärtsgerichtete Netzwerke eine größere Flexibilität und sind besser für die Verarbeitung dynamischer Daten geeignet.
 
 \section{Anwendungsfälle von neuronalen Netzwerken}
-\label{sec:Grundlagen_neuronale_Netzwerke}
+\label{sec:Grundlagen_Anwendungsfälle}
+Neuronale Netzwerke haben sich als äußerst vielseitige Werkzeuge erwiesen und finden Anwendung in einer breiten Palette von Bereichen. Hier sind einige der prominentesten Anwendungsfälle:
+
+Bilderkennung und Computer Vision: Neuronale Netzwerke werden häufig in Bilderkennungsanwendungen eingesetzt, um Objekte, Gesichter, Muster und vieles mehr in Bildern zu identifizieren und zu klassifizieren. Computer Vision, die Fähigkeit von Computern, visuelle Informationen zu interpretieren und zu verstehen, wird durch den Einsatz von neuronalen Netzwerken erheblich verbessert.
+
+Natürliche Sprachverarbeitung (NLP): In der NLP werden neuronale Netzwerke verwendet, um menschenähnliche Sprache zu verstehen, zu interpretieren und zu generieren. Anwendungen reichen von Chatbots und virtuellen Assistenten bis hin zu maschineller Übersetzung und Sentimentanalyse in sozialen Medien.
+
+Mustererkennung und Vorhersage: Neuronale Netzwerke werden häufig für die Mustererkennung und Vorhersage in verschiedenen Domänen eingesetzt, einschließlich Finanzwesen, Gesundheitswesen, Verkehr und mehr. Sie können Muster in großen Datensätzen erkennen und Prognosen für zukünftige Ereignisse treffen.
+
+Autonome Fahrzeuge: In der Automobilindustrie spielen neuronale Netzwerke eine entscheidende Rolle bei der Entwicklung autonomer Fahrzeuge. Sie werden verwendet, um Hindernisse zu erkennen, Verkehrssituationen zu verstehen, Routen zu planen und Fahrzeugfunktionen wie Lenkung und Bremsen zu steuern.
+
+Medizinische Diagnose: Neuronale Netzwerke werden in der medizinischen Bildgebung eingesetzt, um Krankheiten wie Krebs auf Röntgenbildern und MRT-Scans zu erkennen. Sie unterstützen auch Ärzte bei der Diagnose von Krankheiten und der Vorhersage von Behandlungsergebnissen anhand von Patientendaten.
+
+Finanzwesen: Im Finanzwesen werden neuronale Netzwerke für die Kreditrisikobewertung, Betrugserkennung, Handelsstrategien und die Analyse von Markttrends eingesetzt. Sie helfen Finanzinstituten dabei, fundierte Entscheidungen zu treffen und Risiken zu minimieren.
+
+Diese Anwendungsfälle verdeutlichen die Vielseitigkeit und die transformative Kraft von neuronalen Netzwerken in verschiedenen Branchen und Disziplinen. Durch kontinuierliche Forschung und Entwicklung werden ihre Fähigkeiten ständig erweitert, was zu neuen und aufregenden Anwendungen führt.
 
 \section{Einführung in die Parallelisierung}
-\label{sec:Grundlagen_neuronale_Netzwerke}
+\label{sec:Grundlagen_Parallelisierung}
 \subsection{Definition und Herangehensweise}
-\label{sec:Grundlagen_neuronale_Netzwerke_Aufbau}
+\label{sec:Grundlagen_Parallelisierung_Herangehensweise}
+Die Parallelisierung stellt einen zentralen Ansatz dar, um die Leistungsfähigkeit von Computersystemen zu steigern. Im Kern bedeutet Parallelisierung, dass Aufgaben oder Berechnungen gleichzeitig und unabhängig voneinander ausgeführt werden, anstatt sequenziell abzulaufen. Dieser Ansatz findet breite Anwendung in einer Vielzahl von Bereichen, darunter die High-Performance-Computing (HPC), Datenverarbeitung, Simulationen, künstliche Intelligenz und viele weitere.
+
+Es gibt verschiedene Herangehensweisen zur Parallelisierung, die je nach Art des Problems und der verfügbaren Hardware eingesetzt werden können. Die Task-Parallelisierung zielt darauf ab, die Ausführung von Aufgaben auf mehrere Prozessoren oder Kerne aufzuteilen. Diese Art der Parallelisierung eignet sich besonders für Anwendungen mit vielen gleichzeitig auszuführenden Aufgaben, wie beispielsweise parallele Suchalgorithmen oder Simulationen von physikalischen Systemen.
+
+Eine weitere Herangehensweise ist die Datenparallelisierung, bei der ein Problem in kleinere Teile zerlegt wird, die jeweils auf unterschiedlichen Datensätzen arbeiten. Dieser Ansatz eignet sich besonders gut für Anwendungen, bei denen eine große Menge an Daten gleichzeitig verarbeitet werden muss, wie beispielsweise bei der Bildverarbeitung oder beim maschinellen Lernen.
+
+Es ist jedoch wichtig zu betonen, dass nicht alle Probleme gleichermaßen für eine Parallelisierung geeignet sind. Manche Probleme enthalten intrinsische Abhängigkeiten oder Sequenzialität, die eine effektive Parallelisierung erschweren oder unmöglich machen.
+
+Zusammenfassend lässt sich sagen, dass die Parallelisierung eine leistungsstarke Technik ist, um die Rechenleistung von Computersystemen zu maximieren. Durch die Aufteilung von Aufgaben oder Daten auf mehrere Ressourcen können erhebliche Geschwindigkeitsverbesserungen erzielt werden. Die Wahl der geeigneten Parallelisierungsstrategie erfordert jedoch eine sorgfältige Analyse der spezifischen Anforderungen und Rahmenbedingungen einer Anwendung.
+
 \subsection{Vor- und Nachteile von Parallelisierung}
-\label{sec:Grundlagen_neuronale_Netzwerke_Aufbau}
+\label{sec:Grundlagen_Parallelisierung_Vorteile_Nachteile}
+Die Parallelisierung bietet eine Vielzahl von Vorteilen, die zur Leistungssteigerung von Computersystemen beitragen. Einer der offensichtlichsten Vorteile ist die Verbesserung der Ausführungsgeschwindigkeit von Programmen und Berechnungen. Durch die gleichzeitige Ausführung von Aufgaben oder die Verarbeitung von Daten auf mehreren Prozessoren oder Kernen können Ergebnisse schneller erzielt werden, was insbesondere bei rechenintensiven Anwendungen von Vorteil ist.
+
+Ein weiterer Vorteil der Parallelisierung liegt in der Skalierbarkeit. Indem Aufgaben oder Daten auf mehrere Ressourcen aufgeteilt werden, können Systeme leichter an wachsende Anforderungen angepasst werden. Dies ermöglicht es, die Leistungsfähigkeit von Systemen flexibel zu erweitern, ohne dass eine komplette Neuentwicklung erforderlich ist.
+
+Des Weiteren kann die Parallelisierung die Auslastung von Ressourcen optimieren. Durch die effiziente Nutzung von Prozessoren oder anderen Hardware-Ressourcen können Engpässe reduziert und die Gesamtleistung des Systems verbessert werden.
+
+Trotz dieser Vorteile gibt es auch einige Nachteile und Herausforderungen bei der Implementierung von Parallelisierung. Ein wichtiger Aspekt sind die erhöhten Anforderungen an die Programmierung und das Systemdesign. Die Entwicklung paralleler Algorithmen und die Verwaltung von parallelen Prozessen erfordern spezifisches Fachwissen und können komplex sein. Darüber hinaus können sich Probleme wie Datenabhängigkeiten, Wettlaufsituationen (englisch: race conditions) und Synchronisationskonflikte ergeben, die die Entwicklung und Fehlerbehebung erschweren.
+
+Ein weiterer Nachteil ist die potenzielle Zunahme des Energieverbrauchs. Obwohl die Parallelisierung die Leistungsfähigkeit von Systemen verbessern kann, kann sie auch zu einem erhöhten Energiebedarf führen, insbesondere wenn nicht effizient implementiert. Dies ist besonders relevant in Umgebungen, in denen Energieeffizienz ein wichtiges Anliegen ist, wie beispielsweise in mobilen Geräten oder Rechenzentren.
+
+Insgesamt bietet die Parallelisierung viele Vorteile, die zur Leistungssteigerung von Computersystemen beitragen können. Jedoch ist es wichtig, die potenziellen Herausforderungen und Nachteile zu berücksichtigen und eine sorgfältige Planung und Implementierung sicherzustellen, um die bestmöglichen Ergebnisse zu erzielen.
 
 \section{Parallelisierung in vorwärtsgerichteten Netzwerken}
-\label{sec:Grundlagen_neuronale_Netzwerke}
+\label{sec:Grundlagen_Parallelisierung_Neuronale_Netze}
 \subsection{Thread- und Prozessparallelsierung}
-\label{sec:Grundlagen_neuronale_Netzwerke_Aufbau}
+\label{sec:Grundlagen_Thread_Parallelisierung}
+Für die parallele Ausführung des Trainings mehrerer Netzwerke unabhängig voneinander spielt die Thread- und Prozessparallelisierung eine bedeutende Rolle. Diese Techniken bieten Mechanismen, um das Training der Netzwerke auf mehrere Threads oder Prozesse aufzuteilen, was die Effizienz und Geschwindigkeit des Trainings verbessern kann.
+
+Thread-Parallelisierung bezieht sich auf die Aufteilung des Trainingsprozesses eines Netzwerks in mehrere Threads, die gleichzeitig auf einem einzigen Prozessorkern oder auf mehreren Kernen eines Mehrkernprozessors ausgeführt werden können. In diesem Szenario ermöglicht die Thread-Parallelisierung das gleichzeitige Training mehrerer Netzwerke, wobei jeder Thread sich auf das Training eines bestimmten Netzwerks konzentriert. Dies kann die Gesamttrainingszeit reduzieren und die Auslastung der verfügbaren Prozessorressourcen optimieren.
+
+Prozessparallelisierung hingegen umfasst die Aufteilung des Trainingsprozesses in mehrere unabhängige Prozesse, die auf verschiedenen Prozessorkernen oder sogar auf verschiedenen physikalischen Maschinen ausgeführt werden können. Bei der Prozessparallelisierung werden die Trainingsvorgänge mehrerer Netzwerke auf separaten Prozessen ausgeführt, was eine hochgradig parallele Verarbeitung und Skalierbarkeit über mehrere Computerknoten hinweg ermöglicht. Die Kommunikation zwischen den Prozessen kann über verschiedene Mechanismen wie Sockets, Messaging-Systeme oder gemeinsam genutzte Speicherbereiche erfolgen.
+
+Die Wahl zwischen Thread- und Prozessparallelisierung hängt von verschiedenen Faktoren ab, darunter die Hardwarearchitektur, die Natur der Netzwerke und die Kommunikationsanforderungen zwischen den Trainingseinheiten. Eine sorgfältige Analyse dieser Faktoren ist entscheidend, um die optimale Parallelisierungsstrategie für das Training mehrerer Netzwerke unabhängig voneinander zu bestimmen.
+
 \subsection{Implementierung von Parallelisierungstechniken}
-\label{sec:Grundlagen_neuronale_Netzwerke_Aufbau}
+\label{sec:Grundlagen_Parallelisierung_Implementierung}
+Für die Implementierung von Thread- und Prozessparallelisierung in vorwärtsgerichteten Netzwerken können verschiedene Ansätze verfolgt werden. Eine gängige Methode besteht darin, parallele Bibliotheken oder Frameworks zu verwenden, die bereits implementierte Funktionen für die Thread- und Prozessverwaltung bereitstellen. Beispiele hierfür sind die Verwendung von OpenMP, CUDA oder MPI, je nach den Anforderungen der Anwendung und der zugrunde liegenden Hardwarearchitektur.
+
+Bei der Implementierung von Thread-Parallelisierung können Entwickler Thread-Pools verwenden, um die Ressourcennutzung zu optimieren und die Thread-Erstellungskosten zu minimieren. Die Aufgaben werden in Threads aufgeteilt und in einem Pool von vorab erstellten Threads ausgeführt, was die Ausführungszeit der Aufgaben reduziert und die Gesamtperformance verbessert.
+
+Für die Prozessparallelisierung ist die Implementierung von Mechanismen zur Kommunikation und Koordination zwischen den verschiedenen Prozessen entscheidend. Dies kann die Verwendung von Sockets, Messaging-Systemen wie ZeroMQ oder die gemeinsame Nutzung von Speicherbereichen umfassen, um Daten zwischen den Prozessen auszutauschen und den Trainingsfortschritt zu synchronisieren.
+
+Es ist wichtig, bei der Implementierung von Parallelisierungstechniken auf Aspekte wie Datenkonsistenz, Synchronisierung und Ressourcenmanagement zu achten. Die richtige Balance zwischen Parallelisierung und Overhead ist entscheidend, um die Gesamtperformance der Anwendung zu maximieren. Durch den Einsatz von geeigneten Werkzeugen, Techniken und Best Practices können Entwickler eine effiziente und skalierbare Parallelisierung in vorwärtsgerichteten Netzwerken erreichen.
+
 \subsection{Auswirkungen auf die Leistungsfähigkeit}
-\label{sec:Grundlagen_neuronale_Netzwerke_Aufbau}
+\label{sec:Grundlagen_Parallelisierung_Leistungsfähigkeit}
+Ein wesentlicher Vorteil besteht darin, dass durch die parallele Ausführung mehrerer Netzwerke (mit verschiedenen Seeds) gleichzeitig eine Vielzahl von Trainingsdurchläufen durchgeführt werden kann. Dies ermöglicht es, eine breite Palette von Modellen zu trainieren und verschiedene hyperparameterabhängige Variationen zu erkunden, um letztendlich das optimale Modell zu identifizieren. Durch die gleichzeitige Ausführung dieser Trainingsläufe können Entwickler Zeit sparen und schneller zu aussagekräftigen Ergebnissen gelangen.
+
+Des Weiteren bietet die parallele Ausführung die Möglichkeit, Inferenzoperationen gleichzeitig durchzuführen. Mehrere Eingaben können gleichzeitig an duplizierte Netzwerke weitergeleitet werden, um eine simultane Auswertung zu ermöglichen. Dies beschleunigt nicht nur den Inferenzprozess erheblich, sondern ermöglicht auch eine effizientere Nutzung der verfügbaren Hardwareressourcen.
+
+Ein weiterer Vorteil besteht in der verbesserten Skalierbarkeit der Anwendung. Durch die Nutzung von Thread- oder Prozessparallelisierung kann die Anwendung problemlos auf mehreren Rechenknoten oder sogar in Cloud-Umgebungen skaliert werden. Dies ermöglicht es, die Trainings- und Inferenzkapazitäten je nach Bedarf flexibel anzupassen und die Gesamtperformance der Anwendung zu optimieren.
+
+Zusammenfassend ermöglicht die Implementierung von Parallelisierungstechniken eine effizientere Nutzung von Ressourcen, beschleunigt Trainings- und Inferenzvorgänge und verbessert die Skalierbarkeit der Anwendung. Dies trägt dazu bei, die Entwicklung und Bereitstellung von neuronalen Netzwerken in großen Maßstäben zu erleichtern und ermöglicht es, schnellere Fortschritte in der Forschung und Anwendung von KI-Technologien zu erzielen.

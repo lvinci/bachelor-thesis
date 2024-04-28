@@ -1,0 +1,5 @@
+
+real	18m37.517s
+user	62m21.409s
+sys	0m0.357s
+TOTAL TIME: 1117.524 seconds

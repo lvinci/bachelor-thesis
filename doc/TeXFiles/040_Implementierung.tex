@@ -5,18 +5,15 @@
 \section{Erläuterung des N++ Simulatorkerns}
 \label{sec:Erlauterung_Npp}
 \sectionmark{Erläuterung N++}
-N++ ist ein Simulator für neuronale Netze, welcher als Forschungsprojekt innerhalb der Frankfurt University of Applied Sciences programmiert wurde.
-Es können mehrere neuronale Netze simuliert werden, und es soll dem Anwender ermöglicht werden, ohne größeren Aufwand die Grundfunktionen zu erweitern und eine simple Schnittstelle für Anwenderprogramme bereitgestellt werden.
+N++ ist ein Simulator für neuronale Netze, der als Forschungsprojekt an der Frankfurt University of Applied Sciences entwickelt wurde. Die Software ermöglicht die Simulation mehrerer neuronaler Netze und strebt danach, dem Anwender eine einfache Erweiterung der Grundfunktionen sowie eine benutzerfreundliche Schnittstelle für Anwendungsprogramme bereitzustellen.
 
-N++ ist eine Bibliothek, welche in C++ geschrieben ist. Dabei macht sie jedoch größtenteils nicht von moderneren C++ Features Gebrauch, da der Hauptteil des Simulatorkerns bereits seit über 20 Jahre besteht, und Kompatibilität mit C gewährleistet werden soll.
+Die Bibliothek N++ ist in C++ verfasst. Da sie seit über 20 Jahren besteht, verwendet sie größtenteils keine modernen C++-Features, unter anderem auch um die Kompatibilität mit C beizubehalten, da der Kern des Simulators auf dieser älteren Sprachversion aufbaut. Oft werden im Quellcode Funktionen der Standartbibliothek von C denen von C++ vorgezogen.
 
-N++ ermöglicht es dem Anwender die Netztopologie zu spezifizieren und das Netz genau den gegebenen Bedürfnissen anzupassen. Dabei können unter anderem die Anzahl an Schichten, die Größe der Schichten als auch die Größe der Ein- und Ausgabeschichten festgelegt werden.
-Sobald ein Netz besteht können Eingabemuster vorwärts propagiert werden. Das Ergebnis kann dann ausgelesen werden und optional kann mit Rückwärtspropagation des Fehlervektors ein Lernen des Netzwerks simuliert werden. Die Gewichte werden dabei automatisch angepasst.
-Generierte Netze können in eine Datei geschrieben werden, um sie zu einem späteren Zeitpunkt erneut verwenden zu können, was beispielsweise für reproduzierbare Experimente nötig ist.
+N++ ermöglicht es dem Benutzer, die Topologie des neuronalen Netzes zu spezifizieren und es an die spezifischen Anforderungen anzupassen. Hierbei können Parameter wie die Anzahl der Schichten, die Größe der Schichten sowie die Dimensionen der Ein- und Ausgabeschichten festgelegt werden \citep{dokumentation_n++}. Nach der Konfiguration des Netzes können Eingabemuster durch Vorwärtspropagation propagiert werden. Die resultierenden Ausgaben können abgerufen werden, und optional kann durch Rückwärtspropagation des Fehlervektors ein Lernprozess des Netzwerks simuliert werden, wobei die Gewichte automatisch angepasst werden. Generierte Netze können in Dateien gespeichert werden, um sie zu einem späteren Zeitpunkt wiederzuverwenden, insbesondere für reproduzierbare Experimente.
 
-In dem folgenden Code Ausschnitt wird ein Beispielnetz mit 3 Schichten erstellt. Dabei hat die Eingabeschicht 2 und die Ausgabeschicht 3 Parameter. Die verborgene Schicht hat dabei 4.
-Es ist gut zu sehen, dass die N++ Bibliothek einfaches Austauschen der Updatefunktionen unterstützt. In Zeile 16 und 17 wird die Updatefunktion auf Rückwärtspropagation gesetzt, was ohne große Mühe geändert werden könnte.
+In Codeausschnitt \ref{npp_examplenet_code}, welcher eine vereinfachte Form des Beispielnetzes aus der N++-Dokumentation darstellt, wird ein Beispielnetz mit drei Schichten erstellt. Die Eingabeschicht hat dabei zwei Parameter, die Ausgabeschicht drei, und die versteckte Schicht hat vier Parameter. Es ist ersichtlich, dass die N++-Bibliothek das einfache Austauschen von Updatefunktionen unterstützt. In den Zeilen 16 und 17 wird die Updatefunktion dynamisch auf Rückwärtspropagation gesetzt, was ohne großen Aufwand möglich ist \citep{dokumentation_n++}.
 
+\begin{listing}[!ht]
 \begin{minted}
 [
 frame=lines,
@@ -44,10 +41,15 @@ int main() {
     net.set_update_f(BP, uparams);
 }
 \end{minted}
+\caption{Vereinfachte Form des Beispielnetzes aus der N++-Dokumentation}
+\label{npp_examplenet_code}
+\end{listing}
 
 \section{Bestehender Code}
 \label{sec:Bestehender_Code_Brening}
 \sectionmark{Bestehender Code}
+
+
 
 \section{Voraussetzungen}
 \label{sec:Voraussetzungen_Parallelisierung}

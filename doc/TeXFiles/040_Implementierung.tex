@@ -1,23 +1,69 @@
 \chapter{Implementierung der Parallelisierung in N++}
-\label{ch:Zielstellung}
+\label{ch:Implementierung_Parallelisierung_Npp}
+\chaptermark{Implementierung}
 
 \section{Erläuterung des N++ Simulatorkerns}
-\label{sec:Zielstellung_Forschungsfrage}
+\label{sec:Erlauterung_Npp}
+\sectionmark{Erläuterung N++}
+N++ ist ein Simulator für neuronale Netze, welcher als Forschungsprojekt innerhalb der Frankfurt University of Applied Sciences programmiert wurde.
+Es können mehrere neuronale Netze simuliert werden, und es soll dem Anwender ermöglicht werden, ohne größeren Aufwand die Grundfunktionen zu erweitern und eine simple Schnittstelle für Anwenderprogramme bereitgestellt werden.
+
+N++ ist eine Bibliothek, welche in C++ geschrieben ist. Dabei macht sie jedoch größtenteils nicht von moderneren C++ Features Gebrauch, da der Hauptteil des Simulatorkerns bereits seit über 20 Jahre besteht, und Kompatibilität mit C gewährleistet werden soll.
+
+N++ ermöglicht es dem Anwender die Netztopologie zu spezifizieren und das Netz genau den gegebenen Bedürfnissen anzupassen. Dabei können unter anderem die Anzahl an Schichten, die Größe der Schichten als auch die Größe der Ein- und Ausgabeschichten festgelegt werden.
+Sobald ein Netz besteht können Eingabemuster vorwärts propagiert werden. Das Ergebnis kann dann ausgelesen werden und optional kann mit Rückwärtspropagation des Fehlervektors ein Lernen des Netzwerks simuliert werden. Die Gewichte werden dabei automatisch angepasst.
+Generierte Netze können in eine Datei geschrieben werden, um sie zu einem späteren Zeitpunkt erneut verwenden zu können, was beispielsweise für reproduzierbare Experimente nötig ist.
+
+In dem folgenden Code Ausschnitt wird ein Beispielnetz mit 3 Schichten erstellt. Dabei hat die Eingabeschicht 2 und die Ausgabeschicht 3 Parameter. Die verborgene Schicht hat dabei 4.
+Es ist gut zu sehen, dass die N++ Bibliothek einfaches Austauschen der Updatefunktionen unterstützt. In Zeile 16 und 17 wird die Updatefunktion auf Rückwärtspropagation gesetzt, was ohne große Mühe geändert werden könnte.
+
+\begin{minted}
+[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+]{c++}
+#include "n++.h"
+
+#define INPUTS 2
+#define OUTPUTS 3
+#define LAYERS 3
+
+int main() {
+    Net net;
+    // Schichten des Netzes erstellen und miteinander verbinden
+    int layerNodes[LAYERS] = {INPUTS, 4, OUTPUTS};
+    net.create_layers(LAYERS, layerNodes);
+    net.connect_layers();
+    // Gewichte mit Zufallszahlen zwischen 0 und 0,5 initialisieren
+    net.init_weights(0, 0.5);
+    // Updatefunktion auf Rückwärtspropagation setzen
+    float uparams[5] = {0.1, 0.9, 0, 0, 0};
+    net.set_update_f(BP, uparams);
+}
+\end{minted}
+
+\section{Bestehender Code von Herr Brening}
+\label{sec:Bestehender_Code_Brening}
+\sectionmark{Voraussetzungen}
 
 \section{Voraussetzungen}
-\label{sec:Implementierung_Voraussetzung}
+\label{sec:Voraussetzungen_Parallelisierung}
+\sectionmark{Voraussetzungen}
 
-\subsection{Entfernung von Data Races}
-\label{sec:Implementierung_Entfernung_Variablen}
+\subsection{Entfernung von geteilten Speicherzugriffen}
+\label{sec:Entfernung_geteilte_Speicherzugriffe}
 
 \subsection{Verlagerung der zu parallelisierenden Routine}
-\label{sec:Implementierung_Routine}
+\label{sec:Verlagerung_parallelisierende_Routine}
 
 \section{Vorstellung der Implementierung}
-\label{sec:Implementierung_Vorstellung}
+\label{sec:Vorstellung_Implementierung}
 
 \subsection{Verwendung von threadsicheren Funktionen}
-\label{sec:Implementierung_Threadsichere_Funktionen}
+\label{sec:Verwendung_threadsichere_Funktionen}
 
 \subsection{Entfernung globaler Variablen}
-\label{sec:Implementierung_Globale_Variablen}
+\label{sec:Entfernung_globaler_Variablen}

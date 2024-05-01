@@ -105,8 +105,15 @@ In Bezug auf den Cache verfügt der Ryzen 5 3600XT über 32KB L1-Cache, 512KB L2
 \end{figure}
 
 \subsection{Raspberry Pi 3}
+Der Raspberry Pi 3 ist ein Single-Board-Computer, der von der Raspberry Pi Foundation entwickelt wurde. Ein Single-Board-Computer ist eine vollständige Computerplatine, die alle erforderlichen Komponenten wie Prozessor, Speicher, Ein-/Ausgabeanschlüsse und Stromversorgung auf einer einzigen Platine vereint. Der Raspberry Pi 3 wurde 2016 veröffentlicht und basiert auf einem ARM Cortex-A53 Quad-Core-Prozessor mit einer Taktfrequenz von 1,2 GHz und 1 GB LPDDR2-RAM \citep{RaspberryPi_Technische_Daten}.
 
-\begin{figure}[htbp!]
+Im Vergleich zu anderen Prozessoren ist der Raspberry Pi 3 natürlich langsamer. Seine Spezifikationen bieten eine grundlegende Leistung für einfache Computing-Aufgaben und den Betrieb von IoT (Internet der Dinge)-Anwendungen.
+
+Der Raspberry Pi 3 ist aufgrund seiner geringen Größe, seines geringen Stromverbrauchs und seiner vielfältigen Einsatzmöglichkeiten beliebt. Er wird häufig in Bildungsprojekten, DIY (Do It Yourself)-Projekten, Heimautomatisierungssystemen und als kostengünstige Entwicklungsumgebung für Softwareentwickler eingesetzt. Trotz seiner begrenzten Leistungsfähigkeit erfüllt der Raspberry Pi 3 wichtige Funktionen in verschiedenen Anwendungsbereichen aufgrund seiner Kompaktheit und seines erschwinglichen Preises.
+
+Aufgrund der begrenzten Leistung des Raspberry Pi 3 und der damit verbundenen Laufzeiten konnte der Testablauf nicht vollständig durchgeführt werden. Es wurden maximal 4 Threads getestet, und die Partitionen wurden auf 8 und 4 begrenzt.
+
+\begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{../results/plots/raspberrypi3/comp_all_threads.pdf}
 \caption{Ergebnisse der Leistungstests verglichen nach Thread Anzahl}

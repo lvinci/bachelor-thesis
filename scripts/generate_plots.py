@@ -45,7 +45,10 @@ def generate_comp_all_threads_plot(benchmark_id: string, dataset: list[DatasetRo
         index += 1
     data_file.close()
     # Generate the plot
-    subprocess.run(["cp", "plots/comp_all_threads.gp", f'../results/plots/{benchmark_id}/comp_all_threads.gp'])
+    if len(lines) < 6:
+        subprocess.run(["cp", "plots/comp_all_threads_small.gp", f'../results/plots/{benchmark_id}/comp_all_threads.gp'])
+    else:
+        subprocess.run(["cp", "plots/comp_all_threads.gp", f'../results/plots/{benchmark_id}/comp_all_threads.gp'])
     os.chdir(f'../results/plots/{benchmark_id}/')
     subprocess.run(["gnuplot", "comp_all_threads.gp"])
     os.chdir("../../../scripts")
@@ -73,7 +76,10 @@ def generate_comp_all_partitions_plot(benchmark_id: string, dataset: list[Datase
         index += 1
     data_file.close()
     # Generate the plot
-    subprocess.run(["cp", "plots/comp_all_partitions.gp", f'../results/plots/{benchmark_id}/comp_all_partitions.gp'])
+    if len(lines) < 4:
+        subprocess.run(["cp", "plots/comp_all_partitions_small.gp", f'../results/plots/{benchmark_id}/comp_all_partitions.gp'])
+    else:
+        subprocess.run(["cp", "plots/comp_all_partitions.gp", f'../results/plots/{benchmark_id}/comp_all_partitions.gp'])
     os.chdir(f'../results/plots/{benchmark_id}/')
     subprocess.run(["gnuplot", "comp_all_partitions.gp"])
     os.chdir("../../../scripts")

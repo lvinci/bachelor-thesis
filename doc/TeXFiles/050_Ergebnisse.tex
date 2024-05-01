@@ -25,7 +25,7 @@ Das Skript misst die benötigten Laufzeiten der Durchläufe und schreibt nach je
 
 Als Parameter ist es möglich, die maximale Anzahl an Threads festzulegen. So ist es beispielsweise auf einem Raspberry Pi sinnvoll, das Programm nur mit maximal 4 Threads zu testen, da er nur über 4 Threads verfügt.
 
-Das Skript ist simpel und wurde in Bash geschrieben, was die Portabilität zwischen Linux und MacOS gewährleistet. Dabei wurde jedoch das Programm bc in dem Skript verwendet, welches auf Linux standardmäßig nicht vorinstalliert ist.
+Das Skript ist simpel und wurde in Bash geschrieben, was die Portabilität zwischen Linux und MacOS gewährleistet. Dabei wurde jedoch das Programm bc verwendet, welches auf Linux standardmäßig nicht vorinstalliert ist.
 
 \begin{figure}[H]
 \begin{minted}
@@ -37,28 +37,16 @@ fontsize=\footnotesize,
 linenos
 ]{bash}
 #!/bin/bash
-EXECUTABLE="./lucavinciguerra-bathesis"
 ATTEMPTS=5
-PARTITIONS=(8 4 2 1) # Partitions to be tested
-THREADS=(10 8 6 4 2 1) # Thread counts to be tested
-AVAILABLE_THREADS=10 # Amount of threads to be used
-CSV_FILE="benchmark_results.csv"
+PARTITIONS=(8 4 2 1) # Verschiedene Partitionen zum Testen
+THREADS=(10 8 6 4 2 1) # Verschiedene Thread Anzahlen zum Testen
+AVAILABLE_THREADS=10 # Maximal verfügbare Anzahl an Threads für aktuelles System
 
-# Run the attempt with the given values
 function run_attempt {
-  local threadcount=$1
-  local partitioncount=$2
-  local attempt=$3
-  echo -e "$partitioncount partitions / $threadcount threads $attempt "
-  local filename="attempt_${attempt}_${partitioncount}p_${threadcount}t.txt"
-  start=$(date +%s.%3N)
-  { time $EXECUTABLE > /dev/null; } 2>> "$filename"
-  end=$(date +%s.%3N)
-  echo "TOTAL TIME: $(echo "$end - $start" | bc) seconds" >> "$filename"
-  echo "$threadcount,$partitioncount,$attempt,$(echo "$end - $start" | bc)" >> "$CSV_FILE"
+    # Hier wird ein Durchlauf durchgeführt und getestet
 }
 
-# Run the benchmarks for all possible combinations
+# Test für jede mögliche Kombination durchführen
 for partition in ${PARTITIONS[@]};do
   for threads in ${THREADS[@]};do
       if ((threads <= AVAILABLE_THREADS));then
@@ -77,6 +65,10 @@ done
 
 \subsection{Apple M1 Pro}
 
+Der M1 Pro Prozessor, der im MacBook Pro 16 Zoll verwendet wird, integriert eine heterogene Mehrkernarchitektur, die auf die Parallelverarbeitung von Aufgaben ausgelegt ist. Der M1 Pro wurde 2021 vorgestellt und ist eine hochskalierte Version des M1 Prozessors. Er verfügt über insgesamt 12 CPU-Kerne, darunter 8 Hochleistungskerne und 4 Effizienzkerne \citep{MacBook_Technische_Daten}. Die Hochleistungskerne sind für rechenintensive Aufgaben konzipiert, während die Effizienzkerne für weniger anspruchsvolle Aufgaben und eine Reduzierung des Energieverbrauchs optimiert sind.
+
+In Bezug auf die Leistung bietet der M1 Pro Prozessor eine sehr beeindruckende Single-Core-Leistung sowie eine bemerkenswerte parallele Verarbeitungsfähigkeit für multithreaded Anwendungen. Die genaue Hauptspeichergröße beträgt 16 GB RAM mit einer Speicherbandbreite von 200 GBit/s \citep{MacBook_Technische_Daten}. Auch die Cache-Größe des Prozessors ist sehr hoch, was die Latenz bei Speicherzugriffen zusätzlich vermindert.
+
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{../results/plots/m1pro/comp_all_threads.pdf}
@@ -92,6 +84,11 @@ done
 \end{figure}
 
 \subsection{AMD Ryzen 3600XT}
+Der AMD Ryzen 5 3600XT ist ein Prozessor aus der Ryzen 3000-Serie von AMD, der im Jahr 2020 eingeführt wurde. Er verfügt über insgesamt 6 CPU-Kerne und 12 Threads auf Basis der Zen 2-Architektur, welche auch im Servermarkt verbreitet ist. Es handelt sich um einen Desktopprozessor mit einer maximalen Leistungsaufnahme von 95 Watt \citep{Ryzen_Technische_Daten}.
+
+Der Prozessor unterstützt DDR4-RAM mit unübertakteten Geschwindigkeiten von bis zu 3200 MHz \citep{Ryzen_Technische_Daten}. Die genaue Speicherbandbreite und Größe hängt von der verwendeten RAM-Konfiguration ab, da Desktop Prozessoren modular in verschiedene Systeme eingebaut werden können.
+
+In Bezug auf den Cache verfügt der Ryzen 5 3600XT über 32KB L1-Cache, 512KB L2-Cache und 32MB L3-Cache pro Kern  \citep{Ryzen_Technische_Daten}. In der Konfiguration des Testcomputers sind 16GB DDR4 Speicher mit 3600 MHz verbaut, und der Prozessor wird mit einer Wasserkühlung gekühlt, was für eine gleichmäßige und Robuste Kühlung sorgt.
 
 \begin{figure}[htbp!]
 \centering

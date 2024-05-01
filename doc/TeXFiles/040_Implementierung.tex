@@ -11,9 +11,9 @@ Die Bibliothek N++ ist in C++ verfasst. Da sie seit über 20 Jahren besteht, ver
 
 N++ ermöglicht es dem Benutzer, die Topologie des neuronalen Netzes zu spezifizieren und es an die spezifischen Anforderungen anzupassen. Hierbei können Parameter wie die Anzahl der Schichten, die Größe der Schichten sowie die Dimensionen der Ein- und Ausgabeschichten festgelegt werden \citep{dokumentation_n++}. Nach der Konfiguration des Netzes können Eingabemuster durch Vorwärtspropagation propagiert werden. Die resultierenden Ausgaben können abgerufen werden, und optional kann durch Rückwärtspropagation des Fehlervektors ein Lernprozess des Netzwerks simuliert werden, wobei die Gewichte automatisch angepasst werden. Generierte Netze können in Dateien gespeichert werden, um sie zu einem späteren Zeitpunkt wiederzuverwenden, insbesondere für reproduzierbare Experimente.
 
-In Codeausschnitt \ref{npp_examplenet_code}, welcher eine vereinfachte Form des Beispielnetzes aus der N++-Dokumentation darstellt, wird ein Beispielnetz mit drei Schichten erstellt. Die Eingabeschicht hat dabei zwei Parameter, die Ausgabeschicht drei, und die versteckte Schicht hat vier Parameter. Es ist ersichtlich, dass die N++-Bibliothek das einfache Austauschen von Updatefunktionen unterstützt. In den Zeilen 16 und 17 wird die Updatefunktion dynamisch auf Rückwärtspropagation gesetzt, was ohne großen Aufwand möglich ist \citep{dokumentation_n++}.
+In Codeausschnitt \ref{fig:npp_examplenet_code}, welcher eine vereinfachte Form des Beispielnetzes aus der N++-Dokumentation darstellt, wird ein Beispielnetz mit drei Schichten erstellt. Die Eingabeschicht hat dabei zwei Parameter, die Ausgabeschicht drei, und die versteckte Schicht hat vier Parameter. Es ist ersichtlich, dass die N++-Bibliothek das einfache Austauschen von Updatefunktionen unterstützt. In den Zeilen 16 und 17 wird die Updatefunktion dynamisch auf Rückwärtspropagation gesetzt, was ohne großen Aufwand möglich ist \citep{dokumentation_n++}.
 
-\begin{listing}[!ht]
+\begin{figure}[!ht]
 \begin{minted}
 [
 frame=lines,
@@ -42,14 +42,14 @@ int main() {
 }
 \end{minted}
 \caption{Vereinfachte Form des Beispielnetzes aus der N++-Dokumentation}
-\label{npp_examplenet_code}
-\end{listing}
+\label{fig:npp_examplenet_code}
+\end{figure}
 
 \section{Bestehender Code}
 \label{sec:Bestehender_Code_Brening}
 \sectionmark{Bestehender Code}
 
-
+Als bestehender Code wird ein Experiment aus der Bachelorarbeit von \citep{thesis_Artur_Brening}
 
 \section{Voraussetzungen}
 \label{sec:Voraussetzungen_Parallelisierung}
@@ -57,7 +57,6 @@ int main() {
 
 \subsection{Entfernung von geteilten Speicherzugriffen}
 \label{sec:Entfernung_geteilte_Speicherzugriffe}
-
 
 
 \subsection{Verlagerung der zu parallelisierenden Routine}

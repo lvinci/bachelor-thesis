@@ -77,8 +77,8 @@ bool parseDatasetRow(const string &line, DatasetRow *row) {
     stringstream ss(line);
     string substr;
     // Parse the first floats separated by ';'
-    for (int i = 0; i < INPUTS; ++i) {
-        if (!getline(ss, substr, ';') || !(istringstream(substr) >> row->input[i])) {
+    for (float & i : row->input) {
+        if (!getline(ss, substr, ';') || !(istringstream(substr) >> i)) {
             return false; // If conversion fails or delimiter is missing, return false
         }
     }
@@ -106,7 +106,7 @@ inline bool fileExists(const std::string &name) {
  * @param dataset vector to save the parsed dataset rows
  * @return true if the dataset could be read, false otherwise
  */
-bool readDataset(string filename, vector<DatasetRow> *dataset) {
+bool readDataset(const string& filename, vector<DatasetRow> *dataset) {
     ifstream file(filename);
     if (!file || !file.is_open()) {
         return false;
@@ -180,7 +180,7 @@ void analyzeResults(const int threadcount, const int partitionCount, const int a
             "results_attempt" + to_string(attempt) + "_" + to_string(partitionCount) + "partitions_" +
             to_string(threadcount) + "threads.txt");
     for (int i = 0; i <= EPOCHS; i++) {
-        double tssVariance = 0, tssDeviation = 0, testTssVariance = 0, testTssDeviation = 0, correctsVariance = 0, correctsDeviation = 0;
+        double tssVariance, tssDeviation, testTssVariance, testTssDeviation, correctsVariance, correctsDeviation;
         double mse = 0, mseTesting = 0, corrects = 0;
         for (int seed = 1; seed <= SEEDS; seed++) {
             mse += combinedMSE[seed][i];

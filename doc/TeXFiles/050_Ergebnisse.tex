@@ -72,28 +72,37 @@ In Bezug auf die Leistung bietet der M1 Pro Prozessor eine sehr beeindruckende S
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{../results/plots/m1pro/comp_all_threads.pdf}
-\caption{Ergebnisse der Leistungstests verglichen nach Thread Anzahl}
+\caption{Performance-Benchmark auf Apple M1 Pro: Einfluss von Thread-Anzahlen auf Verarbeitungszeit bei variierenden Datensatzgrößen}
 \label{fig:m1pro_benchmark_threads}
 \end{figure}
+
+Die Analyse der Benchmark-Ergebnisse auf dem M1 Pro-Prozessor aus Abbildung \ref{fig:m1pro_benchmark_threads} liefert wertvolle Einblicke in die Leistungsfähigkeit seiner Mehrkernarchitektur und der Effektivität von Parallelisierung des Programms. Durch Tests mit 10, 8, 6, 4, 2 und 1 Threads konnte eine nahezu lineare Skalierung der Leistung beobachtet werden, wobei 10 Threads annähernd eine zehnfache Beschleunigung im Vergleich zu einem einzelnen Thread erzielten.
+
+Interessanterweise zeigt sich jedoch eine bemerkenswerte Konvergenz der Leistungskurven bei 6 und 8 Threads. Dies resultiert aus der Verteilung der parallelen Aufgaben auf die verfügbaren Threads. Mit 6 Threads werden zunächst 6 Aufgaben bearbeitet, während 4 Aufgaben verbleiben. Die verbleibenden 4 Aufgaben erfordern ungefähr dieselbe Ausführungszeit wie die 2 zusätzlichen Aufgaben bei Verwendung von 8 Threads. Diese Konvergenz erklärt die nahezu identischen Leistungskurven bei 6 und 8 Threads.
+Bei 6 Threads könnten zwar insgesamt 6 Aufgaben bearbeitet werden, jedoch sind beim zweiten Durchlauf 2 Threads im Leerlauf, während die verbleibenden 4 Threads genutzt werden. Bei 8 Threads bleiben im zweiten Durchlauf sogar 6 Threads inaktiv. Diese Effizienzunterschiede führen zu einer vergleichbaren Ausführungszeit für die verbleibenden Aufgaben bei 6 und 8 Threads.
 
 \begin{figure}[htbp!]
 \centering
 \includegraphics[width=0.8\textwidth]{../results/plots/m1pro/comp_all_partitions.pdf}
-\caption{Ergebnisse der Leistungstests verglichen nach Datensatzgröße}
+\caption{Performance-Benchmark auf Apple M1 Pro: Einfluss von Datensatzgrößen auf Verarbeitungszeit unter variierender Thread-Anzahl}
 \label{fig:m1pro_benchmark_partitions}
 \end{figure}
+
+Die Konvergenz ist auch in Abbildung \ref{fig:m1pro_benchmark_partitions} ersichtlich, in welcher die Leistung im Bezug auf verschiedene Datensatzgrößen verglichen wird. Dort ist klar erkennbar, das die Linien von 6 zu 8 Threads waagerecht verlaufen, was einem Gleichbleiben der benötigten Zeit für die Berechnung entspricht.
+
+Des Weiteren ist der Overhead der Parallelisierung ein wichtiger Aspekt, der bei der Interpretation der Ergebnisse berücksichtigt werden muss. Trotz der Parallelisierung von Aufgaben bleibt der Overhead auf dem M1 Pro-Prozessor in diesem spezifischen Kontext gering, jedoch definitiv nicht vernachlässigbar. Die Skalierung der Leistung bleibt hoch. Für die gesamte Datensatzgröße (1 Partition) lag die benötigte Zeit bei einem Thread bei 948,6 Sekunden, während mit 10 Threads eine Zeit von 129,4 Sekunden erzielt wurde. Bei einer theoretisch perfekten Skalierung der Parallelisierung wären bei 10 Threads 94,86 Sekunden zu erwarten, jedoch läuft beispielsweise die Auswertung der Ergebnisse nach dem Programmablauf immer sequenziell, und benötigt somit gleich viel Zeit unabhängig von der verwendeten Thread Anzahl. Des Weiteren ist der bereits angesprochene Overhead der Parallelisierung ein Faktor. Dieser kann teilweise auf das Betriebssystem zurückzuführen sein, das Ressourcen für die Verwaltung und Koordination der Threads bereitstellen muss, was zu zusätzlicher Latenz führen kann, insbesondere wenn die CPU bereits stark ausgelastet ist. Bei voller CPU-Auslastung können Temperaturthrottling-Mechanismen eingreifen, um die Betriebstemperatur der CPU zu regulieren, was zu vorübergehenden Leistungseinbußen führen kann, da die Taktfrequenz reduziert wird, um die Temperaturen im sicheren Bereich zu halten. Ein weiterer Faktor ist die begrenzte Anzahl von Performance-Kernen auf dem M1 Pro Prozessor, die dazu führen kann, dass bei einer höheren Thread-Anzahl als verfügbaren Performance-Kernen nicht alle Threads auf gleich schnellen Kernen laufen können.
 
 \subsection{AMD Ryzen 3600XT}
 Der AMD Ryzen 5 3600XT ist ein Prozessor aus der Ryzen 3000-Serie von AMD, der im Jahr 2020 eingeführt wurde. Er verfügt über insgesamt 6 CPU-Kerne und 12 Threads auf Basis der Zen 2-Architektur, welche auch im Servermarkt verbreitet ist. Es handelt sich um einen Desktopprozessor mit einer maximalen Leistungsaufnahme von 95 Watt \citep{Ryzen_Technische_Daten}.
 
 Der Prozessor unterstützt DDR4-RAM mit unübertakteten Geschwindigkeiten von bis zu 3200 MHz \citep{Ryzen_Technische_Daten}. Die genaue Speicherbandbreite und Größe hängt von der verwendeten RAM-Konfiguration ab, da Desktop Prozessoren modular in verschiedene Systeme eingebaut werden können.
 
-In Bezug auf den Cache verfügt der Ryzen 5 3600XT über 32KB L1-Cache, 512KB L2-Cache und 32MB L3-Cache \citep{Ryzen_Technische_Daten}. In der Konfiguration des Testcomputers sind 16GB DDR4 Speicher mit 3600 MHz verbaut, und der Prozessor wird mit einer Wasserkühlung gekühlt, was für eine gleichmäßige und Robuste Kühlung sorgt.
+In Bezug auf den Cache verfügt der Ryzen 5 3600XT über 32KB L1-Cache, 512KB L2-Cache und 32MB L3-Cache \citep{Ryzen_Technische_Daten}. In der Konfiguration des Testcomputers sind 16GB DDR4 Speicher mit 3600 MHz verbaut, und der Prozessor wird mit einer Wasserkühlung gekühlt, was für eine gleichmäßige und robuste Kühlung sorgt.
 
 \begin{figure}[htbp!]
 \centering
 \includegraphics[width=0.8\textwidth]{../results/plots/3600xt/comp_all_threads.pdf}
-\caption{Ergebnisse der Leistungstests verglichen nach Thread Anzahl}
+\caption{Performance-Benchmark auf Ryzen 5 3600XT: Einfluss von Thread-Anzahlen auf Verarbeitungszeit bei variierenden Datensatzgrößen}
 \label{fig:ryzen_benchmark_threads}
 \end{figure}
 

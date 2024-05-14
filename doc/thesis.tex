@@ -252,12 +252,11 @@
 % Zeilenabstand für das ganze Dokument (1.0 = Normalwert):
 \renewcommand{\baselinestretch}{1.0}
 
-%%%%% Acronymdefinitionen einbinden:
-\input{TeXFiles/005_Acronyms}
-
-
 \usepackage{fontsize}
   \changefontsize[14]{14}
+
+\usepackage[acronym]{glossaries}
+\makeglossaries
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% hier beginnt das eigentliche Dokument 
@@ -344,25 +343,8 @@
 
 \begin{appendix}
   \input{TeXFiles/090_Anhang}
+  \clearpage
 \end{appendix}
-
-\clearpage
-
-\ifdefined\ThesisLanguageIsEnglish
-\printglossary[type=\acronymtype, title=List of Abbreviations, toctitle=List of Abbreviations]
-\else
-\printglossary[type=\acronymtype, title=Abkürzungsverzeichnis, toctitle=Abkürzungsverzeichnis]
-\fi
-%\printglossary[type=acronym,title=Abbreviations]
-%\addcontentsline{toc}{section}{Abbreviations} 
-%\addcontentsline{toc}{chapter*}{Verzeichnis: Akronyme} 
-\clearpage
-
-\ifdefined\ThesisLanguageIsEnglish
-\printglossary[title=Glossary, toctitle=Glossary]
-\else
-\printglossary[title=Glossar, toctitle=Glossar]
-\fi
 
 %Falls man die Überschrift des Literaturverzeichnisses
 %aendern moechte, geht das durch Verwendung der folgenden Zeile:

@@ -167,6 +167,12 @@ static inline void initializeVectors(const DatasetRow &row, float *inVec, float 
     tarVec[1] = row.classification == 'h';
 }
 
+/**
+ * Squares the given number and returns the result.
+ * This function is used to make the analyzeResults function more readable.
+ * @param number number to be squared
+ * @return the number squared
+ */
 inline double square(double number) {
     return number * number;
 }

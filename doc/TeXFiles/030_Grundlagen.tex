@@ -10,28 +10,26 @@ Die Nutzung von Grafikprozessoren (GPUs) für parallele Berechnungen wird dabei 
 \label{sec:Grundlagen_Grundprinzipien_neuronale_Netze}
 Neuronale Netzwerke sind ein wesentlicher Bestandteil des maschinellen Lernens und der künstlichen Intelligenz. Sie sind inspiriert von der Funktionsweise des menschlichen Gehirns und bestehen aus einer Ansammlung miteinander verbundener Knoten, die genau wie beim menschlichen Gehirn als Neuronen bezeichnet werden \citep{Manuela_Kunstliche_Intelligenz}. Diese Netzwerke können eine Vielzahl von Aufgaben ausführen, von der Bilderkennung bis hin zur Sprachverarbeitung.
 
-Die Funktionsweise eines neuronalen Netzwerks lässt sich grob in zwei Hauptphasen unterteilen: Vorwärtspropagierung und Rückwärtspropagierung. Während der Vorwärtspropagierung fließen die Eingabedaten vorwärts durch das Netzwerk, beginnend mit den Neuronen der Eingabeschicht, welche die Rohdaten empfangen, und endend mit den Neuronen der Ausgabeschicht, wleche die Vorhersagen oder Klassifikationen des Netzwerks abbilden. Jedes Neuron in einem neuronalen Netzwerk ist mit anderen Neuronen verbunden, und diese Verbindungen sind mit Gewichten versehen, die die Stärke der Verbindung zwischen den Neuronen darstellen  \citep{Manuela_Kunstliche_Intelligenz}.
+Die Funktionsweise eines neuronalen Netzwerks lässt sich grob in zwei Hauptphasen unterteilen: Vorwärtspropagierung und Rückwärtspropagierung. Während der Vorwärtspropagierung fließen die Eingabedaten vorwärts durch das Netzwerk, beginnend mit den Neuronen der Eingabeschicht, welche die Rohdaten empfangen, und endend mit den Neuronen der Ausgabeschicht, welche die Vorhersagen oder Klassifikationen des Netzwerks abbilden. Jedes Neuron in einem neuronalen Netzwerk ist mit anderen Neuronen verbunden, und diese Verbindungen sind mit Gewichten versehen, die die Stärke der Verbindung zwischen den Neuronen darstellen  \citep{Manuela_Kunstliche_Intelligenz}.
 
-Während der Vorwärtspropagierung durchläuft jede Eingabe eine Reihe von Schichten im Netzwerk, wobei jede Schicht aus einer bestimmten Anzahl von Neuronen besteht. Jedes Neuron in einer Schicht erhält Inputs von den Neuronen der vorherigen Schicht, multipliziert diese Inputs mit den entsprechenden Gewichten und summiert sie. Anschließend wird eine Aktivierungsfunktion auf die gewichtete Summe angewendet, um die Ausgabe des Neurons zu berechnen, die dann an die Neuronen der nächsten Schicht weitergeleitet wird.
+Während der Vorwärtspropagierung durchläuft jede Eingabe eine Reihe von Schichten im Netzwerk, wobei jede Schicht aus einer bestimmten Anzahl von Neuronen besteht. Jedes Neuron in einer Schicht erhält Eingaben von den Neuronen der vorherigen Schicht, multipliziert diese Eingaben mit den entsprechenden Gewichten und summiert sie. Anschließend wird, wie in Gleichung \ref{eq:perceptron_weighted} gezeigt, eine Aktivierungsfunktion auf die gewichtete Summe angewendet, um die Ausgabe des Neurons zu berechnen, die dann an die Neuronen der nächsten Schicht weitergeleitet wird.
 
-Die Rückwärtspropagierung ist der Prozess, bei dem das Netzwerk lernt, indem es seine Gewichte entsprechend der Fehler zwischen den tatsächlichen und den vorhergesagten Ausgaben anpasst. Dies geschieht durch die Berechnung von Gradienten mit Hilfe des Backpropagation-Algorithmus und die Anpassung der Gewichte mithilfe eines Optimierungsalgorithmus wie dem Gradientenabstiegsverfahren.
+\begin{equation}
+    o=f\left(\sum_{k=1}^{n}i_{k}\cdot W_{k}\right)
+    \label{eq:perceptron_weighted}
+\end{equation}
+\todo{text}
+
+Die Rückwärtspropagierung ist der Prozess, bei dem das Netzwerk lernt, indem es seine Gewichte entsprechend der Fehler zwischen den tatsächlichen und den vorhergesagten Ausgaben anpasst. Dies geschieht durch die Berechnung von Gradienten mit Hilfe des Backpropagation-Algorithmus \todo{add citation} und die Anpassung der Gewichte mithilfe eines Optimierungsalgorithmus wie dem Gradientenabstiegsverfahren.
 
 Insgesamt ermöglicht die Funktionsweise von neuronalen Netzwerken die Modellierung komplexer Zusammenhänge in Daten und die Durchführung verschiedenster Aufgaben des maschinellen Lernens und der künstlichen Intelligenz.
 
 \section{Aufbau eines neuronalen Netzwerks}
 \label{sec:Grundlagen_Aufbau_neuronale_Netzwerke}
-\subsection{Neuronen und deren Verbindungen}
-\label{sec:Grundlagen_neuronen_und_Verbindungen}
-
-Ein künstliches neuronales Netzwerk besteht aus 
-
-Ein neuronales Netzwerk besteht aus einer Vielzahl von Neuronen, die in einem komplexen Netzwerk miteinander verbunden sind. Jedes Neuron empfängt Eingaben von anderen Neuronen oder von externen Quellen und verarbeitet diese Informationen, bevor es Signale an andere Neuronen weitergibt. Die Verbindungen zwischen den Neuronen werden durch Gewichte repräsentiert, die anzeigen, wie stark die Verbindung zwischen zwei Neuronen ist. Diese Gewichte werden während des Trainingsprozesses des neuronalen Netzwerks angepasst, um eine optimale Leistung zu erreichen.
-
-Die Funktionsweise eines Neurons kann vereinfacht als eine Summation der Eingaben multipliziert mit den entsprechenden Gewichten beschrieben werden, gefolgt von der Anwendung einer Aktivierungsfunktion. Diese Aktivierungsfunktion bestimmt, ob das Neuron aktiviert wird und Signale an die nächsten Neuronen weitergibt. Durch diese Schichtung und Verbindung der Neuronen kann das neuronale Netzwerk komplexe Muster erkennen und Informationen verarbeiten.
 
 \subsection{Schichten und ihre Funktionen}
 \label{sec:Grundlagen_Schichten}
-Ein neuronales Netzwerk ist in der Regel in verschiedene Schichten organisiert, die jeweils spezifische Funktionen erfüllen. Die erste Schicht wird oft als Eingangsschicht bezeichnet und empfängt die Rohdaten oder Merkmale, die dem Netzwerk präsentiert werden. Diese Daten werden dann durch das Netzwerk weitergeleitet, wobei jede Schicht eine spezifische Transformation durchführt.
+Ein mehrlagiges neuronales Netzwerk ist in verschiedene Schichten organisiert, die jeweils spezifische Funktionen erfüllen. Die erste Schicht wird oft als Eingangsschicht bezeichnet und empfängt die Rohdaten oder Merkmale, die dem Netzwerk präsentiert werden. Diese Daten werden dann durch das Netzwerk weitergeleitet, wobei jede Schicht eine spezifische Transformation durchführt.
 
 Zwischen der Eingangsschicht und der Ausgangsschicht können mehrere versteckte Schichten vorhanden sein. Diese versteckten Schichten sind entscheidend für die Fähigkeit des Netzwerks, komplexe Muster zu lernen und abstrakte Merkmale zu extrahieren. Jede Schicht lernt auf unterschiedlichen Abstraktionsebenen und trägt zur schrittweisen Verbesserung der Leistung des Netzwerks bei.
 
@@ -39,12 +37,12 @@ Die Ausgangsschicht liefert schließlich die Ergebnisse der Netzwerkberechnungen
 
 \subsection{Vorwärtsgerichtete und rückwärtsgerichtete Netzwerke}
 \label{sec:Grundlagen_vorwarts_Netzwerke}
-Neuronale Netzwerke können in zwei Hauptkategorien unterteilt werden lorem ipsum dolor: vorwärtsgerichtete (feedforward) und rückwärtsgerichtete (feedback) Netzwerke.
+Neuronale Netzwerke können in zwei Hauptkategorien unterteilt werden lorem ipsum dolor: vorwärtsgerichtete (feedforward) und rückgekoppelte (feedback) Netzwerke.
 Vorwärtsgerichtete Netzwerke sind die am häufigsten verwendete Architektur in der neuronalen Netzwerkwissenschaft. In diesen Netzwerken fließen die Informationen nur in eine Richtung, von der Eingangsschicht zur Ausgangsschicht, ohne Rückkopplungsschleifen. Das bedeutet, dass die Ausgabe jedes Neurons in einer Schicht nur von den Eingaben der vorhergehenden Schicht abhängt und nicht von den Ausgaben der Neuronen derselben Schicht oder einer späteren Schicht.
 
 Dieses einfache Flussmuster ermöglicht eine effiziente Berechnung und einfache Interpretation der Ergebnisse. Vorwärtsgerichtete Netzwerke eignen sich besonders gut für Anwendungen wie Klassifikation und Regression, bei denen eine direkte Zuordnung von Eingaben zu Ausgaben erfolgt.
 
-Im Gegensatz dazu haben rückwärtsgerichtete Netzwerke Rückkopplungsschleifen, die es ermöglichen, Informationen sowohl vorwärts als auch rückwärts durch das Netzwerk zu propagieren. Diese Art von Netzwerken, auch als rekurrente neuronale Netzwerke (RNNs) bekannt, sind besonders gut geeignet für die Verarbeitung sequenzieller Daten, bei denen der Kontext und die zeitliche Abfolge der Eingaben wichtig sind.
+Im Gegensatz dazu haben rückgekoppelte Netzwerke Rückkopplungsschleifen, die es ermöglichen, Informationen sowohl vorwärts als auch rückwärts durch das Netzwerk zu propagieren. Diese Art von Netzwerken, auch als rekurrente neuronale Netzwerke (RNNs) bekannt, sind besonders gut geeignet für die Verarbeitung sequenzieller Daten, bei denen der Kontext und die zeitliche Abfolge der Eingaben wichtig sind.
 
 RNNs sind in der Lage, vergangene Informationen zu berücksichtigen und sie in die aktuelle Berechnung einzubeziehen, was sie besonders nützlich für Aufgaben wie Sprachverarbeitung, Zeitreihenanalyse und maschinelles Übersetzen macht.
 
@@ -52,26 +50,31 @@ Die Wahl zwischen vorwärtsgerichteten und rückwärtsgerichteten Netzwerken hä
 
 \section{Anwendungsfälle von neuronalen Netzwerken}
 \label{sec:Grundlagen_Anwendungsfälle}
+
 Neuronale Netzwerke haben sich besonders im letzten Jahrzehnt als äußerst vielseitige Instrumente erwiesen und finden breite Anwendung in diversen Branchen. Prominente Einsatzgebiete umfassen:
 
-Bilderkennung und Computer Vision: Eine der bekanntesten Anwendungen von neuronalen Netzwerken ist die Bilderkennung, mit der Objekte, Gesichter, Muster und weitere Elemente in Bildmaterial identifiziert und klassifiziert werden können \citep{LeCun_Deep_Learning}. Als Beispiel sind zum Beispiel die simple Gesichtserkennung zum Entsperren von Smartphones, sowie die Erkennung von Personen auf Bildern in verschiedenen Cloudservices zu nennen.
+\begin{itemize} 
 
-Natürliche Sprachverarbeitung: In der Natürlichen Sprachverarbeitung, auch NLP genannt, kommen neuronale Netzwerke zum Einsatz, um menschenähnliche Sprache zu verstehen, zu interpretieren und zu generieren. Anwendungen erstrecken sich von Chatbots und virtuellen Assistenten bis hin zu maschineller Übersetzung und Analyse von Inhalt in sozialen Medien.
+\item Bilderkennung und Computer Vision: Eine der bekanntesten Anwendungen von neuronalen Netzwerken ist die Bilderkennung, mit der Objekte, Gesichter, Muster und weitere Elemente in Bildmaterial identifiziert und klassifiziert werden können \citep{LeCun_Deep_Learning}. Als Beispiel sind zum Beispiel die simple Gesichtserkennung zum Entsperren von Smartphones, sowie die Erkennung von Personen auf Bildern in verschiedenen Cloudservices zu nennen.
 
-Mustererkennung und Prognose: Neuronale Netzwerke finden in diversen Domänen Anwendung bei der Mustererkennung und Prognose. Dies umfasst unter anderem das Finanzwesen, Gesundheitswesen und den Verkehr. Sie ermöglichen die Identifikation von Mustern in umfangreichen Datensätzen und die Vorhersage zukünftiger Ereignisse. Weitere wichtige Anwendungsgebiete sind die Prognose von Wetterdaten und die Analyse von Verspätungsdaten öffentlicher Verkehrsmittel.
+\item Natürliche Sprachverarbeitung: In der Natürlichen Sprachverarbeitung, auch NLP genannt, kommen neuronale Netzwerke zum Einsatz, um menschenähnliche Sprache zu verstehen, zu interpretieren und zu generieren. Anwendungen erstrecken sich von Chatbots und virtuellen Assistenten bis hin zu maschineller Übersetzung und Analyse von Inhalt in sozialen Medien.
 
-Autonome Fahrzeuge: In der Automobilindustrie spielen neuronale Netzwerke eine Schlüsselrolle bei der Entwicklung autonomer Fahrzeuge. Sie werden eingesetzt, um Hindernisse zu erkennen, Verkehrssituationen zu verstehen, Routen zu planen und Fahrzeugfunktionen zu steuern.
+\item Mustererkennung und Prognose: Neuronale Netzwerke finden in diversen Domänen Anwendung bei der Mustererkennung und Prognose. Dies umfasst unter anderem das Finanzwesen, Gesundheitswesen und den Verkehr. Sie ermöglichen die Identifikation von Mustern in umfangreichen Datensätzen und die Vorhersage zukünftiger Ereignisse. Weitere wichtige Anwendungsgebiete sind die Prognose von Wetterdaten und die Analyse von Verspätungsdaten öffentlicher Verkehrsmittel.
 
-Medizinische Diagnose: Neuronale Netzwerke werden in der medizinischen Bildgebung verwendet, um Krankheiten wie Krebs auf Röntgen- und MRT-Scans zu identifizieren. Sie unterstützen Ärzte auch bei der Diagnose von Krankheiten und der Vorhersage von Behandlungsergebnissen anhand von Patientendaten \citep{LeCun_Deep_Learning}.
+\item Autonome Fahrzeuge: In der Automobilindustrie spielen neuronale Netzwerke eine Schlüsselrolle bei der Entwicklung autonomer Fahrzeuge. Sie werden eingesetzt, um Hindernisse zu erkennen, Verkehrssituationen zu verstehen, Routen zu planen und Fahrzeugfunktionen zu steuern.
 
-Finanzwesen: Im Finanzsektor kommen neuronale Netzwerke für die Kreditrisikobewertung, Betrugserkennung, Handelsstrategien und Marktanalyse zum Einsatz. Sie unterstützen Finanzinstitute bei fundierten Entscheidungen und der Minimierung von Risiken.
+\item Medizinische Diagnose: Neuronale Netzwerke werden in der medizinischen Bildgebung verwendet, um Krankheiten wie Krebs auf Röntgen- und MRT-Scans zu identifizieren. Sie unterstützen Ärzte auch bei der Diagnose von Krankheiten und der Vorhersage von Behandlungsergebnissen anhand von Patientendaten \citep{LeCun_Deep_Learning}.
+
+\item Finanzwesen: Im Finanzsektor kommen neuronale Netzwerke für die Kreditrisikobewertung, Betrugserkennung, Handelsstrategien und Marktanalyse zum Einsatz. Sie unterstützen Finanzinstitute bei fundierten Entscheidungen und der Minimierung von Risiken.
+
+\end{itemize}
 
 Diese Anwendungsbereiche verdeutlichen die Vielseitigkeit und transformative Kraft neuronaler Netzwerke in diversen Branchen und Disziplinen. Durch kontinuierliche Forschung und Entwicklung werden ihre Fähigkeiten kontinuierlich erweitert, was zu neuen Anwendungen führt.
 
+\todo{eventuell kürzen oder weglassen}
+
 \section{Einführung in die Parallelisierung}
 \label{sec:Grundlagen_Parallelisierung}
-\subsection{Definition und Herangehensweise}
-\label{sec:Grundlagen_Parallelisierung_Herangehensweise}
 Die Parallellisierung stellt einen zentralen Ansatz dar, um die Leistungsfähigkeit von Computersystemen zu steigern, insbesondere angesichts der Tatsache, dass moderne CPUs und GPUs über eine wachsende Anzahl von Kernen verfügen. Kern der Parallellisierung ist die simultane und unabhängige Ausführung von Aufgaben oder Berechnungen, anstatt einer sequenziellen Abfolge. Dieser Ansatz findet breite Anwendung in verschiedenen Bereichen wie High-Performance-Computing (HPC), Datenverarbeitung, Simulationen, künstlicher Intelligenz und weiteren \citep{Flynn_Computer_Organizations_and_their_Effectiveness}.
 
 Eine Vielzahl von Herangehensweisen zur Parallellisierung existiert, die abhängig von der Problemstellung und der verfügbaren Hardware eingesetzt werden können. Die Task-Parallellisierung zielt darauf ab, Aufgaben auf mehrere Prozessoren oder Kerne zu verteilen. Insbesondere für Anwendungen mit vielen simultan auszuführenden Aufgaben wie parallele Suchalgorithmen oder Simulationen von physikalischen Systemen eignet sich diese Art der Parallellisierung besonders \citep{Flynn_Computer_Organizations_and_their_Effectiveness}.
@@ -79,8 +82,6 @@ Eine Vielzahl von Herangehensweisen zur Parallellisierung existiert, die abhäng
 Ein weiterer Ansatz ist die Datenparallellisierung, bei der ein Problem in kleinere Teile zerlegt wird, die jeweils auf unterschiedlichen Datensätzen operieren. Dieser Ansatz ist besonders effektiv für Anwendungen, die eine simultane Verarbeitung großer Datenmengen erfordern, wie beispielsweise Bildverarbeitung oder maschinelles Lernen \citep{Flynn_Computer_Organizations_and_their_Effectiveness}.
 
 Es ist jedoch zu betonen, dass nicht alle Probleme gleichermaßen für eine Parallellisierung geeignet sind. Manche Probleme beinhalten intrinsische Abhängigkeiten oder Sequenzialität, die eine effektive Parallellisierung erschweren oder gar unmöglich machen.
-
-Zusammenfassend lässt sich festhalten, dass die Parallellisierung ein leistungsstarker Ansatz ist, um die Rechenleistung von Algorithmen zu maximieren. Durch die Verteilung von Aufgaben oder Daten auf mehrere Ressourcen können erhebliche Geschwindigkeitsverbesserungen erzielt werden. Die Auswahl der geeigneten Parallellisierungsstrategie erfordert jedoch eine sorgfältige Analyse der spezifischen Anforderungen und Rahmenbedingungen einer Anwendung.
 
 \subsection{Vor- und Nachteile von Parallelisierung}
 \label{sec:Grundlagen_Parallelisierung_Vorteile_Nachteile}
@@ -94,8 +95,6 @@ Trotz dieser Vorteile gibt es auch einige Nachteile und Herausforderungen bei de
 
 Ein weiterer Nachteil ist die potenzielle Zunahme des Energieverbrauchs, insbesondere wenn die Parallelisierung nicht effizient implementiert ist. Dies ist besonders relevant in Umgebungen, in denen Energieeffizienz ein wichtiges Anliegen ist, wie beispielsweise in mobilen Geräten oder Rechenzentren.
 
-Insgesamt bietet die Parallelisierung viele Vorteile, die zur Leistungssteigerung von Computersystemen beitragen können. Jedoch ist es wichtig, die potenziellen Herausforderungen und Nachteile zu berücksichtigen und eine sorgfältige Planung und Implementierung sicherzustellen, um die bestmöglichen Ergebnisse zu erzielen.
-
 \section{Parallelisierung in vorwärtsgerichteten Netzwerken}
 \label{sec:Grundlagen_Parallelisierung_Neuronale_Netze}
 \subsection{Thread- und Prozessparallelsierung}
@@ -106,8 +105,6 @@ Thread-Parallelisierung bezieht sich auf die Aufteilung des Trainingsprozesses e
 
 Prozessparallelisierung hingegen umfasst die Aufteilung des Trainingsprozesses in mehrere unabhängige Prozesse, die auf verschiedenen Prozessorkernen oder sogar auf verschiedenen physikalischen Maschinen ausgeführt werden können. Bei der Prozessparallelisierung werden die Trainingsvorgänge mehrerer Netzwerke auf separaten Prozessen ausgeführt, was eine hochgradig parallele Verarbeitung und Skalierbarkeit über mehrere Computerknoten hinweg ermöglicht. Die Kommunikation zwischen den Prozessen kann über verschiedene Mechanismen wie Sockets, Messaging-Systeme oder gemeinsam genutzte Speicherbereiche erfolgen \citep{Flynn_Computer_Organizations_and_their_Effectiveness}.
 
-Die Wahl zwischen Thread- und Prozessparallelisierung hängt von verschiedenen Faktoren ab, darunter die Hardwarearchitektur, die Natur der Netzwerke und die Kommunikationsanforderungen zwischen den Trainingseinheiten. Eine sorgfältige Analyse dieser Faktoren ist entscheidend, um die optimale Parallelisierungsstrategie für das Training mehrerer Netzwerke unabhängig voneinander zu bestimmen.
-
 \subsection{Implementierung von Parallelisierungstechniken}
 \label{sec:Grundlagen_Parallelisierung_Implementierung}
 Für die Implementierung von Thread- und Prozessparallelisierung in vorwärtsgerichteten Netzwerken können verschiedene Ansätze verfolgt werden. Eine gängige Methode besteht darin, parallele Bibliotheken oder Frameworks zu verwenden, die bereits implementierte Funktionen für die Thread- und Prozessverwaltung bereitstellen. Beispiele hierfür sind die Verwendung von OpenMP, CUDA oder MPI, je nach den Anforderungen der Anwendung und der zugrunde liegenden Hardwarearchitektur.
@@ -116,8 +113,6 @@ Bei der Implementierung von Thread-Parallelisierung können Entwickler Thread-Po
 
 Für die Prozessparallelisierung ist die Implementierung von Mechanismen zur Kommunikation und Koordination zwischen den verschiedenen Prozessen entscheidend. Dies kann die Verwendung von Sockets, Messaging-Systemen wie ZeroMQ oder die gemeinsame Nutzung von Speicherbereichen umfassen, um Daten zwischen den Prozessen auszutauschen und den Trainingsfortschritt zu synchronisieren.
 
-Es ist wichtig, bei der Implementierung von Parallelisierungstechniken auf Aspekte wie Datenkonsistenz, Synchronisierung und Ressourcenmanagement zu achten. Die richtige Balance zwischen Parallelisierung und Overhead ist entscheidend, um die Gesamtperformance der Anwendung zu maximieren. Durch den Einsatz von geeigneten Werkzeugen, Techniken und Best Practices können Entwickler eine effiziente und skalierbare Parallelisierung in vorwärtsgerichteten Netzwerken erreichen.
-
 \subsection{Auswirkungen auf die Leistungsfähigkeit}
 \label{sec:Grundlagen_Parallelisierung_Leistungsfähigkeit}
 Ein wesentlicher Vorteil besteht darin, dass durch die parallele Ausführung mehrerer Netzwerke (mit verschiedenen Seeds) gleichzeitig eine Vielzahl von Trainingsdurchläufen durchgeführt werden kann. Dies ermöglicht es, eine breite Palette von Modellen zu trainieren und verschiedene hyperparameterabhängige Variationen zu erkunden, um letztendlich das optimale Modell zu identifizieren. Durch die gleichzeitige Ausführung dieser Trainingsläufe können Entwickler Zeit sparen und schneller zu aussagekräftigen Ergebnissen gelangen.
@@ -125,5 +120,3 @@ Ein wesentlicher Vorteil besteht darin, dass durch die parallele Ausführung meh
 Des Weiteren bietet die parallele Ausführung die Möglichkeit, Inferenzoperationen gleichzeitig durchzuführen. Mehrere Eingaben können gleichzeitig an duplizierte Netzwerke weitergeleitet werden, um eine simultane Auswertung zu ermöglichen. Dies beschleunigt nicht nur den Inferenzprozess erheblich, sondern ermöglicht auch eine effizientere Nutzung der verfügbaren Hardwareressourcen.
 
 Ein weiterer Vorteil besteht in der verbesserten Skalierbarkeit der Anwendung. Durch die Nutzung von Thread- oder Prozessparallelisierung kann die Anwendung problemlos auf mehreren Rechenknoten oder sogar in Cloud-Umgebungen skaliert werden. Dies ermöglicht es, die Trainings- und Inferenzkapazitäten je nach Bedarf flexibel anzupassen und die Gesamtperformance der Anwendung zu optimieren.
-
-Zusammenfassend ermöglicht die Implementierung von Parallelisierungstechniken eine effizientere Nutzung von Ressourcen, beschleunigt Trainings- und Inferenzvorgänge und verbessert die Skalierbarkeit der Anwendung. Dies trägt dazu bei, die Entwicklung und Bereitstellung von neuronalen Netzwerken in großen Maßstäben zu erleichtern und ermöglicht es, schnellere Fortschritte in der Forschung und Anwendung von KI-Technologien zu erzielen.

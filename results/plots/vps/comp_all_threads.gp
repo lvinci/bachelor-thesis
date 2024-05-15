@@ -1,5 +1,3 @@
-
-
 set xlabel "Anzahl der Datensätze"
 set ylabel "Laufzeit /s"
 

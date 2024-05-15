@@ -1,0 +1,439 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.2 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{Praktische_Einfuhrung_in_neuronale_Netze}{book}{}
+      \name{author}{1}{}{%
+        {{hash=dbd0b9e7ac5a3b3cd0ebf38638d5e940}{%
+           family={Mazzetti},
+           familyi={M\bibinitperiod},
+           given={Alessandro},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {ger}%
+      }
+      \list{location}{1}{%
+        {Hannover}%
+      }
+      \list{publisher}{1}{%
+        {Heise}%
+      }
+      \strng{namehash}{dbd0b9e7ac5a3b3cd0ebf38638d5e940}
+      \strng{fullhash}{dbd0b9e7ac5a3b3cd0ebf38638d5e940}
+      \strng{bibnamehash}{dbd0b9e7ac5a3b3cd0ebf38638d5e940}
+      \strng{authorbibnamehash}{dbd0b9e7ac5a3b3cd0ebf38638d5e940}
+      \strng{authornamehash}{dbd0b9e7ac5a3b3cd0ebf38638d5e940}
+      \strng{authorfullhash}{dbd0b9e7ac5a3b3cd0ebf38638d5e940}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{3-88229-011-0}
+      \field{title}{Praktische Einf{"u}hrung in neuronale Netze}
+      \field{year}{1992}
+    \endentry
+    \entry{Rosenblatt_Perceptron}{article}{}
+      \name{author}{1}{}{%
+        {{hash=1750cd87a34d44119e7a4aab9b8012c6}{%
+           family={Rosenblatt},
+           familyi={R\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {eng}%
+      }
+      \strng{namehash}{1750cd87a34d44119e7a4aab9b8012c6}
+      \strng{fullhash}{1750cd87a34d44119e7a4aab9b8012c6}
+      \strng{bibnamehash}{1750cd87a34d44119e7a4aab9b8012c6}
+      \strng{authorbibnamehash}{1750cd87a34d44119e7a4aab9b8012c6}
+      \strng{authornamehash}{1750cd87a34d44119e7a4aab9b8012c6}
+      \strng{authorfullhash}{1750cd87a34d44119e7a4aab9b8012c6}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0033-295X}
+      \field{journaltitle}{Psychological review}
+      \field{number}{6}
+      \field{pagination}{page}
+      \field{title}{The perceptron: a probabilistic model for information storage and organization in the brain}
+      \field{volume}{65}
+      \field{year}{1958}
+      \field{pages}{386\bibrangedash 408}
+      \range{pages}{23}
+      \verb{doi}
+      \verb 10.1037/h0042519
+      \endverb
+      \verb{eprint}
+      \verb 13602029
+      \endverb
+    \endentry
+    \entry{Chip_makers_turn_to_multicore}{article}{}
+      \name{author}{1}{}{%
+        {{hash=2c69c987e2fb7977f7a7d67284be51d5}{%
+           family={Geer},
+           familyi={G\bibinitperiod},
+           given={D.},
+           giveni={D\bibinitperiod}}}%
+      }
+      \strng{namehash}{2c69c987e2fb7977f7a7d67284be51d5}
+      \strng{fullhash}{2c69c987e2fb7977f7a7d67284be51d5}
+      \strng{bibnamehash}{2c69c987e2fb7977f7a7d67284be51d5}
+      \strng{authorbibnamehash}{2c69c987e2fb7977f7a7d67284be51d5}
+      \strng{authornamehash}{2c69c987e2fb7977f7a7d67284be51d5}
+      \strng{authorfullhash}{2c69c987e2fb7977f7a7d67284be51d5}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{issn}{0018-9162}
+      \field{journaltitle}{Computer}
+      \field{number}{5}
+      \field{pagination}{page}
+      \field{title}{Chip makers turn to multicore processors}
+      \field{volume}{38}
+      \field{year}{2005}
+      \field{pages}{11\bibrangedash 13}
+      \range{pages}{3}
+      \verb{doi}
+      \verb 10.1109/MC.2005.160
+      \endverb
+    \endentry
+    \entry{thesis_Artur_Brening}{thesis}{}
+      \name{author}{1}{}{%
+        {{hash=a37fdd514dfbf440170ba5de1ec3f697}{%
+           family={Brening},
+           familyi={B\bibinitperiod},
+           given={Artur},
+           giveni={A\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Frankfurt University of Applied Sciences}%
+      }
+      \strng{namehash}{a37fdd514dfbf440170ba5de1ec3f697}
+      \strng{fullhash}{a37fdd514dfbf440170ba5de1ec3f697}
+      \strng{bibnamehash}{a37fdd514dfbf440170ba5de1ec3f697}
+      \strng{authorbibnamehash}{a37fdd514dfbf440170ba5de1ec3f697}
+      \strng{authornamehash}{a37fdd514dfbf440170ba5de1ec3f697}
+      \strng{authorfullhash}{a37fdd514dfbf440170ba5de1ec3f697}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Stochastischer Gradientenabstieg zum Trainieren neuronaler Netze: Implementierung und vergleichende Untersuchung des RMSprop-Lernverfahrens für den n++-Simulator}
+      \field{year}{2020}
+    \endentry
+    \entry{Manuela_Kunstliche_Intelligenz}{book}{}
+      \name{author}{1}{}{%
+        {{hash=0069bd84ba50c02a294c682cd1889734}{%
+           family={Lenzen},
+           familyi={L\bibinitperiod},
+           given={Manuela},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{language}{1}{%
+        {ger}%
+      }
+      \list{location}{1}{%
+        {M{"u}nchen}%
+      }
+      \list{publisher}{1}{%
+        {C.H. Beck}%
+      }
+      \strng{namehash}{0069bd84ba50c02a294c682cd1889734}
+      \strng{fullhash}{0069bd84ba50c02a294c682cd1889734}
+      \strng{bibnamehash}{0069bd84ba50c02a294c682cd1889734}
+      \strng{authorbibnamehash}{0069bd84ba50c02a294c682cd1889734}
+      \strng{authornamehash}{0069bd84ba50c02a294c682cd1889734}
+      \strng{authorfullhash}{0069bd84ba50c02a294c682cd1889734}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{Originalausgabe}
+      \field{isbn}{978-3-406-75124-0}
+      \field{pagetotal}{128}
+      \field{series}{C.H. Beck Wissen}
+      \field{subtitle}{Fakten, Chancen, Risiken}
+      \field{title}{K{"u}nstliche Intelligenz}
+      \field{volume}{2904}
+      \field{year}{2020}
+    \endentry
+    \entry{LeCun_Deep_Learning}{article}{}
+      \name{author}{3}{}{%
+        {{hash=6a1aa6b7eab12b931ca7c7e3f927231d}{%
+           family={LeCun},
+           familyi={L\bibinitperiod},
+           given={Yann},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=40a8e4774982146adc2688546f54efb2}{%
+           family={Bengio},
+           familyi={B\bibinitperiod},
+           given={Yoshua},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=9a8750ccdb2a4cf14d2655face1ce016}{%
+           family={Hinton},
+           familyi={H\bibinitperiod},
+           given={Geoffrey},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{c6c75bd00ce5a488e91a749d8383b3df}
+      \strng{fullhash}{c6c75bd00ce5a488e91a749d8383b3df}
+      \strng{bibnamehash}{c6c75bd00ce5a488e91a749d8383b3df}
+      \strng{authorbibnamehash}{c6c75bd00ce5a488e91a749d8383b3df}
+      \strng{authornamehash}{c6c75bd00ce5a488e91a749d8383b3df}
+      \strng{authorfullhash}{c6c75bd00ce5a488e91a749d8383b3df}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Deep learning allows computational models that are composed of multiple processing layers to learn representations of data with multiple levels of abstraction. These methods have dramatically improved the state-of-the-art in speech recognition, visual object recognition, object detection and many other domains such as drug discovery and genomics. Deep learning discovers intricate structure in large data sets by using the backpropagation algorithm to indicate how a machine should change its internal parameters that are used to compute the representation in each layer from the representation in the previous layer. Deep convolutional nets have brought about breakthroughs in processing images, video, speech and audio, whereas recurrent nets have shone light on sequential data such as text and speech.}
+      \field{isbn}{1476-4687}
+      \field{journaltitle}{Nature}
+      \field{number}{7553}
+      \field{title}{Deep learning}
+      \field{volume}{521}
+      \field{year}{2015}
+      \field{pages}{436\bibrangedash 444}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1038/nature14539
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1038/nature14539
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1038/nature14539
+      \endverb
+    \endentry
+    \entry{Flynn_Computer_Organizations_and_their_Effectiveness}{article}{}
+      \name{author}{1}{}{%
+        {{hash=30a552c603bdd1a4130d54d00c0c1efd}{%
+           family={Flynn},
+           familyi={F\bibinitperiod},
+           given={Michael\bibnamedelima J.},
+           giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{30a552c603bdd1a4130d54d00c0c1efd}
+      \strng{fullhash}{30a552c603bdd1a4130d54d00c0c1efd}
+      \strng{bibnamehash}{30a552c603bdd1a4130d54d00c0c1efd}
+      \strng{authorbibnamehash}{30a552c603bdd1a4130d54d00c0c1efd}
+      \strng{authornamehash}{30a552c603bdd1a4130d54d00c0c1efd}
+      \strng{authorfullhash}{30a552c603bdd1a4130d54d00c0c1efd}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Computers}
+      \field{number}{9}
+      \field{title}{Some Computer Organizations and Their Effectiveness}
+      \field{volume}{C-21}
+      \field{year}{1972}
+      \field{pages}{948\bibrangedash 960}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1109/TC.1972.5009071
+      \endverb
+      \keyw{Organizations;Computers;Entropy;Computational modeling;Data mining;Probability density function;Bandwidth;Computer organization;instruction stream;overlapped;parallel processors;resource hierarchy}
+    \endentry
+    \entry{Sidorenko_Subway_Train_Scheduling}{inproceedings}{}
+      \name{author}{3}{}{%
+        {{hash=f41af84ef12e7877bfecda133c1069cc}{%
+           family={Sidorenko},
+           familyi={S\bibinitperiod},
+           given={V.G.},
+           giveni={V\bibinitperiod}}}%
+        {{hash=462fb57599ea51037c3c646398dab48a}{%
+           family={Aung},
+           familyi={A\bibinitperiod},
+           given={Kyaw\bibnamedelima Min},
+           giveni={K\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=52488a21a56d3819433fa94fd8f0e698}{%
+           family={Petrov},
+           familyi={P\bibinitperiod},
+           given={A.S.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{6fabde969c916740ee72bba88989febb}
+      \strng{fullhash}{6fabde969c916740ee72bba88989febb}
+      \strng{bibnamehash}{6fabde969c916740ee72bba88989febb}
+      \strng{authorbibnamehash}{6fabde969c916740ee72bba88989febb}
+      \strng{authornamehash}{6fabde969c916740ee72bba88989febb}
+      \strng{authorfullhash}{6fabde969c916740ee72bba88989febb}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2020 International Multi-Conference on Industrial Engineering and Modern Technologies}
+      \field{title}{Automation of Subway Train Scheduling Based on the Multi-Threaded Software Product}
+      \field{year}{2020}
+      \field{pages}{1\bibrangedash 6}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1109/FarEastCon50210.2020.9271599
+      \endverb
+    \endentry
+    \entry{dokumentation_n++}{thesis}{}
+      \name{author}{1}{}{%
+        {{hash=9449802bcb467309c0ebced658096818}{%
+           family={Riedmiller},
+           familyi={R\bibinitperiod},
+           given={Martin},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Universität Karlsruhe}%
+      }
+      \strng{namehash}{9449802bcb467309c0ebced658096818}
+      \strng{fullhash}{9449802bcb467309c0ebced658096818}
+      \strng{bibnamehash}{9449802bcb467309c0ebced658096818}
+      \strng{authorbibnamehash}{9449802bcb467309c0ebced658096818}
+      \strng{authornamehash}{9449802bcb467309c0ebced658096818}
+      \strng{authorfullhash}{9449802bcb467309c0ebced658096818}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Dokumentation zu N++}
+      \field{year}{1997}
+    \endentry
+    \entry{misc_magic_gamma_telescope_159}{misc}{}
+      \name{author}{1}{}{%
+        {{hash=0b75eb1c1faf0174437e5869d7b8f321}{%
+           family={Bock},
+           familyi={B\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod}}}%
+      }
+      \strng{namehash}{0b75eb1c1faf0174437e5869d7b8f321}
+      \strng{fullhash}{0b75eb1c1faf0174437e5869d7b8f321}
+      \strng{bibnamehash}{0b75eb1c1faf0174437e5869d7b8f321}
+      \strng{authorbibnamehash}{0b75eb1c1faf0174437e5869d7b8f321}
+      \strng{authornamehash}{0b75eb1c1faf0174437e5869d7b8f321}
+      \strng{authorfullhash}{0b75eb1c1faf0174437e5869d7b8f321}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{UCI Machine Learning Repository}
+      \field{note}{{DOI}: https://doi.org/10.24432/C52C8B}
+      \field{title}{{MAGIC Gamma Telescope}}
+      \field{year}{2007}
+    \endentry
+    \entry{MacBook_Technische_Daten}{report}{}
+      \name{author}{1}{}{%
+        {{hash=f508f8ff22f456b2c8cef697136c83a9}{%
+           family={Inc},
+           familyi={I\bibinitperiod},
+           given={Apple},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{f508f8ff22f456b2c8cef697136c83a9}
+      \strng{fullhash}{f508f8ff22f456b2c8cef697136c83a9}
+      \strng{bibnamehash}{f508f8ff22f456b2c8cef697136c83a9}
+      \strng{authorbibnamehash}{f508f8ff22f456b2c8cef697136c83a9}
+      \strng{authornamehash}{f508f8ff22f456b2c8cef697136c83a9}
+      \strng{authorfullhash}{f508f8ff22f456b2c8cef697136c83a9}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{MacBook Pro (16", 2021) - Technische Daten}
+      \field{type}{techreport}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2024}
+      \field{year}{2021}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://support.apple.com/de-de/111901
+      \endverb
+      \verb{url}
+      \verb https://support.apple.com/de-de/111901
+      \endverb
+    \endentry
+    \entry{Ryzen_Technische_Daten}{report}{}
+      \name{author}{1}{}{%
+        {{hash=577ac524fdbb5eb6e8c09969b71919a1}{%
+           family={WikiChip},
+           familyi={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{577ac524fdbb5eb6e8c09969b71919a1}
+      \strng{fullhash}{577ac524fdbb5eb6e8c09969b71919a1}
+      \strng{bibnamehash}{577ac524fdbb5eb6e8c09969b71919a1}
+      \strng{authorbibnamehash}{577ac524fdbb5eb6e8c09969b71919a1}
+      \strng{authornamehash}{577ac524fdbb5eb6e8c09969b71919a1}
+      \strng{authorfullhash}{577ac524fdbb5eb6e8c09969b71919a1}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Ryzen 5 3600XT - AMD}
+      \field{type}{techreport}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2024}
+      \field{year}{2020}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://en.wikichip.org/wiki/amd/ryzen_5/3600xt
+      \endverb
+      \verb{url}
+      \verb https://en.wikichip.org/wiki/amd/ryzen_5/3600xt
+      \endverb
+    \endentry
+    \entry{RaspberryPi_Technische_Daten}{report}{}
+      \name{author}{1}{}{%
+        {{hash=03eb7fa9a11a8c6d79113b8a4ace0c93}{%
+           family={Foundation},
+           familyi={F\bibinitperiod},
+           given={Raspberry\bibnamedelima Pi},
+           giveni={R\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \strng{namehash}{03eb7fa9a11a8c6d79113b8a4ace0c93}
+      \strng{fullhash}{03eb7fa9a11a8c6d79113b8a4ace0c93}
+      \strng{bibnamehash}{03eb7fa9a11a8c6d79113b8a4ace0c93}
+      \strng{authorbibnamehash}{03eb7fa9a11a8c6d79113b8a4ace0c93}
+      \strng{authornamehash}{03eb7fa9a11a8c6d79113b8a4ace0c93}
+      \strng{authorfullhash}{03eb7fa9a11a8c6d79113b8a4ace0c93}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Raspberry Pi 3 Model B}
+      \field{type}{techreport}
+      \field{urlday}{2}
+      \field{urlmonth}{5}
+      \field{urlyear}{2024}
+      \field{year}{2022}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.raspberrypi.com/products/raspberry-pi-3-model-b
+      \endverb
+      \verb{url}
+      \verb https://www.raspberrypi.com/products/raspberry-pi-3-model-b
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

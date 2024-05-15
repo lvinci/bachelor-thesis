@@ -27,9 +27,9 @@ def generate_averages(benchmark_id):
             avg_runtime += runtime
             if attempt == ATTEMPTS:
                 avg_runtime /= ATTEMPTS
-                avg_runtime = round(avg_runtime, 3)
-                stddev = round(statistics.stdev(results), 3)
-                variance = round(statistics.variance(results), 3)
+                avg_runtime = round(avg_runtime, 1)
+                stddev = round(statistics.stdev(results), 1)
+                variance = round(statistics.variance(results), 1)
                 averages_file.write(f'{threads},{partitions},{avg_runtime},{stddev},{variance}\n')
                 avg_runtime = 0
                 results = []

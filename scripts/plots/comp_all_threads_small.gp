@@ -1,9 +1,9 @@
 
 
-set xlabel "Partitionen"
+set xlabel "Anzahl der Datensätze"
 set ylabel "Laufzeit /s"
 
-set xtics ("4" 4, "8" 8)
+set xtics ("4755" 1, "2377" 2)
 
 set yrange [0:8000]
 

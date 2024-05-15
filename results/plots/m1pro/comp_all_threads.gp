@@ -1,7 +1,9 @@
 
 
-set xlabel "Partitionen"
+set xlabel "Anzahl der Datensätze"
 set ylabel "Laufzeit /s"
+
+set xtics ("19020" 1, "9510" 2, "4755" 3, "2377" 4)
 
 plot 'comp_all_threads.dat' index 0 w lp pt 7 ps 0.6 lc rgb "green" lw 2 title "10 Threads", \
      ''             index 1 w lp pt 7 ps 0.6 lc rgb "blue" lw 2 title "8 Threads", \

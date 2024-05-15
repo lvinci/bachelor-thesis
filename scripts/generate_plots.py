@@ -40,7 +40,18 @@ def generate_comp_all_threads_plot(benchmark_id: string, dataset: list[DatasetRo
         data_file.write(f'# {rows[0].threads} Threads (index: {index}) \n')
         data_file.write("# X   Y\n")
         for row in rows:
-            data_file.write(f'  {row.partitions}   {row.runtime}\n')
+            x = row.partitions
+            if row.partitions == 4:
+                if len(lines) < 6:
+                    x = 1
+                else:
+                    x = 3
+            elif row.partitions == 8:
+                if len(lines) < 6:
+                    x = 2
+                else:
+                    x = 4
+            data_file.write(f'  {x}   {row.runtime}\n')
         data_file.write("\n\n")
         index += 1
     data_file.close()

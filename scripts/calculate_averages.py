@@ -6,6 +6,7 @@ import statistics
 import sys
 
 ATTEMPTS = 5
+DECIMAL_PLACES = 1
 
 
 # Read in csv file
@@ -15,7 +16,7 @@ def generate_averages(benchmark_id):
     with open(source_filepath, newline="") as csvfile:
         reader = csv.reader(csvfile, delimiter=",", quotechar="\"")
         avg_runtime = 0.0
-        results = []
+        results = [] # stores the results for the current tries
         for line in reader:
             # Read in the csv rows
             threads = line[0]
@@ -26,10 +27,12 @@ def generate_averages(benchmark_id):
             # Add to the average runtime add write it to the file when the 5th attempt is reached
             avg_runtime += runtime
             if attempt == ATTEMPTS:
+                # calculate average and standard deviation
                 avg_runtime /= ATTEMPTS
-                avg_runtime = round(avg_runtime, 1)
-                stddev = round(statistics.stdev(results), 1)
-                variance = round(statistics.variance(results), 1)
+                avg_runtime = round(avg_runtime, DECIMAL_PLACES)
+                stddev = round(statistics.stdev(results), DECIMAL_PLACES)
+                variance = round(statistics.variance(results), DECIMAL_PLACES)
+                # write results to csv file and reset variables
                 averages_file.write(f'{threads},{partitions},{avg_runtime},{stddev},{variance}\n')
                 avg_runtime = 0
                 results = []

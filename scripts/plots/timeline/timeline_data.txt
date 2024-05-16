@@ -1,0 +1,11 @@
+sample "Durchlauf 1"     Analyse       Leerlauf       Total
+1      2    1    0    3
+2      2    0    1    3
+3      2    0    1    3
+4      2    0    1    3
+5      2    0    1    3
+6      2    0    1    3
+7      2    0    1    3
+8      2    0    1    3
+9      2    0    1    3
+10     2    0    1    3

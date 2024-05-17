@@ -51,7 +51,20 @@ int main() {
 \label{sec:Bestehender_Code_Brening}
 \sectionmark{Bestehender Code}
 
-Als bestehender Code wird ein Experiment aus der Bachelorarbeit von Artur Brening \citep{thesis_Artur_Brening} betrachtet.
+Als bestehender Code wird ein Experiment aus der Bachelorarbeit von Artur Brening \citep{thesis_Artur_Brening} betrachtet. In dieser Bachelorarbeit wurde der Gradientenabstieg zum Trainieren neuronaler Netze implementiert. Dabei wurden viele Experimente mit verschiedenen Datensätzen und Lernmethoden zum Vergleich implementiert. Eines dieser Experimente wird als Grundlage für diese Bachelorarbeit übernommen.
+
+Ausgewählt wurde das Experiment \enquote{MAGIC\_BP}, welches Rückwärtspropagierung nutzt. In dem Experiment wird der Magic Datensatz verwendet, auf welchen im nächsten Abschnitt eingegangen wird. Es wird ein mit Hilfe der n++-Bibliothek ein neuronales Netz erstellt und zunächst wird ein festgelegter Teil des Datensatzes als Trainingsdatensatz genommen, und jede dieser Trainingsdaten wird zunächst vorwärts durch das neuronale Netz propagiert. Anschließend wird der Fehler der resultierenden Ausgabe des Netzes bestimmt und es wird rückwärtspropagiert.
+Nachdem alle Datensätze aus dem Trainingsdatensatz vor- und rückwärtspropagiert wurden, wird der verbleibende Teil des Datensatzes als Testdatensatz definiert. Genau wie die Trainingsdatensätze wird jeder Datensatz zuerst vor- und dann rückwärts propagiert. Nach jedem Datensatz wird hier jedoch geschaut, ob die Ausgabe des Netzes korrekt ist, um zu schauen, wie viele Daten des Testdatensatzes korrekt klassifiziert werden.
+Dieser Prozess über den gesamten Datensatz wird für 10000 Epochen, also 10000 mal ausgeführt, um das Netz lernen zu lassen.
+
+Dieser Lernprozess wird sequenziell für 10 verschiedene Netze mit 10 verschiedenen Startseeds ausgeführt, um das Verhalten mit verschiedenen Zufallszahlen zu überprüfen. Nachdem alle 10 Netze trainiert und getestet wurden, werden die Testergebnisse analysiert und in eine Datei geschrieben, um sie weiter verwerten zu können.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{../results/plots/timeline/timeline_plot_1thread.pdf}
+\caption{Performance-Benchmark auf Apple M1 Pro: Einfluss von Thread-Anzahlen auf Verarbeitungszeit bei variierenden Datensatzgrößen}
+\label{fig:timeline_existing_code}
+\end{figure}
 
 \section{Datensatz}
 \label{sec:Datensatz}

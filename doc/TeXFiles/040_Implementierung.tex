@@ -57,14 +57,16 @@ Ausgewählt wurde das Experiment \enquote{MAGIC\_BP}, welches Rückwärtspropagi
 Nachdem alle Datensätze aus dem Trainingsdatensatz vor- und rückwärtspropagiert wurden, wird der verbleibende Teil des Datensatzes als Testdatensatz definiert. Genau wie die Trainingsdatensätze wird jeder Datensatz zuerst vor- und dann rückwärts propagiert. Nach jedem Datensatz wird hier jedoch geschaut, ob die Ausgabe des Netzes korrekt ist, um zu schauen, wie viele Daten des Testdatensatzes korrekt klassifiziert werden.
 Dieser Prozess über den gesamten Datensatz wird für 10000 Epochen, also 10000 mal ausgeführt, um das Netz lernen zu lassen.
 
-Dieser Lernprozess wird sequenziell für 10 verschiedene Netze mit 10 verschiedenen Startseeds ausgeführt, um das Verhalten mit verschiedenen Zufallszahlen zu überprüfen. Nachdem alle 10 Netze trainiert und getestet wurden, werden die Testergebnisse analysiert und in eine Datei geschrieben, um sie weiter verwerten zu können.
+Dieser Lernprozess wird sequenziell für 10 verschiedene Netze mit 10 verschiedenen Startseeds ausgeführt, um das Verhalten mit verschiedenen Zufallszahlen zu überprüfen. Nachdem alle 10 Netze trainiert und getestet wurden, werden die Testergebnisse analysiert und in eine Datei geschrieben, um sie weiter verwerten zu können. Ein Durchlauf des bestehenden Programmes benötigt auf einem Apple M1 Pro Prozessor circa 1450 Sekunden.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{../results/plots/timeline/timeline_plot_1thread.pdf}
-\caption{Performance-Benchmark auf Apple M1 Pro: Einfluss von Thread-Anzahlen auf Verarbeitungszeit bei variierenden Datensatzgrößen}
+\caption{Schematischer Ablauf des bestehenden Programms. In jedem Durchlauf wird ein neuronales Netz mit 10000 Epochen trainiert und anschließend getestet. In der Analyse werden die Ergebnisse aller Netze zusammengetragen und in eine Datei geschrieben.}
 \label{fig:timeline_existing_code}
 \end{figure}
+
+Wie in Abbildung \ref{fig:timeline_existing_code} ersichtlich laufen alle Netze, auf der Grafik in blau dargestellt, auf einem Thread. Anschließend wird die Analyse, in grün dargestellt, ausgeführt. In dieser Arbeit werden die Trainings- und Testdurchläufe parallelisiert, was bedeutet, dass potenziell 10 Netze gleichzeitig trainiert und getestet werden können. Dies könnte möglicherweise zu großen Leistungsverbesserungen führen, da das Training und Testen der Netze den Großteil der Laufzeit einnimmt, und die Analyse nur wenige Sekunden in Anspruch nimmt. 
 
 \section{Datensatz}
 \label{sec:Datensatz}

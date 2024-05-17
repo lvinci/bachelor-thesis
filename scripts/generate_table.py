@@ -84,9 +84,9 @@ def generate_table(output_file: str, results: list[Result]):
     for device in devices:
         table.write(f'& \\multicolumn{{2}}{{c|}}{{{full_device_name(device)}}} ')
     # Write the second line of the table header
-    table.write("\\\\\n\t\\text{Threads} & \\text{Daten} ")
+    table.write("\\\\\n\t\\text{Threads} & \\text{Datenmenge} ")
     for _ in devices:
-        table.write("& \\text{Zeit} & \\text{SD} ")
+        table.write("& $t$ & $\sigma$ ")
     # Start writing the table data
     table.write("\\\\\\hline\n\t%Daten\n")
     partitions = (1, 2, 4, 8)

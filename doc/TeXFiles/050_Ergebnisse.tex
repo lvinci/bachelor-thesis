@@ -1,8 +1,9 @@
 \chapter{Experimentelle Untersuchungen}
-\chaptermark{Experimentelle Untersuchungen}  % short form for headlines on pages
+\chaptermark{Experimentelle Untersuchungen}
 \label{ch:EntwickelteMethode}
 
 \section{Angewendete Methodik}
+\sectionmark{Methodik}
 \subsection{Testumgebung}
 
 Um die Wirksamkeit der Parallelisierung der N++-Bibliothek in C++ zu bewerten, wird ein umfassender Benchmark-Test durchgeführt. Dieser Test umfasst verschiedene Kombinationen von Threads, Anzahl an Datensätzen und verschiedenen Computern mit verschiedenen Prozessorarchitekturen, um die Auswirkungen der Implementierung auf die Leistung der Bibliothek unter unterschiedlichen Bedingungen zu untersuchen.
@@ -15,6 +16,23 @@ Für jede Kombination von Threads und Partitionen werden mindestens 5 Testläufe
 Das Ergebnis jedes Programmdurchlaufs wird in eine Datei geschrieben, um vergleichen zu können, ob mit verschiedenen Anzahlen von Threads die gleichen Ergebnisse berechnet werden.
 
 Nach Abschluss der Testläufe werden die erzielten Ergebnisse automatisch analysiert und Durchschnittswerte für jede Kombination von Threads und Partitionen berechnet. Diese Durchschnittswerte dienen dazu, die möglichen Schwankungen der Testabläufe auszugleichen, und ein neutraleres Ergebnis zu liefern.
+
+\subsection{Getestete Hardware}
+\subsectionmark{Hardware}
+
+Der M1 Pro Prozessor, der im MacBook Pro 16 Zoll verwendet wird, integriert eine heterogene Mehrkernarchitektur, die auf die Parallelverarbeitung von Aufgaben ausgelegt ist. Der M1 Pro wurde 2021 vorgestellt und ist eine hochskalierte Version des M1 Prozessors. Er verfügt über insgesamt 12 CPU-Kerne, darunter 8 Hochleistungskerne und 4 Effizienzkerne \citep{MacBook_Technische_Daten}. Die Hochleistungskerne sind für rechenintensive Aufgaben konzipiert, während die Effizienzkerne für weniger anspruchsvolle Aufgaben und eine Reduzierung des Energieverbrauchs optimiert sind.
+In Bezug auf die Leistung bietet der M1 Pro Prozessor eine sehr beeindruckende Single-Core-Leistung sowie eine bemerkenswerte parallele Verarbeitungsfähigkeit für multithreaded Anwendungen. Die genaue Hauptspeichergröße beträgt 16 GB RAM mit einer Speicherbandbreite von 200 GBit/s \citep{MacBook_Technische_Daten}. Auch die Cache-Größe des Prozessors ist sehr hoch, was die Latenz bei Speicherzugriffen zusätzlich vermindert.
+Verwendet wurde MacOS Sonoma 14.5 mit dem Darwin Kernel Version 23.5.0 und Clang Version 1500.3.9.4 auf einem MacBook Pro 16 Zoll Laptop.
+
+
+Der AMD Ryzen 5 3600XT ist ein Prozessor aus der Ryzen 3000-Serie von AMD, der im Jahr 2020 eingeführt wurde. Er verfügt über insgesamt 6 CPU-Kerne und 12 Threads auf Basis der Zen 2-Architektur, welche auch im Servermarkt verbreitet ist. Es handelt sich um einen Desktopprozessor mit einer maximalen Leistungsaufnahme von 95 Watt \citep{Ryzen_Technische_Daten}.
+Der Prozessor unterstützt DDR4-RAM mit unübertakteten Geschwindigkeiten von bis zu 3200 MHz \citep{Ryzen_Technische_Daten}. Die genaue Speicherbandbreite und Größe hängt von der verwendeten RAM-Konfiguration ab, da Desktop Prozessoren modular in verschiedene Systeme eingebaut werden können.
+In Bezug auf den Cache verfügt der Ryzen 5 3600XT über 32KB L1-Cache, 512KB L2-Cache und 32MB L3-Cache \citep{Ryzen_Technische_Daten}. In der Konfiguration des Testcomputers sind 16GB DDR4 Speicher mit 3600 MHz verbaut, und der Prozessor wird mit einer Wasserkühlung gekühlt, was für eine gleichmäßige und robuste Kühlung sorgt. Als Betriebssystem kam Fedora 40 mit dem Linux Kernel der Version 6.8 zum Einsatz.
+
+Der Raspberry Pi 3 ist ein Single-Board-Computer, der von der Raspberry Pi Foundation entwickelt wurde. Ein Single-Board-Computer ist eine vollständige Computerplatine, die alle erforderlichen Komponenten wie Prozessor, Speicher, Ein-/Ausgabeanschlüsse und Stromversorgung auf einer einzigen Platine vereint. Der Raspberry Pi 3 wurde 2016 veröffentlicht und basiert auf einem ARM Cortex-A53 Quad-Core-Prozessor mit einer Taktfrequenz von 1,2 GHz und 1 GB LPDDR2-RAM \citep{RaspberryPi_Technische_Daten}.
+Im Vergleich zu anderen Prozessoren ist der Raspberry Pi 3 natürlich langsamer. Seine Spezifikationen bieten eine grundlegende Leistung für einfache Computing-Aufgaben und den Betrieb von IoT (Internet der Dinge)-Anwendungen.
+Der Raspberry Pi 3 ist aufgrund seiner geringen Größe, seines geringen Stromverbrauchs und seiner vielfältigen Einsatzmöglichkeiten beliebt. Er wird häufig in Bildungsprojekten, DIY (Do It Yourself)-Projekten, Heimautomatisierungssystemen und als kostengünstige Entwicklungsumgebung für Softwareentwickler eingesetzt. Trotz seiner begrenzten Leistungsfähigkeit erfüllt der Raspberry Pi 3 wichtige Funktionen in verschiedenen Anwendungsbereichen aufgrund seiner Kompaktheit und seines erschwinglichen Preises.
+Aufgrund der begrenzten Leistung des Raspberry Pi 3 und der damit verbundenen Laufzeiten konnte der Testablauf nicht vollständig durchgeführt werden. Es wurden maximal 4 Threads getestet, und die Partitionen wurden auf 8 und 4 begrenzt.
 
 \subsection{Benchmark Script}
 
@@ -63,14 +81,6 @@ done
 
 \section{Ergebnisse}
 
-\subsection{Apple M1 Pro}
-
-Der M1 Pro Prozessor, der im MacBook Pro 16 Zoll verwendet wird, integriert eine heterogene Mehrkernarchitektur, die auf die Parallelverarbeitung von Aufgaben ausgelegt ist. Der M1 Pro wurde 2021 vorgestellt und ist eine hochskalierte Version des M1 Prozessors. Er verfügt über insgesamt 12 CPU-Kerne, darunter 8 Hochleistungskerne und 4 Effizienzkerne \citep{MacBook_Technische_Daten}. Die Hochleistungskerne sind für rechenintensive Aufgaben konzipiert, während die Effizienzkerne für weniger anspruchsvolle Aufgaben und eine Reduzierung des Energieverbrauchs optimiert sind.
-
-In Bezug auf die Leistung bietet der M1 Pro Prozessor eine sehr beeindruckende Single-Core-Leistung sowie eine bemerkenswerte parallele Verarbeitungsfähigkeit für multithreaded Anwendungen. Die genaue Hauptspeichergröße beträgt 16 GB RAM mit einer Speicherbandbreite von 200 GBit/s \citep{MacBook_Technische_Daten}. Auch die Cache-Größe des Prozessors ist sehr hoch, was die Latenz bei Speicherzugriffen zusätzlich vermindert.
-
-Verwendet wurde MacOS Sonoma 14.5 mit dem Darwin Kernel Version 23.5.0 und Clang Version 1500.3.9.4 auf einem MacBook Pro 16 Zoll Laptop.
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{../results/plots/m1pro/comp_all_threads.pdf}
@@ -103,28 +113,12 @@ Die Standardabweichung, welche in Tabelle \ref{tab:performance_comparison} zu se
 
 Des Weiteren ist der Overhead der Parallelisierung ein wichtiger Aspekt, der bei der Interpretation der Ergebnisse berücksichtigt werden muss. Trotz der Parallelisierung von Aufgaben bleibt der Overhead auf dem M1 Pro-Prozessor in diesem spezifischen Kontext gering, jedoch definitiv nicht vernachlässigbar. Die Skalierung der Leistung bleibt hoch. Für die gesamte Datensatzgröße von 19020 lag die benötigte Zeit bei einem Thread bei 948,6 Sekunden, während mit 10 Threads eine Zeit von 129,4 Sekunden erzielt wurde. Bei einer theoretisch perfekten Skalierung der Parallelisierung wären bei 10 Threads 94,86 Sekunden zu erwarten, jedoch läuft beispielsweise die Auswertung der Ergebnisse nach dem Programmablauf immer sequenziell, und benötigt somit gleich viel Zeit unabhängig von der verwendeten Thread Anzahl. Des Weiteren ist der bereits angesprochene Overhead der Parallelisierung ein Faktor. Dieser kann teilweise auf das Betriebssystem zurückzuführen sein, das Ressourcen für die Verwaltung und Koordination der Threads bereitstellen muss, was zu zusätzlicher Latenz führen kann, insbesondere wenn die CPU bereits stark ausgelastet ist. Bei voller CPU-Auslastung können Temperaturthrottling-Mechanismen eingreifen, um die Betriebstemperatur der CPU zu regulieren, was zu vorübergehenden Leistungseinbußen führen kann, da die Taktfrequenz reduziert wird, um die Temperaturen im sicheren Bereich zu halten. Ein weiterer Faktor ist die begrenzte Anzahl von Performance-Kernen auf dem M1 Pro Prozessor, die dazu führen kann, dass bei einer höheren Thread-Anzahl als verfügbaren Performance-Kernen nicht alle Threads auf gleich schnellen Kernen laufen können.
 
-\subsection{AMD Ryzen 3600XT}
-Der AMD Ryzen 5 3600XT ist ein Prozessor aus der Ryzen 3000-Serie von AMD, der im Jahr 2020 eingeführt wurde. Er verfügt über insgesamt 6 CPU-Kerne und 12 Threads auf Basis der Zen 2-Architektur, welche auch im Servermarkt verbreitet ist. Es handelt sich um einen Desktopprozessor mit einer maximalen Leistungsaufnahme von 95 Watt \citep{Ryzen_Technische_Daten}.
-
-Der Prozessor unterstützt DDR4-RAM mit unübertakteten Geschwindigkeiten von bis zu 3200 MHz \citep{Ryzen_Technische_Daten}. Die genaue Speicherbandbreite und Größe hängt von der verwendeten RAM-Konfiguration ab, da Desktop Prozessoren modular in verschiedene Systeme eingebaut werden können.
-
-In Bezug auf den Cache verfügt der Ryzen 5 3600XT über 32KB L1-Cache, 512KB L2-Cache und 32MB L3-Cache \citep{Ryzen_Technische_Daten}. In der Konfiguration des Testcomputers sind 16GB DDR4 Speicher mit 3600 MHz verbaut, und der Prozessor wird mit einer Wasserkühlung gekühlt, was für eine gleichmäßige und robuste Kühlung sorgt.
-
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{../results/plots/3600xt/comp_all_threads.pdf}
 \caption{Performance-Benchmark auf Ryzen 5 3600XT: Einfluss von Thread-Anzahlen auf Verarbeitungszeit bei variierenden Datensatzgrößen}
 \label{fig:ryzen_benchmark_threads}
 \end{figure}
-
-\subsection{Raspberry Pi 3}
-Der Raspberry Pi 3 ist ein Single-Board-Computer, der von der Raspberry Pi Foundation entwickelt wurde. Ein Single-Board-Computer ist eine vollständige Computerplatine, die alle erforderlichen Komponenten wie Prozessor, Speicher, Ein-/Ausgabeanschlüsse und Stromversorgung auf einer einzigen Platine vereint. Der Raspberry Pi 3 wurde 2016 veröffentlicht und basiert auf einem ARM Cortex-A53 Quad-Core-Prozessor mit einer Taktfrequenz von 1,2 GHz und 1 GB LPDDR2-RAM \citep{RaspberryPi_Technische_Daten}.
-
-Im Vergleich zu anderen Prozessoren ist der Raspberry Pi 3 natürlich langsamer. Seine Spezifikationen bieten eine grundlegende Leistung für einfache Computing-Aufgaben und den Betrieb von IoT (Internet der Dinge)-Anwendungen.
-
-Der Raspberry Pi 3 ist aufgrund seiner geringen Größe, seines geringen Stromverbrauchs und seiner vielfältigen Einsatzmöglichkeiten beliebt. Er wird häufig in Bildungsprojekten, DIY (Do It Yourself)-Projekten, Heimautomatisierungssystemen und als kostengünstige Entwicklungsumgebung für Softwareentwickler eingesetzt. Trotz seiner begrenzten Leistungsfähigkeit erfüllt der Raspberry Pi 3 wichtige Funktionen in verschiedenen Anwendungsbereichen aufgrund seiner Kompaktheit und seines erschwinglichen Preises.
-
-Aufgrund der begrenzten Leistung des Raspberry Pi 3 und der damit verbundenen Laufzeiten konnte der Testablauf nicht vollständig durchgeführt werden. Es wurden maximal 4 Threads getestet, und die Partitionen wurden auf 8 und 4 begrenzt.
 
 \begin{figure}[H]
 \centering
@@ -139,8 +133,6 @@ Aufgrund der begrenzten Leistung des Raspberry Pi 3 und der damit verbundenen La
   \caption{Verteilung der Aufgaben auf die verfügbaren Threads bei einem Programmablauf mit 8 Threads}
   \label{fig:runtime_timeline_4threads}
 \end{figure}
-
-\subsection{VPS Server}
 
 \begin{figure}[H]
 \centering

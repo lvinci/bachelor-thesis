@@ -292,7 +292,40 @@
       \verb 10.1109/FarEastCon50210.2020.9271599
       \endverb
     \endentry
-    \entry{dokumentation_n++}{thesis}{}
+    \entry{Riedmiller_RPROP}{inproceedings}{}
+      \name{author}{2}{}{%
+        {{hash=c0f189183378afe94dc24779243437ac}{%
+           family={Riedmiller},
+           familyi={R\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+        {{hash=7a9031029590d7322b0c5d4e89cfbf83}{%
+           family={Braun},
+           familyi={B\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{32fc86bacf9787b4574c8f00a021c585}
+      \strng{fullhash}{32fc86bacf9787b4574c8f00a021c585}
+      \strng{bibnamehash}{32fc86bacf9787b4574c8f00a021c585}
+      \strng{authorbibnamehash}{32fc86bacf9787b4574c8f00a021c585}
+      \strng{authornamehash}{32fc86bacf9787b4574c8f00a021c585}
+      \strng{authorfullhash}{32fc86bacf9787b4574c8f00a021c585}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{IEEE International Conference on Neural Networks}
+      \field{title}{A direct adaptive method for faster backpropagation learning: the RPROP algorithm}
+      \field{year}{1993}
+      \field{pages}{586\bibrangedash 591 vol.1}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1109/ICNN.1993.298623
+      \endverb
+      \keyw{Backpropagation algorithms;Neurons;Acceleration;Supervised learning;Feedforward systems;Computer networks;Convergence;Writing}
+    \endentry
+    \entry{dokumentation_npp}{thesis}{}
       \name{author}{1}{}{%
         {{hash=9449802bcb467309c0ebced658096818}{%
            family={Riedmiller},
@@ -330,14 +363,65 @@
       \strng{authorbibnamehash}{0b75eb1c1faf0174437e5869d7b8f321}
       \strng{authornamehash}{0b75eb1c1faf0174437e5869d7b8f321}
       \strng{authorfullhash}{0b75eb1c1faf0174437e5869d7b8f321}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{UCI Machine Learning Repository}
       \field{note}{{DOI}: https://doi.org/10.24432/C52C8B}
       \field{title}{{MAGIC Gamma Telescope}}
       \field{year}{2007}
+    \endentry
+    \entry{wilkinson2006parallel}{book}{}
+      \name{author}{1}{}{%
+        {{hash=bf8e466d7b9299e96125269ab5c961a9}{%
+           family={Wilkinson},
+           familyi={W\bibinitperiod},
+           given={Philip},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Pearson Education India}%
+      }
+      \strng{namehash}{bf8e466d7b9299e96125269ab5c961a9}
+      \strng{fullhash}{bf8e466d7b9299e96125269ab5c961a9}
+      \strng{bibnamehash}{bf8e466d7b9299e96125269ab5c961a9}
+      \strng{authorbibnamehash}{bf8e466d7b9299e96125269ab5c961a9}
+      \strng{authornamehash}{bf8e466d7b9299e96125269ab5c961a9}
+      \strng{authorfullhash}{bf8e466d7b9299e96125269ab5c961a9}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Parallel programming: Techniques and applications using networked workstations and parallel computers, 2/E}
+      \field{year}{2006}
+    \endentry
+    \entry{Czech_2017_Shared_Memory}{inbook}{}
+      \name{author}{1}{}{%
+        {{hash=16431c274f10b626b37632d1f388b970}{%
+           family={Czech},
+           familyi={C\bibinitperiod},
+           given={Zbigniew\bibnamedelima J.},
+           giveni={Z\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{16431c274f10b626b37632d1f388b970}
+      \strng{fullhash}{16431c274f10b626b37632d1f388b970}
+      \strng{bibnamehash}{16431c274f10b626b37632d1f388b970}
+      \strng{authorbibnamehash}{16431c274f10b626b37632d1f388b970}
+      \strng{authornamehash}{16431c274f10b626b37632d1f388b970}
+      \strng{authorfullhash}{16431c274f10b626b37632d1f388b970}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Introduction to Parallel Computing}
+      \field{title}{Shared-memory Programming}
+      \field{year}{2017}
+      \field{pages}{243\bibrangedash 282}
+      \range{pages}{40}
     \endentry
     \entry{MacBook_Technische_Daten}{report}{}
       \name{author}{1}{}{%
@@ -383,8 +467,8 @@
       \strng{authorbibnamehash}{577ac524fdbb5eb6e8c09969b71919a1}
       \strng{authornamehash}{577ac524fdbb5eb6e8c09969b71919a1}
       \strng{authorfullhash}{577ac524fdbb5eb6e8c09969b71919a1}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Ryzen 5 3600XT - AMD}
@@ -415,8 +499,8 @@
       \strng{authorbibnamehash}{03eb7fa9a11a8c6d79113b8a4ace0c93}
       \strng{authornamehash}{03eb7fa9a11a8c6d79113b8a4ace0c93}
       \strng{authorfullhash}{03eb7fa9a11a8c6d79113b8a4ace0c93}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Raspberry Pi 3 Model B}

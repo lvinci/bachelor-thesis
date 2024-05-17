@@ -104,8 +104,64 @@ Unter Umständen ist es nicht ohne Weiteres möglich, einfach einen bestimmten T
 \section{Vorstellung der Implementierung}
 \label{sec:Vorstellung_Implementierung}
 
+In dieser Sektion wird genauer auf einige Aspekte der Implementierung eingegangen. Dabei werden auch einige Code-Ausschnitte behandelt, um die Änderungen und Implementierung zu veranschaulichen. 
+
+
 \subsection{Verwendung von threadsicheren Funktionen}
 \label{sec:Verwendung_threadsichere_Funktionen}
+
+Besonders zur Manipulation von Zeichenketten macht sowohl die n++-Bibliothek als auch der Code des Experimentes von Herr Brening viel von klassischen Funktionen aus der C-Standardbibliothek gebrauch. Beispielsweise wird wie in Abbildung \ref{fig:strtok_usage_before} zu sehen in der n++-Bibliothek die Funktion strtok() verwendet, welche eine Zeichenkette tokenisieren kann, um ein neuronales Netz aus einer Datei zu laden und zu deserialisieren. 
+
+\begin{figure}[H]
+\begin{minted}
+    [
+    frame=lines,
+    framesep=2mm,
+    baselinestretch=1.2,
+    fontsize=\footnotesize,
+    linenos,
+    firstnumber=611
+    ]
+    {c++}
+int Net::load_net( char filename[] ) {
+    ...
+    else if (strncmp(line,"topology",7)==0){
+        value=strtok(line, " \t\n");  /* skip first token (== topology)*/
+        for(i=0,value=strtok( NULL," \t" );(value!=NULL)&&(i<MAX_LAYERS);
+        value=strtok( NULL," \t\n" ),i++){
+    ...
+\end{minted}
+\label{fig:strtok_usage_before}
+\end{figure}
+
+Werden mehrere Netze gleichzeitig geladen, kann die Verwendung von strtok() in diesem Kontext jedoch zu Problemen und Konflikten führen, da die strtok() Funktion intern den Zustand der Zeichenkettenzerteilung speichert, um bei folgenden Aufrufen den nächsten Teil der Zeichenkette zurückzugeben. Wenn die Funktion also an mehreren Stellen gleichzeitig aufgerufen wird, entstehen inkosistente Ergebnisse. Für diese Fälle existiert in der Standardbibliothek zum Beispiel die Funktion strtok\_r(), welche ähnlich wie strtok() funktioniert, den internen Zustand jedoch in einem Pointer speichert, und es somit ermöglicht in jedem Thread einen separaten Pointer zu benutzen. Der Code musste in diesem Fall leicht umstrukturiert werden, danach ist er aber threadsicher. Das Ergebnis ist in Abbildung \ref{fig:strtok_r_usage_after} ersichtlich.
+
+\begin{figure}[H]
+\begin{minted}
+    [
+    frame=lines,
+    framesep=2mm,
+    baselinestretch=1.2,
+    fontsize=\footnotesize,
+    linenos,
+    firstnumber=611
+    ]
+    {c++}
+int Net::load_net( char filename[] ) {
+    ...
+    char *saveptr;
+    ...
+    else if (strncmp(line, "topology", 7) == 0) {
+        strtok_r(line, " \t\n", &saveptr); /* skip first token (== topology)*/
+        for (i = 0, value = strtok_r(nullptr, " \t", &saveptr);
+             (value != nullptr) && (i < MAX_LAYERS);
+             value = strtok_r(nullptr, " \t\n", &saveptr), i++) {
+    ...
+\end{minted}
+\label{fig:strtok_r_usage_after}
+\end{figure}
+
+Diese Verwendung von strtok() tritt sehr häufig in dem n++-Quellcode auf. Auch in dem Code von Herr Brening wird strtok() verwendet, um den Datensatz einzulesen, und die relevanten Parameter zu extrahieren. Jeder dieser Funktionsaufrufe wurde durch threadsichere Alternativen wie strtok\_r() ersetzt.
 
 \subsection{Entfernung globaler Variablen}
 \label{sec:Entfernung_globaler_Variablen}

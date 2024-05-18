@@ -134,7 +134,7 @@ int Net::load_net( char filename[] ) {
 \label{fig:strtok_usage_before}
 \end{figure}
 
-Werden mehrere Netze gleichzeitig geladen, kann die Verwendung von strtok() in diesem Kontext jedoch zu Problemen und Konflikten führen, da die strtok() Funktion intern den Zustand der Zeichenkettenzerteilung speichert, um bei folgenden Aufrufen den nächsten Teil der Zeichenkette zurückzugeben. Wenn die Funktion also an mehreren Stellen gleichzeitig aufgerufen wird, entstehen inkosistente Ergebnisse. Für diese Fälle existiert in der Standardbibliothek zum Beispiel die Funktion strtok\_r(), welche ähnlich wie strtok() funktioniert, den internen Zustand jedoch in einem Pointer speichert, und es somit ermöglicht in jedem Thread einen separaten Pointer zu benutzen. Der Code musste in diesem Fall leicht umstrukturiert werden, danach ist er aber threadsicher. Das Ergebnis ist in Abbildung \ref{fig:strtok_r_usage_after} ersichtlich.
+Werden mehrere Netze gleichzeitig geladen, kann die Verwendung von strtok() in diesem Kontext jedoch zu Problemen und Konflikten führen, da die strtok() Funktion intern den Zustand der Zeichenkettenzerteilung speichert, um bei folgenden Aufrufen den nächsten Teil der Zeichenkette zurückzugeben. Wenn die Funktion also an mehreren Stellen gleichzeitig aufgerufen wird, entstehen inkosistente Ergebnisse. Für diese Fälle existiert in der Standardbibliothek zum Beispiel die Funktion strtok\_r(), welche ähnlich wie strtok() funktioniert, den internen Zustand jedoch in einem Pointer speichert, und es somit ermöglicht in jedem Thread einen separaten Pointer zu benutzen \citep{Posix_Specification}. Der Code musste in diesem Fall leicht umstrukturiert werden, danach ist er aber threadsicher. Das Ergebnis ist in Abbildung \ref{fig:strtok_r_usage_after} ersichtlich.
 
 \begin{figure}[H]
 \begin{minted}
@@ -162,6 +162,8 @@ int Net::load_net( char filename[] ) {
 \end{figure}
 
 Diese Verwendung von strtok() tritt sehr häufig in dem n++-Quellcode auf. Auch in dem Code von Herr Brening wird strtok() verwendet, um den Datensatz einzulesen, und die relevanten Parameter zu extrahieren. Jeder dieser Funktionsaufrufe wurde durch threadsichere Alternativen wie strtok\_r() ersetzt.
+Weitere häufige verwendete Beispiele für thread-unsichere Funktionen der Standardbibliothek, sind asctime(), ctime() und localtime(), aber auch die Zufallsgeneratorfunktionen wie rand() und srand().
+Wichtig zu erwähnen ist jedoch, dass je nach Anwendungsfall die threadsicheren Funktionen wie strtok\_r() nicht verfügbar sein könnten, wie zum Beispiel, wenn man die Portabilität für POSIX-Systeme vor 2001 gewährleisten möchte \citep{Posix_Specification}.
 
 \subsection{Entfernung globaler Variablen}
 \label{sec:Entfernung_globaler_Variablen}

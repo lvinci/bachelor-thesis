@@ -182,4 +182,35 @@ Ein Threadpool ist ein Entwurfsmuster, das häufig in der parallelen Programmier
 
 Ein Threadpool ermöglicht eine kontrollierte Anzahl von gleichzeitig ausgeführten Threads, wodurch Probleme wie übermäßige Thread-Erstellung und Ressourcenkonflikte vermieden werden. Durch die Begrenzung der Anzahl aktiver Threads können die Systemressourcen effizienter genutzt und die Stabilität des Systems gewährleistet werden. Stehen beispielsweise nur 2 Kerne zur Verfügung, ist es in vielen Fällen effizienter, die Aufgaben von 2 Threads abarbeiten zu lassen, anstatt 50 Threads gleichzeitig zu starten. Zudem wird die Verwaltung von Threads zentralisiert und vereinfacht, da der Threadpool die Lebenszyklen der Threads und die Aufgabenzuweisung übernimmt.
 
-Da die C++-Standardbibliothek nicht über einen ThreadPool verfügt, wurde eine Implementierung aus dem Internet verwendet \citep{ThreadPool_Tutorial_Cpp}. Der verwendete ThreadPool ist simpel aufgebaut, und in einer einzigen C++-Header-Datei implementiert.
+Da die C++-Standardbibliothek nicht über einen ThreadPool verfügt, wurde eine Implementierung aus dem Internet verwendet \citep{ThreadPool_Tutorial_Cpp}. Der verwendete ThreadPool ist simpel aufgebaut, und in einer einzigen C++-Header-Datei implementiert. Abbildung \ref{fig:threadpool_example_usage} zeigt ein Beispielprogramm, welches den Threadpool verwendet.
+
+\begin{figure}[H]
+\begin{minted}
+        [
+        frame=lines,
+        framesep=2mm,
+        baselinestretch=1.2,
+        fontsize=\footnotesize,
+        linenos,
+        ]
+        {c++}
+#include "threadpool/threadpool.h"
+
+int main() {
+    // Threadpool mit 2 Threads erstellen
+    ThreadPool *threadpool = new ThreadPool(2);
+    // 50 Beispielaufgaben erstellen und der Warteschlange hinzufügen
+    for (int i = 1; i <= 50; i++) {
+        threadpool->enqueue([i] { // Abhängigkeiten müssen spezifiziert werden
+            printf("Aufgabe %d\n", i);
+        });
+    }
+    // Aufruf des Destruktors terminiert Threads nach Abschluss aller Aufgaben
+    delete threadpool;
+    return 0;
+}
+\end{minted}
+\caption{Beispielhafter C++-Code zur Verwendung eines Threadpools: Ein Threadpool mit zwei Threads wird erstellt, 50 Aufgaben werden der Warteschlange hinzugefügt und anschließend wird der Threadpool blockierend terminiert.}
+\label{fig:threadpool_example_usage}
+\end{figure}
+    

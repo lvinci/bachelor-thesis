@@ -24,7 +24,6 @@ Der M1 Pro Prozessor, der im MacBook Pro 16 Zoll verwendet wird, integriert eine
 In Bezug auf die Leistung bietet der M1 Pro Prozessor eine sehr beeindruckende Single-Core-Leistung sowie eine bemerkenswerte parallele Verarbeitungsfähigkeit für multithreaded Anwendungen. Die genaue Hauptspeichergröße beträgt 16 GB RAM mit einer Speicherbandbreite von 200 GBit/s \citep{MacBook_Technische_Daten}. Auch die Cache-Größe des Prozessors ist sehr hoch, was die Latenz bei Speicherzugriffen zusätzlich vermindert.
 Verwendet wurde MacOS Sonoma 14.5 mit dem Darwin Kernel Version 23.5.0 und Clang Version 1500.3.9.4 auf einem MacBook Pro 16 Zoll Laptop.
 
-
 Der AMD Ryzen 5 3600XT ist ein Prozessor aus der Ryzen 3000-Serie von AMD, der im Jahr 2020 eingeführt wurde. Er verfügt über insgesamt 6 CPU-Kerne und 12 Threads auf Basis der Zen 2-Architektur, welche auch im Servermarkt verbreitet ist. Es handelt sich um einen Desktopprozessor mit einer maximalen Leistungsaufnahme von 95 Watt \citep{Ryzen_Technische_Daten}.
 Der Prozessor unterstützt DDR4-RAM mit unübertakteten Geschwindigkeiten von bis zu 3200 MHz \citep{Ryzen_Technische_Daten}. Die genaue Speicherbandbreite und Größe hängt von der verwendeten RAM-Konfiguration ab, da Desktop Prozessoren modular in verschiedene Systeme eingebaut werden können.
 In Bezug auf den Cache verfügt der Ryzen 5 3600XT über 32KB L1-Cache, 512KB L2-Cache und 32MB L3-Cache \citep{Ryzen_Technische_Daten}. In der Konfiguration des Testcomputers sind 16GB DDR4 Speicher mit 3600 MHz verbaut, und der Prozessor wird mit einer Wasserkühlung gekühlt, was für eine gleichmäßige und robuste Kühlung sorgt. Als Betriebssystem kam Fedora 40 mit dem Linux Kernel der Version 6.8 zum Einsatz.
@@ -32,7 +31,11 @@ In Bezug auf den Cache verfügt der Ryzen 5 3600XT über 32KB L1-Cache, 512KB L2
 Der Raspberry Pi 3 ist ein Single-Board-Computer, der von der Raspberry Pi Foundation entwickelt wurde. Ein Single-Board-Computer ist eine vollständige Computerplatine, die alle erforderlichen Komponenten wie Prozessor, Speicher, Ein-/Ausgabeanschlüsse und Stromversorgung auf einer einzigen Platine vereint. Der Raspberry Pi 3 wurde 2016 veröffentlicht und basiert auf einem ARM Cortex-A53 Quad-Core-Prozessor mit einer Taktfrequenz von 1,2 GHz und 1 GB LPDDR2-RAM \citep{RaspberryPi_Technische_Daten}.
 Im Vergleich zu anderen Prozessoren ist der Raspberry Pi 3 natürlich langsamer. Seine Spezifikationen bieten eine grundlegende Leistung für einfache Computing-Aufgaben und den Betrieb von IoT (Internet der Dinge)-Anwendungen.
 Der Raspberry Pi 3 ist aufgrund seiner geringen Größe, seines geringen Stromverbrauchs und seiner vielfältigen Einsatzmöglichkeiten beliebt. Er wird häufig in Bildungsprojekten, DIY (Do It Yourself)-Projekten, Heimautomatisierungssystemen und als kostengünstige Entwicklungsumgebung für Softwareentwickler eingesetzt. Trotz seiner begrenzten Leistungsfähigkeit erfüllt der Raspberry Pi 3 wichtige Funktionen in verschiedenen Anwendungsbereichen aufgrund seiner Kompaktheit und seines erschwinglichen Preises.
-Aufgrund der begrenzten Leistung des Raspberry Pi 3 und der damit verbundenen Laufzeiten konnte der Testablauf nicht vollständig durchgeführt werden. Es wurden maximal 4 Threads getestet, und die Partitionen wurden auf 8 und 4 begrenzt.
+Aufgrund der begrenzten Leistung des Raspberry Pi 3 und der damit verbundenen Laufzeiten konnte der Testablauf nicht vollständig durchgeführt werden. Es wurden maximal 4 Threads getestet, und die Partitionen wurden auf 8 und 4 begrenzt. Die Linux Kernel Version 6.6 kam auf Raspberry Pi OS Lite 12 in der 64-Bit Version zum Einsatz.
+
+Um die Skalierbarkeit und das Verhalten der Algorithmen in unterschiedlichen Umgebungen zu beleuchten, wurden die Benchmarks zusätzlich auf einem VPS-Server des Anbieters Contabo durchgeführt. Diese Wahl bot gleich zweifache Vorteile: Zum einen ermöglichte sie die Evaluierung der Algorithmenleistung in einer Cloud-Umgebung, die in der heutigen Anwendungslandschaft immer relevanter wird. 
+Der AMD EPYC 7282 Prozessor ist ein Serverprozessor, der speziell für rechenintensive Aufgaben in Serverumgebungen entwickelt wurde. Mit seinen 16 Kernen und 32 Threads bietet er eine beachtliche Rechenleistung. Der Basistakt liegt bei 2,8 GHz und der Cache ist 64 MB groß \citep{Epyc_Specifications}.
+Von diesem leistungsstarken Prozessor stehen dem VPS-Server lediglich 2 Kerne und 4 GB Arbeitsspeicher zur Verfügung. Diese Einschränkung sollte Aufschluss darüber geben, wie effizient die Algorithmen mit limitierten Ressourcen umgehen können und wie sie in skalierbaren Umgebungen performen. Der verwendete Linux-Kernel war die Version 6.1.0-21 auf Debian 12.
 
 \subsection{Benchmark Script}
 
@@ -84,7 +87,7 @@ done
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{../results/plots/m1pro/comp_all_threads.pdf}
-\caption{Performance-Benchmark auf Apple M1 Pro: Einfluss von Thread-Anzahlen auf Verarbeitungszeit bei variierenden Datensatzgrößen}
+\caption{Leistungstest auf Apple M1 Pro: Einfluss von Thread-Anzahlen auf Verarbeitungszeit bei variierenden Datensatzgrößen}
 \label{fig:m1pro_benchmark_threads}
 \end{figure}
 
@@ -116,14 +119,14 @@ Des Weiteren ist der Overhead der Parallelisierung ein wichtiger Aspekt, der bei
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{../results/plots/3600xt/comp_all_threads.pdf}
-\caption{Performance-Benchmark auf Ryzen 5 3600XT: Einfluss von Thread-Anzahlen auf Verarbeitungszeit bei variierenden Datensatzgrößen}
+\caption{Leistungstest auf AMD Ryzen 5 3600XT: Einfluss von Thread-Anzahlen auf Verarbeitungszeit bei variierenden Datensatzgrößen}
 \label{fig:ryzen_benchmark_threads}
 \end{figure}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{../results/plots/raspberrypi3/comp_all_threads.pdf}
-\caption{Ergebnisse der Leistungstests verglichen nach Thread Anzahl}
+\caption{Leistungstest auf Raspberry Pi 3: Einfluss von Thread-Anzahlen auf Verarbeitungszeit bei variierenden Datensatzgrößen}
 \label{fig:raspi_benchmark_threads}
 \end{figure}
 
@@ -137,7 +140,7 @@ Des Weiteren ist der Overhead der Parallelisierung ein wichtiger Aspekt, der bei
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{../results/plots/vps/comp_all_threads.pdf}
-\caption{Ergebnisse der Leistungstests verglichen nach Thread Anzahl}
+\caption{Leistungstest auf AMD EPYC 7282 mit 2 verfügbaren Kernen: Einfluss von Thread-Anzahlen auf Verarbeitungszeit bei variierenden Datensatzgrößen}
 \label{fig:vps_benchmark_threads}
 \end{figure}
 
@@ -145,7 +148,7 @@ Des Weiteren ist der Overhead der Parallelisierung ein wichtiger Aspekt, der bei
 
 \begin{table}[H]
 \centering
-\caption{Benchmark Ergebnisse für alle getesteten Systeme. Laufzeit Ergebnisse als Mittelwert von 5 Durchläufen mit Standardabweichung SD.\newline }
+\caption{Benchmark-Ergebnisse für alle getesteten Systeme. Die benötigte Laufzeit $t$ ist ein Mittelwert aus jeweils mindestens 5 Durchläufen. Die Standardabweichung dieser Durchläufe ist mit $\sigma$ gekennzeichnet.}
 \label{tab:performance_comparison}
 \begin{adjustbox}{max width=\textwidth}
 \renewcommand{\arraystretch}{1.5}

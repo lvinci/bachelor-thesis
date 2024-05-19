@@ -104,13 +104,16 @@ Unter Umständen ist es nicht ohne Weiteres möglich, einfach einen bestimmten T
 \section{Vorstellung der Implementierung}
 \label{sec:Vorstellung_Implementierung}
 
-In dieser Sektion wird genauer auf einige Aspekte der Implementierung eingegangen. Dabei werden auch einige Code-Ausschnitte behandelt, um die Änderungen und Implementierung zu veranschaulichen. 
+In dieser Sektion wird die Implementierung vorgestellt, wobei einige Aspekte im Anschluss genauer beleuchtet werden. Einige Code-Segmente werden im Vergleich mit der vorherigen Implementierung dargestellt, um die Veränderungen zu veranschaulichen.
 
+Die Herangehensweise der Implementierung war es, zunächst eigenständige Code-Segmente in Funktionen auszulagern, um die Verantwortung einzelner Funktionen klar zu definieren, und große Funktionen mit viel Code herunterzubrechen. Dies ermöglicht es, einfacher zu identifizieren, welche Segmente sich möglicherweise für eine parallele Durchführung eignen. Für die Verlagerung von Code in eigene Funktionen ist es erforderlich, Übergabewerte und Rückgabewerte dieser zu definieren, um weiterhin auf die Daten zugreifen zu können. Dabei wurde bereits darauf geachtet, alle neuen Funktionen ohne Seiteneffekte zu implementieren, was bedeutet, dass sie keine externen Zustände verändern und für gegebene Übergabewerte immer die gleichen Rückgabewerte erzeugen. Dies ist für die Strukturierung des Codes für die Parallelisierung von großem Vorteil.
+
+Bei der Analyse stellte sich recht schnell heraus, dass sich der Abschnitt, in welchem ein neuronales Netz zunächst trainiert und dann getestet wird, am besten für die Parallelisierung eignet. Dieser Abschnitt wurde in eine Funktion namens runSeed ausgelagert. Die Funktion bekommt den auszuführenden Seed und den gesamten Datensatz, der bei Programmstart einmalig eingelesen, in Zeilen aufgeteilt und deserialisiert wird, übergeben. Dies unterscheidet sich von der bestehenden Implementierung, in welcher der Datensatz bei jedem Durchlauf mehrfach zerteilt und eingelesen wird, worauf in der nächsten Sektion \ref{sec:Verwendung_threadsichere_Funktionen} genau eingegangen wird. Dies hat auch Leistungsimplikationen, da der überarbeitete Ansatz nicht nur threadsicher, sondern auch performanter ist.
 
 \subsection{Verwendung von threadsicheren Funktionen}
 \label{sec:Verwendung_threadsichere_Funktionen}
 
-Besonders zur Manipulation von Zeichenketten macht sowohl die n++-Bibliothek als auch der Code des Experimentes von Herr Brening viel von klassischen Funktionen aus der C-Standardbibliothek gebrauch. Beispielsweise wird wie in Abbildung \ref{fig:strtok_usage_before} zu sehen in der n++-Bibliothek die Funktion strtok() verwendet, welche eine Zeichenkette tokenisieren kann, um ein neuronales Netz aus einer Datei zu laden und zu deserialisieren. 
+Besonders zur Manipulation von Zeichenketten macht sowohl die n++-Bibliothek als auch der Code des Experimentes von Herr Brening viel von klassischen Funktionen aus der C-Standardbibliothek gebrauch. Beispielsweise wird wie in Abbildung \ref{fig:strtok_usage_before} zu sehen in der n++-Bibliothek die Funktion strtok verwendet, welche eine Zeichenkette tokenisieren kann, um ein neuronales Netz aus einer Datei zu laden und zu deserialisieren. 
 
 \begin{figure}[H]
 \begin{minted}
@@ -132,9 +135,10 @@ int Net::load_net( char filename[] ) {
     ...
 \end{minted}
 \label{fig:strtok_usage_before}
+\caption{Ausschnitt aus dem bestehenden Code der N++ Bibliothek, in welchem viel Gebrauch von der strtok-Funktion gemacht wird.}
 \end{figure}
 
-Werden mehrere Netze gleichzeitig geladen, kann die Verwendung von strtok() in diesem Kontext jedoch zu Problemen und Konflikten führen, da die strtok() Funktion intern den Zustand der Zeichenkettenzerteilung speichert, um bei folgenden Aufrufen den nächsten Teil der Zeichenkette zurückzugeben. Wenn die Funktion also an mehreren Stellen gleichzeitig aufgerufen wird, entstehen inkosistente Ergebnisse. Für diese Fälle existiert in der Standardbibliothek zum Beispiel die Funktion strtok\_r(), welche ähnlich wie strtok() funktioniert, den internen Zustand jedoch in einem Pointer speichert, und es somit ermöglicht in jedem Thread einen separaten Pointer zu benutzen \citep{Posix_Specification}. Der Code musste in diesem Fall leicht umstrukturiert werden, danach ist er aber threadsicher. Das Ergebnis ist in Abbildung \ref{fig:strtok_r_usage_after} ersichtlich.
+Werden mehrere Netze gleichzeitig geladen, kann die Verwendung von strtok in diesem Kontext jedoch zu Problemen und Konflikten führen, da die strtok-Funktion intern den Zustand der Zeichenkettenzerteilung speichert, um bei folgenden Aufrufen den nächsten Teil der Zeichenkette zurückzugeben. Wenn die Funktion also an mehreren Stellen gleichzeitig aufgerufen wird, entstehen inkosistente Ergebnisse. Für diese Fälle existiert in der Standardbibliothek zum Beispiel die Funktion strtok\_r, welche ähnlich wie strtok funktioniert, den internen Zustand jedoch in einem Pointer speichert, und es somit ermöglicht in jedem Thread einen separaten Pointer zu benutzen \citep{Posix_Specification}. Der Code musste in diesem Fall leicht umstrukturiert werden, danach ist er aber threadsicher. Das Ergebnis ist in Abbildung \ref{fig:strtok_r_usage_after} ersichtlich.
 
 \begin{figure}[H]
 \begin{minted}
@@ -149,7 +153,7 @@ Werden mehrere Netze gleichzeitig geladen, kann die Verwendung von strtok() in d
     {c++}
 int Net::load_net( char filename[] ) {
     ...
-    char *saveptr;
+    char *saveptr; // Speichert den Zustand der Tokenisierung der Zeichenkette
     ...
     else if (strncmp(line, "topology", 7) == 0) {
         strtok_r(line, " \t\n", &saveptr); /* skip first token (== topology)*/
@@ -159,11 +163,14 @@ int Net::load_net( char filename[] ) {
     ...
 \end{minted}
 \label{fig:strtok_r_usage_after}
+\caption{Ausschnitt aus dem überarbeiteten Code der N++ Bibliothek, in welchem die strtok-Funktion durch die strtok\_r-Funktion ersetzt wurde.}
 \end{figure}
 
-Diese Verwendung von strtok() tritt sehr häufig in dem n++-Quellcode auf. Auch in dem Code von Herr Brening wird strtok() verwendet, um den Datensatz einzulesen, und die relevanten Parameter zu extrahieren. Jeder dieser Funktionsaufrufe wurde durch threadsichere Alternativen wie strtok\_r() ersetzt.
-Weitere häufige verwendete Beispiele für thread-unsichere Funktionen der Standardbibliothek, sind asctime(), ctime() und localtime(), aber auch die Zufallsgeneratorfunktionen wie rand() und srand().
-Wichtig zu erwähnen ist jedoch, dass je nach Anwendungsfall die threadsicheren Funktionen wie strtok\_r() nicht verfügbar sein könnten, wie zum Beispiel, wenn man die Portabilität für POSIX-Systeme vor 2001 gewährleisten möchte \citep{Posix_Specification}.
+Diese Verwendung von strtok tritt sehr häufig in dem n++-Quellcode auf. Auch in dem Code von Herr Brening wird strtok verwendet, um den Datensatz einzulesen, und die relevanten Parameter zu extrahieren. Jeder dieser Funktionsaufrufe wurde durch threadsichere Alternativen wie strtok\_r ersetzt.
+Weitere häufige verwendete Beispiele für thread-unsichere Funktionen der Standardbibliothek, sind asctime, ctime und localtime, aber auch die Zufallsgeneratorfunktionen wie rand und srand.
+Wichtig zu erwähnen ist jedoch, dass je nach Anwendungsfall die threadsicheren Funktionen wie strtok\_r nicht verfügbar sein könnten, wie zum Beispiel, wenn man die Portabilität für POSIX-Systeme vor 2001 gewährleisten möchte \citep{Posix_Specification}.
+
+Um das Nachvollziehen des Programmablaufs zu vereinfachen verfügte die bestehende Implementierung über viele Konsolenausgaben welche mit cout und dem << Operator von C++ realisiert worden sind. Diese Konsolenausgaben sind nicht threadsicher, da die Konkatenation von Zeichenketten bei gleichzeitigen Aufrufen die Daten verschiedener Threads sofort ausgegeben werden, bevor sie konkateniert wurden. Als Lösung wurde in der parallelisierten Implementierung die printf Funktion genutzt, welche die Zeichenkette zuerst formattiert und konkateniert, bevor sie in der Konsole ausgegeben wird. Diese Änderung führt jedoch auch zu geringen Leistungsunterschieden, da die Funktionsweise beider Methoden nicht vergleichbar ist.
 
 \subsection{Entfernung globaler Variablen}
 \label{sec:Entfernung_globaler_Variablen}
@@ -191,7 +198,7 @@ int topology[LAYERS];
 float uparams[10];
 FTYPE *in_vec, *out_vec, *tar_vec;
 \end{minted}
-\caption{Teil der globalen Variablen in der bestehenden Implementierung von Herr Brening}
+\caption{Teil der globalen Variablendefinition in der bestehenden Implementierung von Herr Brening}
 \label{fig:global_variable_usage_before}
 \end{figure}
 
@@ -212,6 +219,7 @@ static void runSeed(const int seed, const vector<DatasetRow> &trainingset,
  const vector<DatasetRow> &testingset) {
     ...
     const auto net = new Net();
+    ...
     const auto inVec = new float[net->topo_data.in_count];
     const auto outVec = new float[net->topo_data.out_count];
     const auto tarVec = new float[net->topo_data.out_count];
@@ -219,6 +227,8 @@ static void runSeed(const int seed, const vector<DatasetRow> &trainingset,
 \caption{Verlagerung der globalen Variablen zu lokalen Variablen in der parallelen Implementierung.}
 \label{fig:local_variable_usage_after}
 \end{figure}
+
+Die globalen Variablen, welche die Ergebnisse der Experimente speichert, mussten nicht entfernt werden, da bereits 10, also eine für jeden Seed bestehen. Der Code wurde vereinfacht, da dem Array stattdessen eine weitere Dimension hinzugefügt wurde, welche spezifiziert, von welchem seed die Ergebnisse stammen. So wurde der Code lesbarer, und es ist gibt weiterhin getrennte Speichersegmente für verschiedene Threads.
 
 \subsection{Verwendung eines Threadpools}
 \label{sec:Verwendung_Thread_Pool}

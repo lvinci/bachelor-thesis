@@ -1,6 +1,5 @@
 \chapter{Experimentelle Untersuchungen}
 \chaptermark{Experimentelle Untersuchungen}
-\label{ch:EntwickelteMethode}
 
 \section{Angewendete Methodik}
 \sectionmark{Methodik}
@@ -40,13 +39,13 @@ Von diesem leistungsstarken Prozessor stehen dem VPS-Server lediglich 2 Kerne un
 \subsection{Benchmark Script}
 
 Aus 6 verschiedenen Anzahlen an Threads, 4 verschiedenen Größen der Datensätze und 5 Durchläufen pro Kombination ergeben sich 120 einzelne Tests, die pro System ausgeführt werden müssen.
-Um diese Arbeit zu erleichtern und einen reproduzierbaren Testprozess zu ermöglichen habe ich ein Skript geschrieben, welches alle Tests nacheinander automatisch ausführt.
+Um diese Arbeit zu erleichtern und einen reproduzierbaren Testprozess zu ermöglichen wurde ein Skript geschrieben, welches alle Tests nacheinander automatisch ausführt.
 
-Das Skript misst die benötigten Laufzeiten der Durchläufe und schreibt nach jedem Durchlauf die benötigte Zeit in eine Datei. Zusätzlich werden die Zeit und Informationen zu jedem Durchlauf auch in eine CSV Datei geschrieben, um das Auswerten der Benchmarks auf einem System durch nur eine einzige Datei zu ermöglichen.
+Das Skript misst die benötigten Laufzeiten der Durchläufe und schreibt nach jedem Durchlauf die benötigte Zeit in eine Datei. Zusätzlich werden die Zeit und Informationen zu jedem Durchlauf auch in eine CSV-Datei geschrieben, um das Auswerten der Benchmarks auf einem System durch nur eine einzige Datei zu ermöglichen.
 
 Als Parameter ist es möglich, die maximale Anzahl an Threads festzulegen. So ist es beispielsweise auf einem Raspberry Pi sinnvoll, das Programm nur mit maximal 4 Threads zu testen, da er nur über 4 Kerne verfügt.
 
-Das Skript ist simpel und wurde in Bash geschrieben, was die Portabilität zwischen Linux und MacOS gewährleistet. Dabei wurde jedoch das Programm bc verwendet, welches auf Linux standardmäßig nicht vorinstalliert ist.
+Das Skript ist simpel und wurde in Bash geschrieben, was die Portabilität zwischen Linux und MacOS gewährleistet. Dabei wurde jedoch das Programm bc verwendet, welches auf den meisten Linux-Distributionen standardmäßig nicht vorinstalliert ist.
 
 \begin{figure}[H]
 \begin{minted}
@@ -78,7 +77,7 @@ for partition in ${PARTITIONS[@]};do
     done
 done
 \end{minted}
-\caption{Vereinfacht dargestelltes Benchmark Skript}
+\caption{Vereinfacht dargestelltes Benchmark Skript. Es testet verschiedenen Thread-Anzahlen und Datensatzgrößen.}
 \label{fig:benchmark_script_code}
 \end{figure}
 

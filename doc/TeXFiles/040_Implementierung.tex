@@ -168,6 +168,58 @@ Wichtig zu erwähnen ist jedoch, dass je nach Anwendungsfall die threadsicheren 
 \subsection{Entfernung globaler Variablen}
 \label{sec:Entfernung_globaler_Variablen}
 
+In der bestehenden Implementierung von Herr Brening, von welcher ein Teil in Abbildung \ref{fig:global_variable_usage_before} zu sehen ist, werden die meisten Variablen global, also außerhalb von Funktionen und Klassen, definiert. Die Verwendung von globalen Variablen ermöglicht eine subjektiv empfundene höhere Lesbarkeit und Verständlichkeit des Quellcodes, da alle verwendeten Variablen zu Beginn der Datei definiert sind, und somit an einer Stelle eingesehen werden können. Des Weiteren ermöglichen globale Variablen eine Reduzierung von Parameterübergaben in Funktionen, da auf sie von allen Funktionen direkt zugegriffen werden kann.
+
+\begin{figure}[H]
+\begin{minted}
+[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos,
+firstnumber=24,
+]
+{c++}
+Net* net;
+string* trainingData;
+string* testingData;
+int dataSetCount;
+int seed;
+
+int topology[LAYERS];
+float uparams[10];
+FTYPE *in_vec, *out_vec, *tar_vec;
+\end{minted}
+\caption{Teil der globalen Variablen in der bestehenden Implementierung von Herr Brening}
+\label{fig:global_variable_usage_before}
+\end{figure}
+
+Die globalen Variablen werden für die Datensätze, das neuronale Netz und die Propagierung von Daten verwendet. Im Kontext der Parallelisierung entstehen durch diese Verwendung von globalen Variablen jedoch Konflikte, welche ein Beibehalten dieser Struktur unmöglich machen. So entstehen beispielsweise geteilte Speicherzugriffe wie bereits in Sektion \ref{sec:Entfernung_geteilte_Speicherzugriffe} angesprochen, da nun mehrere Netze zeitgleich laufen sollen. So müsste es beispielsweise entweder eine Variable für jedes Netz geben, oder man schützt die Zugriffe beispielsweise mit einem Mutex, was die Parallelisierung jedoch unwirksam machen würde. Deshalb wurde sich entschieden, die globalen Variablen zu entfernen, und erst an der Stelle zu definieren, wo sie verwendet werden. Das neuronale Netz und die Vektoren werden in Abbildung \ref{fig:local_variable_usage_after} beispielsweise erst innerhalb eines Threads definiert, sodass jeder Thread und jeder Ablauf über separate Netze verfügt, was die Konflikte beseitigt.
+
+\begin{figure}[H]
+    \begin{minted}
+    [
+    frame=lines,
+    framesep=2mm,
+    baselinestretch=1.2,
+    fontsize=\footnotesize,
+    linenos,
+    firstnumber=242,
+    ]
+    {c++}
+static void runSeed(const int seed, const vector<DatasetRow> &trainingset,
+ const vector<DatasetRow> &testingset) {
+    ...
+    const auto net = new Net();
+    const auto inVec = new float[net->topo_data.in_count];
+    const auto outVec = new float[net->topo_data.out_count];
+    const auto tarVec = new float[net->topo_data.out_count];
+\end{minted}
+\caption{Verlagerung der globalen Variablen zu lokalen Variablen in der parallelen Implementierung.}
+\label{fig:local_variable_usage_after}
+\end{figure}
+
 \subsection{Verwendung eines Threadpools}
 \label{sec:Verwendung_Thread_Pool}
 

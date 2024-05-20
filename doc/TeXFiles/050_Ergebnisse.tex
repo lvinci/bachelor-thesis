@@ -34,7 +34,7 @@ Um die Skalierbarkeit und das Verhalten der Algorithmen in unterschiedlichsten U
 Der Server verfügt über einen AMD EPYC 7282 Prozessor, der speziell für rechenintensive Aufgaben in Serverumgebungen entwickelt wurde. Mit seinen 16 Kernen und 32 Threads bietet er eine beachtliche Rechenleistung. Der Basistakt liegt bei 2,8 GHz und der Cache ist 64 MB groß \citep{Epyc_Specifications}.
 Von diesem leistungsstarken Prozessor stehen dem VPS-Server lediglich 2 Kerne und 4 GB Arbeitsspeicher zur Verfügung. Diese Einschränkung sollte Aufschluss darüber geben, wie effizient die Algorithmen mit limitierten Ressourcen umgehen können und wie sie in skalierbaren Umgebungen performen. Der verwendete Linux-Kernel war die Version 6.1.0-21 auf Debian 12.
 
-\section{Benchmark Script}
+\section{Benchmark-Script}
 
 Aus 6 verschiedenen Anzahlen an Threads, 4 verschiedenen Größen der Datensätze und 5 Durchläufen pro Kombination ergeben sich 120 einzelne Tests, die pro System ausgeführt werden müssen.
 Um diese Arbeit zu erleichtern und einen reproduzierbaren Testprozess zu ermöglichen, wurde ein Skript geschrieben, welches alle Tests nacheinander automatisch ausführt.
@@ -166,7 +166,7 @@ Zusammenfassend lässt sich festhalten, dass die parallelisierte Implementierung
 
 
 \begin{table}[H]
-\caption{Benchmark-Ergebnisse für alle getesteten Systeme. Die benötigte Laufzeit $t$ ist ein Mittelwert aus jeweils mindestens 5 Durchläufen. Die Standardabweichung dieser Durchläufe ist mit $\sigma$ gekennzeichnet.}
+\caption{Benchmark-Ergebnisse für alle getesteten Systeme. Die benötigte Laufzeit $t$ ist ein Mittelwert aus jeweils mindestens 5 Durchläufen. Die Standardabweichung dieser Durchläufe ist mit $\sigma$ gekennzeichnet.\newline}
 \label{tab:performance_comparison}
 \begin{adjustbox}{max width=\textwidth}
 \renewcommand{\arraystretch}{1.5}

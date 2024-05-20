@@ -13,8 +13,6 @@ Die Bibliothek n++ ist in C++ verfasst. Da sie seit über 20 Jahren besteht, ver
 
 n++ ermöglicht es dem Benutzer, die Topologie des neuronalen Netzes zu spezifizieren und es an die spezifischen Anforderungen anzupassen. Hierbei können Parameter wie die Anzahl der Schichten, die Größe der Schichten sowie die Dimensionen der Ein- und Ausgabeschichten festgelegt werden \citep{dokumentation_npp}. Nach der Konfiguration des Netzes können Eingabemuster durch Vorwärtspropagation propagiert werden. Die resultierenden Ausgaben können abgerufen werden, und optional kann durch eine Rückführung des Fehlervektors ein Lernprozess des Netzes durchgeführt werden, wobei die Gewichte automatisch angepasst werden. Generierte Netze können in Dateien gespeichert werden, um sie zu einem späteren Zeitpunkt wiederzuverwenden, insbesonders für reproduzierbare Experimente.
 
-In Codeausschnitt \ref{fig:npp_examplenet_code}, welcher eine vereinfachte Form des Beispielnetzes aus der n++-Dokumentation darstellt \citep{dokumentation_npp}, wird ein Beispielnetz mit drei Schichten erstellt. Die Eingabeschicht hat dabei zwei Parameter, die Ausgabeschicht drei, und die versteckte Schicht hat vier Parameter. Es ist ersichtlich, dass die n++-Bibliothek das einfache Austauschen von Updatefunktionen unterstützt. In den Zeilen 16 und 17 wird die Updatefunktion dynamisch auf Backpropagation gesetzt, was ohne großen Aufwand möglich ist.
-
 \begin{figure}[H]
 \begin{minted}
 [
@@ -46,6 +44,8 @@ int main() {
 \label{fig:npp_examplenet_code}
 \caption{Vereinfachte Form des Beispielnetzes aus der n++-Dokumentation welche ein Netz mit 3 Schichten erstellt}
 \end{figure}
+
+In Codeausschnitt \ref{fig:npp_examplenet_code}, welcher eine vereinfachte Form des Beispielnetzes aus der n++-Dokumentation darstellt \citep{dokumentation_npp}, wird ein Beispielnetz mit drei Schichten erstellt. Die Eingabeschicht hat dabei zwei Parameter, die Ausgabeschicht drei, und die versteckte Schicht hat vier Parameter. Es ist ersichtlich, dass die n++-Bibliothek das einfache Austauschen von Updatefunktionen unterstützt. In den Zeilen 16 und 17 wird die Updatefunktion dynamisch auf Backpropagation gesetzt, was ohne großen Aufwand möglich ist.
 
 \section{Bestehender Code}
 \label{sec:Bestehender_Code_Brening}
@@ -102,6 +102,7 @@ Die Verlagerung der zu parallelisierenden Routine ist mitunter der wichtigste Sc
 Unter Umständen ist es nicht ohne Weiteres möglich, einfach einen bestimmten Teil des bestehenden Quellcodes auszulagern und diesen zu parallelisieren. Ist dies der Fall, so muss der Quellcode allgemein konzeptionell umstrukturiert werden. In der Praxis ist dies einer der größten Faktoren, die zur Komplexität von Parallelisierung beitragen.
 
 \section{Vorstellung der Implementierung}
+\sectionmark{Vorstellung Implementierung}
 \label{sec:Vorstellung_Implementierung}
 
 In dieser Sektion wird die Implementierung vorgestellt, wobei einige Aspekte im Anschluss genauer beleuchtet werden. Einige Code-Segmente werden im Vergleich mit der vorherigen Implementierung dargestellt, um die Veränderungen zu veranschaulichen.

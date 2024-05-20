@@ -1,9 +1,8 @@
 \chapter{Fazit und Ausblick}
 \label{ch:Zusammenfassung}
 
-Der Code der Vorarbeit wurde parallelisiert und die n++-Bibliothek wurde threadsicher umgestaltet. Durch ausführliche Leistungstests konnte die Effizienz der Parallelisierung hinsichtlich der benötigten Laufzeit untersucht werden. Eine deutliche Verbesserung der benötigten Laufzeiten konnte erzielt und aufgezeigt werden. Es wurde bestätigt, dass sich die erzielten Verbesserungen nicht auf lediglich ein System beschränken, sondern auf mehreren Prozessorarchitekturen und Betriebssystemen realisiert worden sind.
+Der Code der Vorarbeit wurde parallelisiert und die n++-Bibliothek wurde threadsicher umgestaltet. Durch ausführliche Leistungstests konnte die Effizienz der Parallelisierung hinsichtlich der benötigten Laufzeit untersucht werden. Eine deutliche Verbesserung der benötigten Laufzeiten konnte erzielt und aufgezeigt werden. Es wurde bestätigt, dass sich die erzielten Verbesserungen nicht lediglich auf ein System beschränken, sondern auf mehreren Prozessorarchitekturen und Betriebssystemen realisiert werden.
 
-\begin{itemize}
-    \item Erweiterung der n++-Bibliothek: Die n++-Bibliothek könnte um weitere Funktionen zur Parallelisierung erweitert werden. Dies könnte zum Beispiel die Parallelisierung von internen Codeabschnitten oder die Bereitstellung von Hilfsfunktionen zur Optimierung der Thread-Zuordnung umfassen.
-    \item Untersuchung weiterer Parallelisierungsstrategien: Neben der Parallelisierung auf CPU-Ebene könnten auch andere Parallelisierungsstrategien untersucht werden, z. B. die Parallelisierung auf GPU-Ebene oder die Verwendung von verteilten Systemen.
-\end{itemize}
+Der implementierte Ansatz ermöglicht bei einem Programmablauf mit 8 Threads keine Laufzeitverbesserungen gegenüber einem Ablauf mit 6 Threads. Darüber hinaus sind bei Verwendung von über 10 Threads keine Verbesserungen zu erwarten. Diese Limitierung ist den nur maximal 10 parallel laufenden Aufgaben geschuldet. Um diese aufzuheben, bedarf es einer vollständigen Neukonzeption der Parallelisierungsstrategie wie zum Beispiel dem Modellparallelismus.
+
+Ein weiterer Ansatz wäre es, die n++-Bibliothek um weitere Funktionen zur Parallelisierung zu erweitern. Dies könnte zum Beispiel die Parallelisierung von internen Codeabschnitten oder die Bereitstellung von Hilfsfunktionen zur Vereinfachung paralleler Implementierungen für Anwender umfassen.

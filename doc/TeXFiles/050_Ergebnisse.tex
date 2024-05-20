@@ -83,7 +83,7 @@ done
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{../results/plots/m1pro/comp_all_threads.pdf}
-\caption{Leistungstest auf Apple M1 Pro: Einfluss von Thread-Anzahlen auf Verarbeitungszeit bei variierenden Datensatzgrößen}
+\caption{Leistungstest auf Apple M1 Pro: Einfluss von Thread-Anzahlen auf Laufzeit bei variierenden Datensatzgrößen, welche den Mittelwert von 5 Durchläufen darstellt. Die Standardabweichung der Laufzeit ist in Tabelle \ref{tab:performance_comparison} einzusehen.}
 \label{fig:m1pro_benchmark_threads}
 \end{figure}
 
@@ -108,14 +108,20 @@ Bei 6 Threads könnten zwar insgesamt 6 Aufgaben bearbeitet werden, jedoch sind 
 
 Da für den Analyseschritt im Programmablauf alle 10 Ergebnisse benötigt werden, ist es algorithmisch nicht möglich, die Analyse vor Abschluss aller 10 Durchläufe auszuführen, um die Kerne, die im Leerlauf sind, zu nutzen. Es kann sich also nur eine gleichmäßige und effiziente Nutzung der Threads ergeben, wenn eine ganzzahlige Fraktion der gesamten Aufgaben als Threads zur Verfügung stehen. Bei 10 Aufgaben bedeutet das, dass 10, 5, 2 und 1 Thread ohne signifikanten Leerlauf der Threads voll ausgenutzt werden können, wenn man die Analyse auslässt.
 
-Die Standardabweichung, welche in Tabelle \ref{tab:performance_comparison} zu sehen ist, ist insgesamt ziemlich gering, was für eine zuverlässige Verteilung der Threads von dem Betriebssystem  auf die verschiedenen Kerne spricht. Zu beobachten ist, dass die Standardabweichung selbstverständlich bei Tests, welche mehr Zeit beanspruchen höher ist, aber auch, dass bei diesem System die Standardabweichung bei 4 Threads verhältnismäßig leicht höher erscheint. Dies könnte eventuell an dem Scheduler des Kernels liegen, welcher dynamisch entscheidet, auf welchen Kernen Aufgaben laufen sollen.
+Die Standardabweichung der Ergebnisse des Apple M1 Pro, welche in Tabelle \ref{tab:performance_comparison} ablesbar ist, ist insgesamt ziemlich gering, was für eine zuverlässige Verteilung der Threads von dem Betriebssystem  auf die verschiedenen Kerne spricht. Zu beobachten ist, dass die Standardabweichung selbstverständlich bei Tests, welche mehr Zeit beanspruchen höher ist, aber auch, dass bei diesem System die Standardabweichung bei 4 Threads verhältnismäßig leicht höher erscheint. Dies könnte eventuell an dem Scheduler des Kernels liegen, welcher dynamisch entscheidet, auf welchen Kernen Aufgaben laufen sollen. Ein weiterer Faktor könnte die heterogene Architektur mit den Hochleistungs- und Effizienzkernen sein.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{../results/plots/3600xt/comp_all_threads.pdf}
-\caption{Leistungstest auf AMD Ryzen 5 3600XT: Einfluss von Thread-Anzahlen auf Verarbeitungszeit bei variierenden Datensatzgrößen}
+\caption{Leistungstest auf AMD Ryzen 5 3600XT: Einfluss von Thread-Anzahlen auf Laufzeit bei variierenden Datensatzgrößen, welche den Mittelwert von 5 Durchläufen darstellt. Die Standardabweichung der Laufzeit ist in Tabelle \ref{tab:performance_comparison} einzusehen.}
 \label{fig:ryzen_benchmark_threads}
 \end{figure}
+
+Die angesprochenen Beobachtungen bestätigen sich beim zweiten Testsystem, dem AMD Ryzen 5 3600XT weitgehend bestätigen. Genau wie beim Apple M1 Pro lässt sich eine erfolgreiche Skalierung der Leistung bei höheren Thread-Zahlen feststellen. Dieses System ist auch sehr leistungsstark, und kann von multithreaded Anwendungen stark profitieren. Insgesamt liegen die benötigten Laufzeiten circa 20\% über denen des Apple M1 Pro. Auch die zuvor erwähnte Konvergenz bei 6 und 8 verwendeten Threads ist zu erkennen. 
+
+Besonders zu beobachten ist, dass der Leistungssprung der Laufzeiten von 6 auf 10 Threads bei diesem System geringer ist als bei dem Apple M1 Pro. Dies ist zu erwarten, da der AMD Ryzen 5 3600XT nur über 6 Kerne verfügt, welche zwar mithilfe von Hyper-Threading 12 physische Threads verfügbar stellen \citep{Ryzen_Technische_Daten}, jedoch nicht mit der Leistung von 12 Prozessorkernen vergleichbar sind. Bei 10 Laufenden Threads müssen sich somit 4 der 6 vorhandenen Prozessorkerne mit 2 Aufgaben gleichzeitig beschäftigen.
+
+Die Standardabweichung der Testergebnisse ist im Allgemeinen auf dem gleichen Niveau mit denen des vorherig angesprochenen Systems. Deutliche Unterschiede zwischen Linux und MacOS konnten nicht beobachtet werden und für das getestete Programm scheint es keine großen Unterschiede zwischen dem Linux-Kernel und dem Darwin-Kernel von MacOS zu geben.
 
 \begin{figure}[H]
 \centering
@@ -142,7 +148,7 @@ Des Weiteren ist der Overhead der Parallelisierung ein wichtiger Aspekt, der bei
 
 \mycomment{Beschriftung der Diagramme bei 1 Thread ist noch "1 Threads". Das sollte geändert werden.}
 
-\section{Auswertung}
+\section{Tabellarische Auswertung}
 
 \begin{table}[H]
 \caption{Benchmark-Ergebnisse für alle getesteten Systeme. Die benötigte Laufzeit $t$ ist ein Mittelwert aus jeweils mindestens 5 Durchläufen. Die Standardabweichung dieser Durchläufe ist mit $\sigma$ gekennzeichnet.}

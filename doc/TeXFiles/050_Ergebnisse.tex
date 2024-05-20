@@ -80,6 +80,7 @@ done
 \end{figure}
 
 \section{Ergebnisse}
+\label{sec:results}
 
 \begin{figure}[H]
 \centering
@@ -131,7 +132,7 @@ Die Standardabweichung der Testergebnisse ist im Allgemeinen auf dem gleichen Ni
 \label{fig:raspi_benchmark_threads}
 \end{figure}
 
-Der Raspberry Pi stellt das langsamste getestete System dar. Wie bereits in Sektion \ref{sec:tested_hardware} erläutert und in Abbildung \ref{fig:raspi_benchmark_threads} konnten deshalb aufgrund der zeitlichen Begrenzung nicht alle Tests durchgeführt werden. Im Vergleich zum Apple M1 Pro benötigt der Raspberry Pi bei 2 Threads mit 4755 Datensätzen beispielsweise nahezu 26 mal länger. Es ist zu sehen, dass auch der Raspberry Pi von der Parallelisierung profitiert, was gerade bei einem so langsamen System absolut gesehen enorme Unterschiede macht. So verbessert sich die Laufzeit bei 4755 Datensätzen von 7436 Sekunden (02h 03m 56s) bei einem verwendeten Thread auf 2235 Sekunden (37m 15s), was bedeutet, dass 1 Stunde und 26 Minuten an Laufzeit eingespart werden können.
+Der Raspberry Pi stellt das langsamste getestete System dar. Wie bereits in Sektion \ref{sec:tested_hardware} erläutert und in Abbildung \ref{fig:raspi_benchmark_threads} konnten deshalb aufgrund der zeitlichen Begrenzung nicht alle Tests durchgeführt werden. Im Vergleich zum Apple M1 Pro benötigt der Raspberry Pi bei 2 Threads mit 4755 Datensätzen beispielsweise nahezu 26 mal länger. Es ist zu sehen, dass auch der Raspberry Pi von der Parallelisierung profitiert, was gerade bei einem so langsamen System absolut gesehen enorme Unterschiede macht. So verbessert sich die Laufzeit bei 4755 Datensätzen von 7436 Sekunden (02h 03m 56s) bei einem verwendeten Thread auf 2235 Sekunden (37m 15s) unter der Verwendung von 4 Threads, was bedeutet, dass 1 Stunde und 26 Minuten an Laufzeit eingespart werden können.
 
 Im Gegensatz zu dem MacBook mit macOS und dem Ryzen-System mit Fedora Linux lief auf dem getesteten Raspberry Pi keine grafische Oberfläche, welche eventuell Resourcen während des Tests in Anspruch nehmen könnte. Wirklich in den Ergebnissen durch eine deutlich geringere Standardabweichung im Vergleich zur Laufzeit bemerkbar machte sich das jedoch nicht, weshalb davon auszugehen ist, dass das Testen auf einem System mit grafischer Oberfläche auf diesen Systemen keine signifikanten Leistungseinbußen bedeutet. Da aber sowohl die vorhandene als auch die überarbeitete Implementierung weniger als 100 Megabyte Hauptspeicher benötigen, und sichergestellt wurde, dass während des Tests keine anderen Programme im Hintergrund laufen, war auch mit keinen größen Problemen diesbezüglich zu rechnen.
 
@@ -142,7 +143,7 @@ Im Gegensatz zu dem MacBook mit macOS und dem Ryzen-System mit Fedora Linux lief
   \label{fig:runtime_timeline_4threads}
 \end{figure}
 
-Die Verteilung der 10 neuronalen Netze auf die 4 vorhandenen Kerne bei einem Programmablauf mit 4 Threads ist in Abbildung \ref{fig:runtime_timeline_4threads} dargestellt. Für die ersten 8 Durchläufe können die 4 Kerne des Raspberry Pi voll ausgenutzt werden, während danach nur noch maximal 2 von dem Programm ausgelastet werden.
+Die Verteilung der 10 neuronalen Netze auf die 4 vorhandenen Kerne bei einem Programmablauf mit 4 Threads ist in Abbildung \ref{fig:runtime_timeline_4threads} dargestellt. Für die ersten 8 Durchläufe können die 4 Kerne des Raspberry Pi voll ausgenutzt werden, während danach nur noch maximal 2 von dem Programm ausgelastet werden. Da das Programm auf dem Raspberry Pi nicht mit 6 und 8 Threads getestet wurde ist die zuvor angesprochene Konvergenz nicht ersichtlich.
 
 \begin{figure}[H]
 \centering
@@ -151,11 +152,20 @@ Die Verteilung der 10 neuronalen Netze auf die 4 vorhandenen Kerne bei einem Pro
 \label{fig:vps_benchmark_threads}
 \end{figure}
 
-Des Weiteren ist der Overhead der Parallelisierung ein wichtiger Aspekt, der bei der Interpretation der Ergebnisse berücksichtigt werden muss. Trotz der Parallelisierung von Aufgaben bleibt der Overhead auf dem M1 Pro-Prozessor in diesem spezifischen Kontext gering, jedoch definitiv nicht vernachlässigbar. Die Skalierung der Leistung bleibt hoch. Für die gesamte Datensatzgröße von 19020 lag die benötigte Zeit bei einem Thread bei 948,6 Sekunden, während mit 10 Threads eine Zeit von 129,4 Sekunden erzielt wurde. Bei einer theoretisch perfekten Skalierung der Parallelisierung wären bei 10 Threads 94,86 Sekunden zu erwarten, jedoch läuft beispielsweise die Auswertung der Ergebnisse nach dem Programmablauf immer sequenziell, und benötigt somit gleich viel Zeit unabhängig von der verwendeten Thread Anzahl. Des Weiteren ist der bereits angesprochene Overhead der Parallelisierung ein Faktor. Dieser kann teilweise auf das Betriebssystem zurückzuführen sein, das Ressourcen für die Verwaltung und Koordination der Threads bereitstellen muss, was zu zusätzlicher Latenz führen kann, insbesondere wenn die CPU bereits stark ausgelastet ist. Bei voller CPU-Auslastung können Temperaturthrottling-Mechanismen eingreifen, um die Betriebstemperatur der CPU zu regulieren, was zu vorübergehenden Leistungseinbußen führen kann, da die Taktfrequenz reduziert wird, um die Temperaturen im sicheren Bereich zu halten. Ein weiterer Faktor ist die begrenzte Anzahl von Performance-Kernen auf dem M1 Pro Prozessor, die dazu führen kann, dass bei einer höheren Thread-Anzahl als verfügbaren Performance-Kernen nicht alle Threads auf gleich schnellen Kernen laufen können.
+Als letztes System wurde der virtuelle Server mit einem AMD EPYC 7282 Prozessor getestet. Es zeigt sich in Abbildung \ref{fig:vps_benchmark_threads}, dass er unter Verwendung eines Threads ungefähr halb so schnell wie der Apple M1 Pro ist. Dem virtuellen Server stehen nur 2 Kerne zur Verfügung, was sich deutlich in den Ergebnissen wiederspiegelt. In den Tests mit 2 Threads zeigten sich genau wie bei den anderen getesteten Systemen deutliche Leistungsverbesserungen. Daran ist erkennbar, dass das Programm auch in Serverumgebungen genau so von Parallelisierung profitiert, wie zum Beispiel der AMD Ryzen 5 3600XT. Dies ist zu erwarten, da der AMD EPYC Prozessor die gleiche Mikroarchitektur wie der AMD Ryzen Prozessor namens Zen 2 \citep{Epyc_Specifications} verwendet. Der Serverprozessor ist in diesem Fall eine hochskalierte Version des für Privatkunden handelsüblichen Ryzen Prozessors. Abgesehen von der Anzahl der vorhandenen Kerne unterscheidet sich der AMD Epyc Prozessor auch durch seine deutlich geringere Taktraten vom AMD Ryzen, welche es ermöglichen, mehr Kerne bei gleicher verfügbarer Kühlleistung zu verbauen. Server haben normalerweise deutlich mehr Kerne als Prozessoren für Privatanwender
+
+Deutlich erkennbar ist, dass dieses System nicht von mehr als 2 Threads profitiert. Die Leistungskurven von 2, 4, 6, 8 und 10 Threads liegen nahezu exakt übereinander, da die beiden vorhandenen Kerne von 2 Threads bereits voll ausgelastet werden.
 
 \mycomment{Beschriftung der Diagramme bei 1 Thread ist noch "1 Threads". Das sollte geändert werden.}
 
-\section{Tabellarische Auswertung}
+\section{Auswertung}
+
+Die durchgeführten Benchmarks auf den verschiedenen Testsystemen demonstrieren eindeutig die Leistungsverbesserungen durch die Parallelisierung der Anwendung und der Änderungen in der n++-Bibliothek. In allen getesteten Konfigurationen zeigte sich eine signifikante Reduktion der Laufzeit bei der Nutzung von mehr als einem Thread, was die Effektivität der parallelisierten Implementierung unterstreicht. Bis auf die Ausnahme der gleichbleibenden Laufzeiten bei 6 und 8 Threads, wie bereits im vorigen Abschnitt \ref{sec:results} erwähnt, lässt sich eine effektive Reduktion der Laufzeiten bei der Verwendung von mehr Threads ablesen.
+
+Die getesteten Systeme umfassten sowohl verschiedene Prozessorarchitekturen als auch Betriebssysteme, um die Generalisierbarkeit der Ergebnisse sicherzustellen. In jedem Szenario wurde ein konsistenter Leistungszuwachs verzeichnet, sobald mehrere Threads zur Ausführung der Berechnungen herangezogen wurden, wie unten in Tabelle \ref{tab:performance_comparison} ablesbar.
+
+Zusammenfassend lässt sich festhalten, dass die parallelisierte Implementierung der Vorarbeit erfolgreich war und die gesetzten Ziele in Bezug auf die Laufzeitoptimierung erreicht wurden. Die durchgeführten Tests bestätigen die Annahme, dass die Nutzung von Multithreading in der Lage ist, die Performance signifikant zu verbessern, wodurch die Effizienz und Praktikabilität der Bibliothek für reale Anwendungen gesteigert wird.
+
 
 \begin{table}[H]
 \caption{Benchmark-Ergebnisse für alle getesteten Systeme. Die benötigte Laufzeit $t$ ist ein Mittelwert aus jeweils mindestens 5 Durchläufen. Die Standardabweichung dieser Durchläufe ist mit $\sigma$ gekennzeichnet.}

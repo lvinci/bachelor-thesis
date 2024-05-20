@@ -65,43 +65,11 @@ def generate_comp_all_threads_plot(benchmark_id: string, dataset: list[DatasetRo
     os.chdir("../../../scripts")
 
 
-def generate_comp_all_partitions_plot(benchmark_id: string, dataset: list[DatasetRow]):
-    # Group the dataset rows into separate lines
-    lines: Dict[int, list[DatasetRow]] = {}
-    for row in dataset:
-        if row.partitions not in lines:
-            lines[row.partitions] = []
-        lines[row.partitions].append(row)
-    # Create the data file
-    data_filepath = f'../results/plots/{benchmark_id}/comp_all_partitions.dat'
-    os.makedirs(os.path.dirname(data_filepath), exist_ok=True)
-    data_file = open(data_filepath, "w")
-    index: int = 0
-    # Write each line to the file
-    for line, rows in lines.items():
-        data_file.write(f'# {rows[0].partitions} Partitions (index: {index}) \n')
-        data_file.write("# X   Y\n")
-        for row in rows:
-            data_file.write(f'  {row.threads}   {row.runtime}\n')
-        data_file.write("\n\n")
-        index += 1
-    data_file.close()
-    # Generate the plot
-    if len(lines) < 4:
-        subprocess.run(["cp", "plots/comp_all_partitions_small.gp", f'../results/plots/{benchmark_id}/comp_all_partitions.gp'])
-    else:
-        subprocess.run(["cp", "plots/comp_all_partitions.gp", f'../results/plots/{benchmark_id}/comp_all_partitions.gp'])
-    os.chdir(f'../results/plots/{benchmark_id}/')
-    subprocess.run(["gnuplot", "comp_all_partitions.gp"])
-    os.chdir("../../../scripts")
-
-
 def main() -> int:
     for benchmark_id in os.listdir("../results/benchmarks"):
         if os.path.isdir(f'../results/benchmarks/{benchmark_id}'):
             dataset = read_csv_dataset(f'../results/benchmarks/{benchmark_id}_averaged.csv')
             generate_comp_all_threads_plot(benchmark_id, dataset)
-            generate_comp_all_partitions_plot(benchmark_id, dataset)
     return 0
 
 

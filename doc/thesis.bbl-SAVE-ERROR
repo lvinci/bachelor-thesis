@@ -368,9 +368,11 @@
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{howpublished}{UCI Machine Learning Repository}
-      \field{note}{{DOI}: https://doi.org/10.24432/C52C8B}
       \field{title}{{MAGIC Gamma Telescope}}
       \field{year}{2007}
+      \verb{doi}
+      \verb 10.24432/C52C8B
+      \endverb
     \endentry
     \entry{wilkinson2006parallel}{book}{}
       \name{author}{1}{}{%
@@ -423,6 +425,54 @@
       \field{pages}{243\bibrangedash 282}
       \range{pages}{40}
     \endentry
+    \entry{Posix_Specification}{website}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{title}{POSIX, The Open Group Base Specifications Issue 7, 2018 edition}
+      \field{urlday}{15}
+      \field{urlmonth}{5}
+      \field{urlyear}{2024}
+      \field{year}{2018}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://pubs.opengroup.org/onlinepubs/9699919799/nframe.html
+      \endverb
+      \verb{url}
+      \verb https://pubs.opengroup.org/onlinepubs/9699919799/nframe.html
+      \endverb
+    \endentry
+    \entry{ThreadPool_Tutorial_Cpp}{website}{}
+      \name{author}{1}{}{%
+        {{hash=a7e1a99995bd634347c11939baa4ecc3}{%
+           family={geeksforgeeks.org},
+           familyi={g\bibinitperiod},
+           prefix={ashish\_rao\_2373\bibnamedelima auf},
+           prefixi={a\bibinitperiod\bibinitdelim a\bibinitperiod}}}%
+      }
+      \strng{namehash}{a7e1a99995bd634347c11939baa4ecc3}
+      \strng{fullhash}{a7e1a99995bd634347c11939baa4ecc3}
+      \strng{bibnamehash}{a7e1a99995bd634347c11939baa4ecc3}
+      \strng{authorbibnamehash}{a7e1a99995bd634347c11939baa4ecc3}
+      \strng{authornamehash}{a7e1a99995bd634347c11939baa4ecc3}
+      \strng{authorfullhash}{a7e1a99995bd634347c11939baa4ecc3}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Thread Pool in C++}
+      \field{urlday}{18}
+      \field{urlmonth}{5}
+      \field{urlyear}{2024}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.geeksforgeeks.org/thread-pool-in-cpp
+      \endverb
+      \verb{url}
+      \verb https://www.geeksforgeeks.org/thread-pool-in-cpp
+      \endverb
+    \endentry
     \entry{MacBook_Technische_Daten}{report}{}
       \name{author}{1}{}{%
         {{hash=f508f8ff22f456b2c8cef697136c83a9}{%
@@ -437,8 +487,8 @@
       \strng{authorbibnamehash}{f508f8ff22f456b2c8cef697136c83a9}
       \strng{authornamehash}{f508f8ff22f456b2c8cef697136c83a9}
       \strng{authorfullhash}{f508f8ff22f456b2c8cef697136c83a9}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{MacBook Pro (16", 2021) - Technische Daten}
@@ -515,6 +565,38 @@
       \endverb
       \verb{url}
       \verb https://www.raspberrypi.com/products/raspberry-pi-3-model-b
+      \endverb
+    \endentry
+    \entry{Epyc_Specifications}{report}{}
+      \name{author}{1}{}{%
+        {{hash=82528b9f49a20c6f4295ec0863c14ec9}{%
+           family={Advanced\bibnamedelimb Micro\bibnamedelima Devices},
+           familyi={A\bibinitperiod\bibinitdelim M\bibinitperiod\bibinitdelim D\bibinitperiod},
+           given={Inc},
+           giveni={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{82528b9f49a20c6f4295ec0863c14ec9}
+      \strng{fullhash}{82528b9f49a20c6f4295ec0863c14ec9}
+      \strng{bibnamehash}{82528b9f49a20c6f4295ec0863c14ec9}
+      \strng{authorbibnamehash}{82528b9f49a20c6f4295ec0863c14ec9}
+      \strng{authornamehash}{82528b9f49a20c6f4295ec0863c14ec9}
+      \strng{authorfullhash}{82528b9f49a20c6f4295ec0863c14ec9}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{AMD EPYC 7282 specifications}
+      \field{type}{techreport}
+      \field{urlday}{18}
+      \field{urlmonth}{5}
+      \field{urlyear}{2024}
+      \field{year}{2024}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.amd.com/de/products/cpu/amd-epyc-7282
+      \endverb
+      \verb{url}
+      \verb https://www.amd.com/de/products/cpu/amd-epyc-7282
       \endverb
     \endentry
   \enddatalist

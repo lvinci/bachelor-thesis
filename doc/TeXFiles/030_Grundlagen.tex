@@ -15,19 +15,23 @@ Zwischen der Eingangsschicht und der Ausgangsschicht können mehrere versteckte 
 
 Die Funktionsweise eines neuronalen Netzes lässt sich allgemein in zwei Hauptphasen unterteilen: Vorwärtspropagierung und Rückwärtspropagierung. Während der Vorwärtspropagierung fließen die Eingabedaten vorwärts durch das Netz, beginnend mit den Neuronen der Eingabeschicht, welche die Rohdaten empfangen, und endend mit den Neuronen der Ausgabeschicht, welche die Vorhersagen oder Klassifikationen des Netzes abbilden. Jedes Neuron ist mit anderen Neuronen verbunden, und diese Verbindungen sind mit Gewichten versehen, die die Stärke der Verbindung zwischen den Neuronen darstellen  \citep{Manuela_Kunstliche_Intelligenz}.
 
-Während der Vorwärtspropagierung durchläuft jede Eingabe eine Reihe von Schichten im Netz, wobei jede Schicht aus einer bestimmten Anzahl von Neuronen besteht. Jedes Neuron einer Schicht erhält Eingaben von den Neuronen der vorherigen Schicht, multipliziert diese Eingaben mit den entsprechenden Gewichten und summiert sie, wie in Gleichung \ref{eq:perceptron_weighted} gezeigt. Anschließend wird eine Aktivierungsfunktion auf die gewichtete Summe angewendet, um die Ausgabe des Neurons zu berechnen, die dann an die Neuronen der nächsten Schicht weitergeleitet wird.
+Während der Vorwärtspropagierung durchläuft jede Eingabe eine Reihe von Schichten im Netz, wobei jede Schicht aus einer bestimmten Anzahl von Neuronen besteht. Jedes Neuron einer Schicht erhält Eingaben von den Neuronen der vorherigen Schicht, multipliziert diese Eingaben mit den entsprechenden Gewichten und summiert sie, wie in Gleichung \ref{eq:perceptron_input_eq} dargestellt. Anschließend wird wie in Gleichung \ref{eq:perceptron_output_eq} definiert eine Aktivierungsfunktion auf die gewichtete Summe angewendet, um die Ausgabe des Neurons zu berechnen, die dann an die Neuronen der nächsten Schicht weitergeleitet wird.
 
-\begin{equation}
-    o=f\left(\sum_{k=1}^{n}i_{k}\cdot W_{k}\right)
-    \label{eq:perceptron_weighted}
-\end{equation}
-\todo{text}
+\begin{eqnarray}
+    Eingabe&=&w_0b+\sum_{i=1}^{n}w_ix_i \label{eq:perceptron_input_eq} \\
+    Ausgabe&=&f_a(Eingabe) \label{eq:perceptron_output_eq}
+\end{eqnarray}
+
+\begin{center}
+    \begin{footnotesize}
+        $w_0$: zugehöriges Gewicht; $b$: Schwellenwert; $w_i$: zugehörige Gewichte; $x_i$: Eingabewerte\\
+        $f_a$: Aktivierungsfunktion
+    \end{footnotesize}
+\end{center}
 
 Die Ausgangsschicht liefert schließlich die Ergebnisse der Netzberechnungen, sei es in Form einer Klassifikation, Regression oder einer anderen Art der Informationsverarbeitung, je nach den Anforderungen der spezifischen Anwendung. Durch die Strukturierung des Netzes in Schichten und die Festlegung spezifischer Funktionen für jede Schicht kann das neuronale Netz effizient Informationen verarbeiten und komplexe Probleme lösen.
 
-Die Rückwärtspropagierung ist der Prozess, bei dem das Netz lernt, indem es seine Gewichte entsprechend der Fehler zwischen den tatsächlichen und den vorhergesagten Ausgaben anpasst. Dies geschieht durch die Berechnung von Gradienten mit Hilfe des Backpropagation-Algorithmus \todo{add citation} und die Anpassung der Gewichte mithilfe eines Optimierungsalgorithmus wie dem Gradientenabstiegsverfahren.
-
-\mycomment{Sektion eventuell ergänzen}
+Die Rückwärtspropagierung ist der Prozess, bei dem das Netz lernt, indem es seine Gewichte entsprechend der Fehler zwischen den tatsächlichen und den vorhergesagten Ausgaben anpasst. Dies geschieht durch die Berechnung von Gradienten zum Beispiel mit Hilfe des Backpropagation-Algorithmus \todo{add citation} und die Anpassung der Gewichte mithilfe eines Optimierungsalgorithmus wie dem Gradientenabstiegsverfahren.
 
 \section{Einführung in die Parallelisierung}
 \label{sec:Grundlagen_Parallelisierung}

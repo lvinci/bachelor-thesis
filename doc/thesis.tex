@@ -361,7 +361,10 @@
 %\bibliographystyle{agsm} % (Autoren in runden Klammern)
 %\newpage
 \clearpage
-%\phantomsection % Da sonst falsche Verlinkung im Inhaltsverzeichnis
+
+
+\phantomsection % Da sonst falsche Verlinkung im Inhaltsverzeichnis
+\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
+\listoffigures
 \printbibliography[heading=bibintoc]    % Ohne Kapitelnummer /-buchstabe
-%\printbibliography[heading=bibnumbered]    % Mit Kapitelnummer /-buchstabe
 \end{document}

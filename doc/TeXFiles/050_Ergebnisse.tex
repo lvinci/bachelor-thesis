@@ -15,6 +15,7 @@ Das Ergebnis jedes Programmdurchlaufs wird in eine Datei geschrieben, um verglei
 Nach Abschluss der Testläufe werden die erzielten Ergebnisse automatisch analysiert und Durchschnittswerte für jede Kombination von Threads und Partitionen berechnet. Diese Durchschnittswerte dienen dazu, die möglichen Schwankungen der Testabläufe auszugleichen, und ein neutraleres Ergebnis zu liefern.
 
 \section{Getestete Hardware}
+\label{sec:tested_hardware}
 \sectionmark{Hardware}
 
 Als erstes Testsysten kommt ein MacBook Pro 16 Zoll Laptop mit dem M1 Pro Prozessor, der im MacBook Pro 16 Zoll verwendet wird zum Einsatz. Der M1 Pro wurde 2021 vorgestellt und ist eine hochskalierte Version des M1 Prozessors. Er verfügt über insgesamt 12 CPU-Kerne, darunter 8 Hochleistungs- und 4 Effizienzkerne \citep{MacBook_Technische_Daten}. Die Hochleistungskerne sind für rechenintensive Aufgaben konzipiert, während die Effizienzkerne für weniger anspruchsvolle Aufgaben und eine Reduzierung des Energieverbrauchs optimiert sind.
@@ -117,7 +118,7 @@ Die Standardabweichung der Ergebnisse des Apple M1 Pro, welche in Tabelle \ref{t
 \label{fig:ryzen_benchmark_threads}
 \end{figure}
 
-Die angesprochenen Beobachtungen bestätigen sich beim zweiten Testsystem, dem AMD Ryzen 5 3600XT weitgehend bestätigen. Genau wie beim Apple M1 Pro lässt sich eine erfolgreiche Skalierung der Leistung bei höheren Thread-Zahlen feststellen. Dieses System ist auch sehr leistungsstark, und kann von multithreaded Anwendungen stark profitieren. Insgesamt liegen die benötigten Laufzeiten circa 20\% über denen des Apple M1 Pro. Auch die zuvor erwähnte Konvergenz bei 6 und 8 verwendeten Threads ist zu erkennen. 
+Die angesprochenen Beobachtungen bestätigen sich beim zweiten Testsystem, dem AMD Ryzen 5 3600XT weitgehend bestätigen. Genau wie beim Apple M1 Pro lässt sich eine erfolgreiche Skalierung der Leistung bei höheren Thread-Zahlen feststellen, was in Abbildung \ref{fig:ryzen_benchmark_threads} veranschaulicht ist. Dieses System ist auch sehr leistungsstark, und kann von multithreaded Anwendungen stark profitieren. Insgesamt liegen die benötigten Laufzeiten circa 20\% über denen des Apple M1 Pro. Auch die zuvor erwähnte Konvergenz bei 6 und 8 verwendeten Threads ist zu erkennen. 
 
 Besonders zu beobachten ist, dass der Leistungssprung der Laufzeiten von 6 auf 10 Threads bei diesem System geringer ist als bei dem Apple M1 Pro. Dies ist zu erwarten, da der AMD Ryzen 5 3600XT nur über 6 Kerne verfügt, welche zwar mithilfe von Hyper-Threading 12 physische Threads verfügbar stellen \citep{Ryzen_Technische_Daten}, jedoch nicht mit der Leistung von 12 Prozessorkernen vergleichbar sind. Bei 10 Laufenden Threads müssen sich somit 4 der 6 vorhandenen Prozessorkerne mit 2 Aufgaben gleichzeitig beschäftigen.
 
@@ -130,12 +131,18 @@ Die Standardabweichung der Testergebnisse ist im Allgemeinen auf dem gleichen Ni
 \label{fig:raspi_benchmark_threads}
 \end{figure}
 
+Der Raspberry Pi stellt das langsamste getestete System dar. Wie bereits in Sektion \ref{sec:tested_hardware} erläutert und in Abbildung \ref{fig:raspi_benchmark_threads} konnten deshalb aufgrund der zeitlichen Begrenzung nicht alle Tests durchgeführt werden. Im Vergleich zum Apple M1 Pro benötigt der Raspberry Pi bei 2 Threads mit 4755 Datensätzen beispielsweise nahezu 26 mal länger. Es ist zu sehen, dass auch der Raspberry Pi von der Parallelisierung profitiert, was gerade bei einem so langsamen System absolut gesehen enorme Unterschiede macht. So verbessert sich die Laufzeit bei 4755 Datensätzen von 7436 Sekunden (02h 03m 56s) bei einem verwendeten Thread auf 2235 Sekunden (37m 15s), was bedeutet, dass 1 Stunde und 26 Minuten an Laufzeit eingespart werden können.
+
+Im Gegensatz zu dem MacBook mit macOS und dem Ryzen-System mit Fedora Linux lief auf dem getesteten Raspberry Pi keine grafische Oberfläche, welche eventuell Resourcen während des Tests in Anspruch nehmen könnte. Wirklich in den Ergebnissen durch eine deutlich geringere Standardabweichung im Vergleich zur Laufzeit bemerkbar machte sich das jedoch nicht, weshalb davon auszugehen ist, dass das Testen auf einem System mit grafischer Oberfläche auf diesen Systemen keine signifikanten Leistungseinbußen bedeutet. Da aber sowohl die vorhandene als auch die überarbeitete Implementierung weniger als 100 Megabyte Hauptspeicher benötigen, und sichergestellt wurde, dass während des Tests keine anderen Programme im Hintergrund laufen, war auch mit keinen größen Problemen diesbezüglich zu rechnen.
+
 \begin{figure}[htbp!]
   \centering
   \includegraphics[width=0.8\textwidth]{../results/plots/timeline/timeline_plot_4threads.pdf}
   \caption{Verteilung der Aufgaben auf die verfügbaren Threads bei einem Programmablauf mit 8 Threads}
   \label{fig:runtime_timeline_4threads}
 \end{figure}
+
+Die Verteilung der 10 neuronalen Netze auf die 4 vorhandenen Kerne bei einem Programmablauf mit 4 Threads ist in Abbildung \ref{fig:runtime_timeline_4threads} dargestellt. Für die ersten 8 Durchläufe können die 4 Kerne des Raspberry Pi voll ausgenutzt werden, während danach nur noch maximal 2 von dem Programm ausgelastet werden.
 
 \begin{figure}[H]
 \centering

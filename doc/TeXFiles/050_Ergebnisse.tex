@@ -12,7 +12,7 @@ Die Tests wird mit unterschiedlichen Thread-Anzahlen ausgeführt, darunter 10, 8
 Für jede Kombination von Threads und Partitionen werden mindestens 5 Testläufe durchgeführt, um robuste Durchschnittswerte zu erhalten und Schwankungen zu minimieren. Gemessen wird die benötigte Zeit für den gesamten Programmdurchlauf in Sekunden. Vor jedem Durchlauf werden die Testgeräte auf einen neutralen Zustand zurückgesetzt, um faire Vergleichsbedingungen sicherzustellen. Dies wird gewährleistet, indem gleiche Seeds für die Zufallszahlgeneratoren verwendet werden, und sichergestellt wird, dass keine anderen Programme laufen.
 Das Ergebnis jedes Programmdurchlaufs wird in eine Datei geschrieben, um vergleichen zu können, ob mit verschiedenen Anzahlen von Threads die gleichen Ergebnisse berechnet werden.
 
-Nach Abschluss der Testläufe werden die erzielten Ergebnisse automatisch analysiert und Durchschnittswerte für jede Kombination von Threads und Partitionen berechnet. Diese Durchschnittswerte dienen dazu, die möglichen Schwankungen der Testabläufe auszugleichen, und ein neutraleres Ergebnis zu liefern.
+Nach Abschluss der Testläufe werden die erzielten Ergebnisse automatisch analysiert und Durchschnittswerte für jede Kombination von Threads und Partitionen berechnet. Diese Durchschnittswerte dienen dazu, die möglichen Schwankungen der Testabläufe auszugleichen, und ein neutraleres Ergebnis zu liefern. Zusätzlich wurden die generierten Daten des Programms miteinander verglichen. So wurde sichergestellt, dass sich durch die Parallelisierung keine unerwarteten Fehler des Algorithmus ergeben haben. Sind die generierten Dateien exakt gleich, kann davon ausgegangen werden, dass der Algorithmus erfolgreich abgelaufen ist.
 
 \section{Getestete Hardware}
 \label{sec:tested_hardware}
@@ -166,7 +166,7 @@ Zusammenfassend lässt sich festhalten, dass die parallelisierte Implementierung
 
 
 \begin{table}[H]
-\caption{Benchmark-Ergebnisse für alle getesteten Systeme. Die benötigte Laufzeit $t$ ist ein Mittelwert aus jeweils mindestens 5 Durchläufen. Die Standardabweichung dieser Durchläufe ist mit $\sigma$ gekennzeichnet.\newline}
+\caption{Benchmark-Ergebnisse für alle getesteten Systeme. Die benötigte Laufzeit $t$ in Sekunden ist ein Mittelwert aus jeweils 5 Durchläufen. Die Standardabweichung dieser Durchläufe ist mit $\sigma$ gekennzeichnet.\newline}
 \label{tab:performance_comparison}
 \begin{adjustbox}{max width=\textwidth}
 \renewcommand{\arraystretch}{1.5}

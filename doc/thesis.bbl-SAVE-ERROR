@@ -27,9 +27,6 @@
            given={Alessandro},
            giveni={A\bibinitperiod}}}%
       }
-      \list{language}{1}{%
-        {ger}%
-      }
       \list{location}{1}{%
         {Hannover}%
       }
@@ -58,9 +55,6 @@
            given={F.},
            giveni={F\bibinitperiod}}}%
       }
-      \list{language}{1}{%
-        {eng}%
-      }
       \strng{namehash}{1750cd87a34d44119e7a4aab9b8012c6}
       \strng{fullhash}{1750cd87a34d44119e7a4aab9b8012c6}
       \strng{bibnamehash}{1750cd87a34d44119e7a4aab9b8012c6}
@@ -82,9 +76,6 @@
       \range{pages}{23}
       \verb{doi}
       \verb 10.1037/h0042519
-      \endverb
-      \verb{eprint}
-      \verb 13602029
       \endverb
     \endentry
     \entry{Chip_makers_turn_to_multicore}{article}{}
@@ -183,9 +174,6 @@
            given={Manuela},
            giveni={M\bibinitperiod}}}%
       }
-      \list{language}{1}{%
-        {ger}%
-      }
       \list{location}{1}{%
         {M{"u}nchen}%
       }
@@ -225,8 +213,8 @@
       \strng{authorbibnamehash}{30a552c603bdd1a4130d54d00c0c1efd}
       \strng{authornamehash}{30a552c603bdd1a4130d54d00c0c1efd}
       \strng{authorfullhash}{30a552c603bdd1a4130d54d00c0c1efd}
-      \field{sortinit}{8}
-      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{IEEE Transactions on Computers}
@@ -336,8 +324,8 @@
       \strng{authorbibnamehash}{8cb7d32ec75904edfafaff49577f267c}
       \strng{authornamehash}{8cb7d32ec75904edfafaff49577f267c}
       \strng{authorfullhash}{45dc0be15277d2e82e366afe22773b3c}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{journaltitle}{Queue}
@@ -578,8 +566,8 @@
       \strng{authorbibnamehash}{bf8e466d7b9299e96125269ab5c961a9}
       \strng{authornamehash}{bf8e466d7b9299e96125269ab5c961a9}
       \strng{authorfullhash}{bf8e466d7b9299e96125269ab5c961a9}
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Parallel programming: Techniques and applications using networked workstations and parallel computers, 2/E}
@@ -643,8 +631,8 @@
       \strng{authorbibnamehash}{a7e1a99995bd634347c11939baa4ecc3}
       \strng{authornamehash}{a7e1a99995bd634347c11939baa4ecc3}
       \strng{authorfullhash}{a7e1a99995bd634347c11939baa4ecc3}
-      \field{sortinit}{3}
-      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Thread Pool in C++}

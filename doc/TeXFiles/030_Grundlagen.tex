@@ -78,7 +78,20 @@ Eine weitere Strategie ist es, verschiedene Threads zu nutzen um dasselbe Netz m
 \subsection{Auswirkungen auf die Leistungsfähigkeit}
 \label{sec:Grundlagen_Parallelisierung_Leistungsfähigkeit}
 
-Ein wesentlicher Vorteil der parallelen Ausführung mehrerer Netze (mit beispielsweise verschiedenen Zufalls-Seeds) besteht in der Vielzahl von Trainingsdurchläufen, die simultan durchgeführt werden können. Dies ermöglicht es, eine breite Palette von Modellen zu trainieren und verschiedene Variationen zu erkunden, um letztendlich das optimale Modell zu identifizieren. Durch die gleichzeitige Ausführung dieser Trainingsläufe können Entwickler Zeit sparen und schneller zu aussagekräftigen Ergebnissen gelangen.
+Die Parallelisierung von Algorithmen neuronaler Netze kann, wie bereits beschrieben, zu einer signifikanten Reduktion der Laufzeit führen, indem mehrere Threads gleichzeitig ausgeführt werden. Die potenzielle Verbesserung der Laufzeit allgemeiner Algorithmen bei der Verwendung von $n$ Threads wird durch das Gesetz von Amdahl beschrieben. Formel \ref{eq:amdahls_law} zeigt, wie die Laufzeit $T(n)$ bei Verwendung von $n$ Threads berechnet wird. Dieses Gesetz berücksichtigt den Anteil $S$ des Programms, der nicht parallelisiert werden kann, und ermöglicht die Berechnung der tatsächlichen Laufzeit bei paralleler Ausführung. \citep{amdahl_validity_single_processor}.
+
+\begin{eqnarray}
+    T(n) &=& \frac{T(1)}{S + \frac{1 - S}{n}} \label{eq:amdahls_law}
+\end{eqnarray}
+
+\begin{center}
+    \begin{footnotesize}
+        Gesetz von Amdahl (Amdahl's Law) \\
+        $T(n)$: Laufzeit bei Verwendung von $n$ Threads; $T(1)$: sequentielle Laufzeit mit 1 Thread;\\$S$: Anteil der Laufzeit des Programms, der nicht parallelisiert werden kan
+    \end{footnotesize}
+\end{center}
+
+Dieses Gesetz trifft auch auf die möglichen Verbesserungen der Laufzeit im Kontext neuronaler Netze zu. So besteht ein wesentlicher Vorteil der parallelen Ausführung mehrerer Netze (mit beispielsweise verschiedenen Zufalls-Seeds) in der Vielzahl von Trainingsdurchläufen, die simultan durchgeführt werden können. Dies ermöglicht es, eine breite Palette von Modellen zu trainieren und verschiedene Variationen zu erkunden, um letztendlich das optimale Modell zu identifizieren. Durch die gleichzeitige Ausführung dieser Trainingsläufe können Entwickler Zeit sparen und schneller zu aussagekräftigen Ergebnissen gelangen \citep{Practical_neural_network_recipes_C++}.
 
 Außerdem bietet die parallele Ausführung die Möglichkeit, Inferenzoperationen gleichzeitig durchzuführen. Mehrere Eingaben können gleichzeitig an duplizierte Netze weitergeleitet werden, um eine simultane Auswertung zu ermöglichen. Dies beschleunigt nicht nur den Inferenzprozess erheblich, sondern ermöglicht auch eine effizientere Nutzung der verfügbaren Hardwareressourcen. So können beispielsweise die Eingaben mehrerer Benutzer gleichzeitig verarbeitet werden.
 
